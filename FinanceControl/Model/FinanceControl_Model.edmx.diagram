@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="45991ad117ff478db8368dc3c67f6a2a" Name="Diagram1">
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.Accounts" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.Debts" Width="1.5" PointX="3" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.DebtsTransactions" Width="1.5" PointX="5.25" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.ExpensesCategories" Width="1.5" PointX="3" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.ExpensesTransactions" Width="1.5" PointX="8.25" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.IncomeCategories" Width="1.5" PointX="3" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.IncomeTransactions" Width="1.5" PointX="8.25" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.RegularExpenses" Width="1.5" PointX="5.25" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.Reminders" Width="1.5" PointX="3" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.Transfers" Width="1.5" PointX="5.25" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.Users" Width="1.5" PointX="0.75" PointY="13.25" IsExpanded="true" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__Accounts__UserID__267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__DebtsTran__Accou__48CFD27E" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__ExpensesT__Accou__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__IncomeTra__Accou__300424B4" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__Transfers__Accou__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__Transfers__Accou__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__Debts__UserID__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__DebtsTran__DebtI__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__DebtsTran__UserI__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__ExpensesC__UserI__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__ExpensesT__Expen__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__RegularEx__Expen__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__ExpensesT__UserI__33D4B598" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__IncomeCat__UserI__2C3393D0" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__IncomeTra__Incom__30F848ED" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__IncomeTra__UserI__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__RegularEx__UserI__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__Reminders__UserI__403A8C7D" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

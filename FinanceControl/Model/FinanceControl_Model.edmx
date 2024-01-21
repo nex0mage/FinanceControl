@@ -1,0 +1,1027 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище FinanceControl_DB_Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Accounts">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="int" Nullable="false" />
+          <Property Name="AccountName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Balance" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+        </EntityType>
+        <EntityType Name="Debts">
+          <Key>
+            <PropertyRef Name="DebtID" />
+          </Key>
+          <Property Name="DebtID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ToWho" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="DebtsTransactions">
+          <Key>
+            <PropertyRef Name="DebtTransactionID" />
+          </Key>
+          <Property Name="DebtTransactionID" Type="int" Nullable="false" />
+          <Property Name="DebtID" Type="int" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="AccountID" Type="int" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TransactionDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ExpensesCategories">
+          <Key>
+            <PropertyRef Name="ExpenseCategoryID" />
+          </Key>
+          <Property Name="ExpenseCategoryID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ExpensesTransactions">
+          <Key>
+            <PropertyRef Name="ExpenseTransactionID" />
+          </Key>
+          <Property Name="ExpenseTransactionID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="AccountID" Type="int" />
+          <Property Name="ExpenseCategoryID" Type="int" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TransactionDate" Type="date" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="IncomeCategories">
+          <Key>
+            <PropertyRef Name="IncomeCategoryID" />
+          </Key>
+          <Property Name="IncomeCategoryID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IncomeTransactions">
+          <Key>
+            <PropertyRef Name="IncomeTransactionID" />
+          </Key>
+          <Property Name="IncomeTransactionID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="AccountID" Type="int" />
+          <Property Name="IncomeCategoryID" Type="int" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TransactionDate" Type="date" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="RegularExpenses">
+          <Key>
+            <PropertyRef Name="RegularExpenseID" />
+          </Key>
+          <Property Name="RegularExpenseID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="ExpenseCategoryID" Type="int" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Frequency" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Reminders">
+          <Key>
+            <PropertyRef Name="ReminderID" />
+          </Key>
+          <Property Name="ReminderID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ReminderDate" Type="date" Nullable="false" />
+          <Property Name="IsCompleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transfers">
+          <Key>
+            <PropertyRef Name="TransferID" />
+          </Key>
+          <Property Name="TransferID" Type="int" Nullable="false" />
+          <Property Name="AccountFromID" Type="int" />
+          <Property Name="AccountToID" Type="int" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TransferDate" Type="date" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="UserLogin" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Accounts__UserID__267ABA7A">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Accounts">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Debts__UserID__440B1D61">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Debts" Type="Self.Debts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Debts">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DebtsTran__Accou__48CFD27E">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="DebtsTransactions" Type="Self.DebtsTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="DebtsTransactions">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DebtsTran__DebtI__46E78A0C">
+          <End Role="Debts" Type="Self.Debts" Multiplicity="0..1" />
+          <End Role="DebtsTransactions" Type="Self.DebtsTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debts">
+              <PropertyRef Name="DebtID" />
+            </Principal>
+            <Dependent Role="DebtsTransactions">
+              <PropertyRef Name="DebtID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DebtsTran__UserI__47DBAE45">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="DebtsTransactions" Type="Self.DebtsTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="DebtsTransactions">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ExpensesC__UserI__29572725">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="ExpensesCategories" Type="Self.ExpensesCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="ExpensesCategories">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ExpensesT__Accou__34C8D9D1">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="ExpensesTransactions" Type="Self.ExpensesTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="ExpensesTransactions">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ExpensesT__Expen__35BCFE0A">
+          <End Role="ExpensesCategories" Type="Self.ExpensesCategories" Multiplicity="0..1" />
+          <End Role="ExpensesTransactions" Type="Self.ExpensesTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExpensesCategories">
+              <PropertyRef Name="ExpenseCategoryID" />
+            </Principal>
+            <Dependent Role="ExpensesTransactions">
+              <PropertyRef Name="ExpenseCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ExpensesT__UserI__33D4B598">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="ExpensesTransactions" Type="Self.ExpensesTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="ExpensesTransactions">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__IncomeCat__UserI__2C3393D0">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="IncomeCategories" Type="Self.IncomeCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="IncomeCategories">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__IncomeTra__Accou__300424B4">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="IncomeTransactions" Type="Self.IncomeTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="IncomeTransactions">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__IncomeTra__Incom__30F848ED">
+          <End Role="IncomeCategories" Type="Self.IncomeCategories" Multiplicity="0..1" />
+          <End Role="IncomeTransactions" Type="Self.IncomeTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IncomeCategories">
+              <PropertyRef Name="IncomeCategoryID" />
+            </Principal>
+            <Dependent Role="IncomeTransactions">
+              <PropertyRef Name="IncomeCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__IncomeTra__UserI__2F10007B">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="IncomeTransactions" Type="Self.IncomeTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="IncomeTransactions">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RegularEx__Expen__3D5E1FD2">
+          <End Role="ExpensesCategories" Type="Self.ExpensesCategories" Multiplicity="0..1" />
+          <End Role="RegularExpenses" Type="Self.RegularExpenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExpensesCategories">
+              <PropertyRef Name="ExpenseCategoryID" />
+            </Principal>
+            <Dependent Role="RegularExpenses">
+              <PropertyRef Name="ExpenseCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RegularEx__UserI__3C69FB99">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="RegularExpenses" Type="Self.RegularExpenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="RegularExpenses">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reminders__UserI__403A8C7D">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Reminders" Type="Self.Reminders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Reminders">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transfers__Accou__38996AB5">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="Transfers" Type="Self.Transfers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Transfers">
+              <PropertyRef Name="AccountFromID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transfers__Accou__398D8EEE">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="Transfers" Type="Self.Transfers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Transfers">
+              <PropertyRef Name="AccountToID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище FinanceControl_DB_ModelContainer">
+          <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Debts" EntityType="Self.Debts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DebtsTransactions" EntityType="Self.DebtsTransactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExpensesCategories" EntityType="Self.ExpensesCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExpensesTransactions" EntityType="Self.ExpensesTransactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IncomeCategories" EntityType="Self.IncomeCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IncomeTransactions" EntityType="Self.IncomeTransactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RegularExpenses" EntityType="Self.RegularExpenses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reminders" EntityType="Self.Reminders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transfers" EntityType="Self.Transfers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Accounts__UserID__267ABA7A" Association="Self.FK__Accounts__UserID__267ABA7A">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Debts__UserID__440B1D61" Association="Self.FK__Debts__UserID__440B1D61">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Debts" EntitySet="Debts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DebtsTran__Accou__48CFD27E" Association="Self.FK__DebtsTran__Accou__48CFD27E">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="DebtsTransactions" EntitySet="DebtsTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DebtsTran__DebtI__46E78A0C" Association="Self.FK__DebtsTran__DebtI__46E78A0C">
+            <End Role="Debts" EntitySet="Debts" />
+            <End Role="DebtsTransactions" EntitySet="DebtsTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DebtsTran__UserI__47DBAE45" Association="Self.FK__DebtsTran__UserI__47DBAE45">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="DebtsTransactions" EntitySet="DebtsTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ExpensesC__UserI__29572725" Association="Self.FK__ExpensesC__UserI__29572725">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ExpensesCategories" EntitySet="ExpensesCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ExpensesT__Accou__34C8D9D1" Association="Self.FK__ExpensesT__Accou__34C8D9D1">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="ExpensesTransactions" EntitySet="ExpensesTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ExpensesT__Expen__35BCFE0A" Association="Self.FK__ExpensesT__Expen__35BCFE0A">
+            <End Role="ExpensesCategories" EntitySet="ExpensesCategories" />
+            <End Role="ExpensesTransactions" EntitySet="ExpensesTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ExpensesT__UserI__33D4B598" Association="Self.FK__ExpensesT__UserI__33D4B598">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ExpensesTransactions" EntitySet="ExpensesTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__IncomeCat__UserI__2C3393D0" Association="Self.FK__IncomeCat__UserI__2C3393D0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="IncomeCategories" EntitySet="IncomeCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__IncomeTra__Accou__300424B4" Association="Self.FK__IncomeTra__Accou__300424B4">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="IncomeTransactions" EntitySet="IncomeTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__IncomeTra__Incom__30F848ED" Association="Self.FK__IncomeTra__Incom__30F848ED">
+            <End Role="IncomeCategories" EntitySet="IncomeCategories" />
+            <End Role="IncomeTransactions" EntitySet="IncomeTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__IncomeTra__UserI__2F10007B" Association="Self.FK__IncomeTra__UserI__2F10007B">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="IncomeTransactions" EntitySet="IncomeTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RegularEx__Expen__3D5E1FD2" Association="Self.FK__RegularEx__Expen__3D5E1FD2">
+            <End Role="ExpensesCategories" EntitySet="ExpensesCategories" />
+            <End Role="RegularExpenses" EntitySet="RegularExpenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RegularEx__UserI__3C69FB99" Association="Self.FK__RegularEx__UserI__3C69FB99">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="RegularExpenses" EntitySet="RegularExpenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reminders__UserI__403A8C7D" Association="Self.FK__Reminders__UserI__403A8C7D">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Reminders" EntitySet="Reminders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transfers__Accou__38996AB5" Association="Self.FK__Transfers__Accou__38996AB5">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Transfers" EntitySet="Transfers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transfers__Accou__398D8EEE" Association="Self.FK__Transfers__Accou__398D8EEE">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Transfers" EntitySet="Transfers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FinanceControl_DB_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Accounts">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="Int32" Nullable="false" />
+          <Property Name="AccountName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Balance" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Accounts__UserID__267ABA7A" FromRole="Accounts" ToRole="Users" />
+          <NavigationProperty Name="DebtsTransactions" Relationship="Self.FK__DebtsTran__Accou__48CFD27E" FromRole="Accounts" ToRole="DebtsTransactions" />
+          <NavigationProperty Name="ExpensesTransactions" Relationship="Self.FK__ExpensesT__Accou__34C8D9D1" FromRole="Accounts" ToRole="ExpensesTransactions" />
+          <NavigationProperty Name="IncomeTransactions" Relationship="Self.FK__IncomeTra__Accou__300424B4" FromRole="Accounts" ToRole="IncomeTransactions" />
+          <NavigationProperty Name="Transfers" Relationship="Self.FK__Transfers__Accou__38996AB5" FromRole="Accounts" ToRole="Transfers" />
+          <NavigationProperty Name="Transfers1" Relationship="Self.FK__Transfers__Accou__398D8EEE" FromRole="Accounts" ToRole="Transfers" />
+        </EntityType>
+        <EntityType Name="Debts">
+          <Key>
+            <PropertyRef Name="DebtID" />
+          </Key>
+          <Property Name="DebtID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ToWho" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Debts__UserID__440B1D61" FromRole="Debts" ToRole="Users" />
+          <NavigationProperty Name="DebtsTransactions" Relationship="Self.FK__DebtsTran__DebtI__46E78A0C" FromRole="Debts" ToRole="DebtsTransactions" />
+        </EntityType>
+        <EntityType Name="DebtsTransactions">
+          <Key>
+            <PropertyRef Name="DebtTransactionID" />
+          </Key>
+          <Property Name="DebtTransactionID" Type="Int32" Nullable="false" />
+          <Property Name="DebtID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="AccountID" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK__DebtsTran__Accou__48CFD27E" FromRole="DebtsTransactions" ToRole="Accounts" />
+          <NavigationProperty Name="Debts" Relationship="Self.FK__DebtsTran__DebtI__46E78A0C" FromRole="DebtsTransactions" ToRole="Debts" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__DebtsTran__UserI__47DBAE45" FromRole="DebtsTransactions" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="ExpensesCategories">
+          <Key>
+            <PropertyRef Name="ExpenseCategoryID" />
+          </Key>
+          <Property Name="ExpenseCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__ExpensesC__UserI__29572725" FromRole="ExpensesCategories" ToRole="Users" />
+          <NavigationProperty Name="ExpensesTransactions" Relationship="Self.FK__ExpensesT__Expen__35BCFE0A" FromRole="ExpensesCategories" ToRole="ExpensesTransactions" />
+          <NavigationProperty Name="RegularExpenses" Relationship="Self.FK__RegularEx__Expen__3D5E1FD2" FromRole="ExpensesCategories" ToRole="RegularExpenses" />
+        </EntityType>
+        <EntityType Name="ExpensesTransactions">
+          <Key>
+            <PropertyRef Name="ExpenseTransactionID" />
+          </Key>
+          <Property Name="ExpenseTransactionID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="AccountID" Type="Int32" />
+          <Property Name="ExpenseCategoryID" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK__ExpensesT__Accou__34C8D9D1" FromRole="ExpensesTransactions" ToRole="Accounts" />
+          <NavigationProperty Name="ExpensesCategories" Relationship="Self.FK__ExpensesT__Expen__35BCFE0A" FromRole="ExpensesTransactions" ToRole="ExpensesCategories" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__ExpensesT__UserI__33D4B598" FromRole="ExpensesTransactions" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="IncomeCategories">
+          <Key>
+            <PropertyRef Name="IncomeCategoryID" />
+          </Key>
+          <Property Name="IncomeCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__IncomeCat__UserI__2C3393D0" FromRole="IncomeCategories" ToRole="Users" />
+          <NavigationProperty Name="IncomeTransactions" Relationship="Self.FK__IncomeTra__Incom__30F848ED" FromRole="IncomeCategories" ToRole="IncomeTransactions" />
+        </EntityType>
+        <EntityType Name="IncomeTransactions">
+          <Key>
+            <PropertyRef Name="IncomeTransactionID" />
+          </Key>
+          <Property Name="IncomeTransactionID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="AccountID" Type="Int32" />
+          <Property Name="IncomeCategoryID" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK__IncomeTra__Accou__300424B4" FromRole="IncomeTransactions" ToRole="Accounts" />
+          <NavigationProperty Name="IncomeCategories" Relationship="Self.FK__IncomeTra__Incom__30F848ED" FromRole="IncomeTransactions" ToRole="IncomeCategories" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__IncomeTra__UserI__2F10007B" FromRole="IncomeTransactions" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="RegularExpenses">
+          <Key>
+            <PropertyRef Name="RegularExpenseID" />
+          </Key>
+          <Property Name="RegularExpenseID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="ExpenseCategoryID" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Frequency" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ExpensesCategories" Relationship="Self.FK__RegularEx__Expen__3D5E1FD2" FromRole="RegularExpenses" ToRole="ExpensesCategories" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__RegularEx__UserI__3C69FB99" FromRole="RegularExpenses" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Reminders">
+          <Key>
+            <PropertyRef Name="ReminderID" />
+          </Key>
+          <Property Name="ReminderID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReminderDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Reminders__UserI__403A8C7D" FromRole="Reminders" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Transfers">
+          <Key>
+            <PropertyRef Name="TransferID" />
+          </Key>
+          <Property Name="TransferID" Type="Int32" Nullable="false" />
+          <Property Name="AccountFromID" Type="Int32" />
+          <Property Name="AccountToID" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TransferDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK__Transfers__Accou__38996AB5" FromRole="Transfers" ToRole="Accounts" />
+          <NavigationProperty Name="Accounts1" Relationship="Self.FK__Transfers__Accou__398D8EEE" FromRole="Transfers" ToRole="Accounts" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="UserLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK__Accounts__UserID__267ABA7A" FromRole="Users" ToRole="Accounts" />
+          <NavigationProperty Name="Debts" Relationship="Self.FK__Debts__UserID__440B1D61" FromRole="Users" ToRole="Debts" />
+          <NavigationProperty Name="DebtsTransactions" Relationship="Self.FK__DebtsTran__UserI__47DBAE45" FromRole="Users" ToRole="DebtsTransactions" />
+          <NavigationProperty Name="ExpensesCategories" Relationship="Self.FK__ExpensesC__UserI__29572725" FromRole="Users" ToRole="ExpensesCategories" />
+          <NavigationProperty Name="ExpensesTransactions" Relationship="Self.FK__ExpensesT__UserI__33D4B598" FromRole="Users" ToRole="ExpensesTransactions" />
+          <NavigationProperty Name="IncomeCategories" Relationship="Self.FK__IncomeCat__UserI__2C3393D0" FromRole="Users" ToRole="IncomeCategories" />
+          <NavigationProperty Name="IncomeTransactions" Relationship="Self.FK__IncomeTra__UserI__2F10007B" FromRole="Users" ToRole="IncomeTransactions" />
+          <NavigationProperty Name="RegularExpenses" Relationship="Self.FK__RegularEx__UserI__3C69FB99" FromRole="Users" ToRole="RegularExpenses" />
+          <NavigationProperty Name="Reminders" Relationship="Self.FK__Reminders__UserI__403A8C7D" FromRole="Users" ToRole="Reminders" />
+        </EntityType>
+        <Association Name="FK__Accounts__UserID__267ABA7A">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Accounts">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DebtsTran__Accou__48CFD27E">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="DebtsTransactions" Type="Self.DebtsTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="DebtsTransactions">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ExpensesT__Accou__34C8D9D1">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="ExpensesTransactions" Type="Self.ExpensesTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="ExpensesTransactions">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__IncomeTra__Accou__300424B4">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="IncomeTransactions" Type="Self.IncomeTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="IncomeTransactions">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transfers__Accou__38996AB5">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="Transfers" Type="Self.Transfers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Transfers">
+              <PropertyRef Name="AccountFromID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transfers__Accou__398D8EEE">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="Transfers" Type="Self.Transfers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Transfers">
+              <PropertyRef Name="AccountToID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Debts__UserID__440B1D61">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Debts" Type="Self.Debts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Debts">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DebtsTran__DebtI__46E78A0C">
+          <End Role="Debts" Type="Self.Debts" Multiplicity="0..1" />
+          <End Role="DebtsTransactions" Type="Self.DebtsTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debts">
+              <PropertyRef Name="DebtID" />
+            </Principal>
+            <Dependent Role="DebtsTransactions">
+              <PropertyRef Name="DebtID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DebtsTran__UserI__47DBAE45">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="DebtsTransactions" Type="Self.DebtsTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="DebtsTransactions">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ExpensesC__UserI__29572725">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="ExpensesCategories" Type="Self.ExpensesCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="ExpensesCategories">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ExpensesT__Expen__35BCFE0A">
+          <End Role="ExpensesCategories" Type="Self.ExpensesCategories" Multiplicity="0..1" />
+          <End Role="ExpensesTransactions" Type="Self.ExpensesTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExpensesCategories">
+              <PropertyRef Name="ExpenseCategoryID" />
+            </Principal>
+            <Dependent Role="ExpensesTransactions">
+              <PropertyRef Name="ExpenseCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RegularEx__Expen__3D5E1FD2">
+          <End Role="ExpensesCategories" Type="Self.ExpensesCategories" Multiplicity="0..1" />
+          <End Role="RegularExpenses" Type="Self.RegularExpenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExpensesCategories">
+              <PropertyRef Name="ExpenseCategoryID" />
+            </Principal>
+            <Dependent Role="RegularExpenses">
+              <PropertyRef Name="ExpenseCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ExpensesT__UserI__33D4B598">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="ExpensesTransactions" Type="Self.ExpensesTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="ExpensesTransactions">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__IncomeCat__UserI__2C3393D0">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="IncomeCategories" Type="Self.IncomeCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="IncomeCategories">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__IncomeTra__Incom__30F848ED">
+          <End Role="IncomeCategories" Type="Self.IncomeCategories" Multiplicity="0..1" />
+          <End Role="IncomeTransactions" Type="Self.IncomeTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IncomeCategories">
+              <PropertyRef Name="IncomeCategoryID" />
+            </Principal>
+            <Dependent Role="IncomeTransactions">
+              <PropertyRef Name="IncomeCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__IncomeTra__UserI__2F10007B">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="IncomeTransactions" Type="Self.IncomeTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="IncomeTransactions">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RegularEx__UserI__3C69FB99">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="RegularExpenses" Type="Self.RegularExpenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="RegularExpenses">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reminders__UserI__403A8C7D">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Reminders" Type="Self.Reminders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Reminders">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FinanceControl_DB_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Accounts" />
+          <EntitySet Name="Debts" EntityType="Self.Debts" />
+          <EntitySet Name="DebtsTransactions" EntityType="Self.DebtsTransactions" />
+          <EntitySet Name="ExpensesCategories" EntityType="Self.ExpensesCategories" />
+          <EntitySet Name="ExpensesTransactions" EntityType="Self.ExpensesTransactions" />
+          <EntitySet Name="IncomeCategories" EntityType="Self.IncomeCategories" />
+          <EntitySet Name="IncomeTransactions" EntityType="Self.IncomeTransactions" />
+          <EntitySet Name="RegularExpenses" EntityType="Self.RegularExpenses" />
+          <EntitySet Name="Reminders" EntityType="Self.Reminders" />
+          <EntitySet Name="Transfers" EntityType="Self.Transfers" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK__Accounts__UserID__267ABA7A" Association="Self.FK__Accounts__UserID__267ABA7A">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DebtsTran__Accou__48CFD27E" Association="Self.FK__DebtsTran__Accou__48CFD27E">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="DebtsTransactions" EntitySet="DebtsTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ExpensesT__Accou__34C8D9D1" Association="Self.FK__ExpensesT__Accou__34C8D9D1">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="ExpensesTransactions" EntitySet="ExpensesTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__IncomeTra__Accou__300424B4" Association="Self.FK__IncomeTra__Accou__300424B4">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="IncomeTransactions" EntitySet="IncomeTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transfers__Accou__38996AB5" Association="Self.FK__Transfers__Accou__38996AB5">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Transfers" EntitySet="Transfers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transfers__Accou__398D8EEE" Association="Self.FK__Transfers__Accou__398D8EEE">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Transfers" EntitySet="Transfers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Debts__UserID__440B1D61" Association="Self.FK__Debts__UserID__440B1D61">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Debts" EntitySet="Debts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DebtsTran__DebtI__46E78A0C" Association="Self.FK__DebtsTran__DebtI__46E78A0C">
+            <End Role="Debts" EntitySet="Debts" />
+            <End Role="DebtsTransactions" EntitySet="DebtsTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DebtsTran__UserI__47DBAE45" Association="Self.FK__DebtsTran__UserI__47DBAE45">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="DebtsTransactions" EntitySet="DebtsTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ExpensesC__UserI__29572725" Association="Self.FK__ExpensesC__UserI__29572725">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ExpensesCategories" EntitySet="ExpensesCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ExpensesT__Expen__35BCFE0A" Association="Self.FK__ExpensesT__Expen__35BCFE0A">
+            <End Role="ExpensesCategories" EntitySet="ExpensesCategories" />
+            <End Role="ExpensesTransactions" EntitySet="ExpensesTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RegularEx__Expen__3D5E1FD2" Association="Self.FK__RegularEx__Expen__3D5E1FD2">
+            <End Role="ExpensesCategories" EntitySet="ExpensesCategories" />
+            <End Role="RegularExpenses" EntitySet="RegularExpenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ExpensesT__UserI__33D4B598" Association="Self.FK__ExpensesT__UserI__33D4B598">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ExpensesTransactions" EntitySet="ExpensesTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__IncomeCat__UserI__2C3393D0" Association="Self.FK__IncomeCat__UserI__2C3393D0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="IncomeCategories" EntitySet="IncomeCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__IncomeTra__Incom__30F848ED" Association="Self.FK__IncomeTra__Incom__30F848ED">
+            <End Role="IncomeCategories" EntitySet="IncomeCategories" />
+            <End Role="IncomeTransactions" EntitySet="IncomeTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__IncomeTra__UserI__2F10007B" Association="Self.FK__IncomeTra__UserI__2F10007B">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="IncomeTransactions" EntitySet="IncomeTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RegularEx__UserI__3C69FB99" Association="Self.FK__RegularEx__UserI__3C69FB99">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="RegularExpenses" EntitySet="RegularExpenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reminders__UserI__403A8C7D" Association="Self.FK__Reminders__UserI__403A8C7D">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Reminders" EntitySet="Reminders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище FinanceControl_DB_ModelContainer" CdmEntityContainer="FinanceControl_DB_Entities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="FinanceControl_DB_Model.Accounts">
+              <MappingFragment StoreEntitySet="Accounts">
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Debts">
+            <EntityTypeMapping TypeName="FinanceControl_DB_Model.Debts">
+              <MappingFragment StoreEntitySet="Debts">
+                <ScalarProperty Name="DebtID" ColumnName="DebtID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="ToWho" ColumnName="ToWho" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DebtsTransactions">
+            <EntityTypeMapping TypeName="FinanceControl_DB_Model.DebtsTransactions">
+              <MappingFragment StoreEntitySet="DebtsTransactions">
+                <ScalarProperty Name="DebtTransactionID" ColumnName="DebtTransactionID" />
+                <ScalarProperty Name="DebtID" ColumnName="DebtID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExpensesCategories">
+            <EntityTypeMapping TypeName="FinanceControl_DB_Model.ExpensesCategories">
+              <MappingFragment StoreEntitySet="ExpensesCategories">
+                <ScalarProperty Name="ExpenseCategoryID" ColumnName="ExpenseCategoryID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExpensesTransactions">
+            <EntityTypeMapping TypeName="FinanceControl_DB_Model.ExpensesTransactions">
+              <MappingFragment StoreEntitySet="ExpensesTransactions">
+                <ScalarProperty Name="ExpenseTransactionID" ColumnName="ExpenseTransactionID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="ExpenseCategoryID" ColumnName="ExpenseCategoryID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IncomeCategories">
+            <EntityTypeMapping TypeName="FinanceControl_DB_Model.IncomeCategories">
+              <MappingFragment StoreEntitySet="IncomeCategories">
+                <ScalarProperty Name="IncomeCategoryID" ColumnName="IncomeCategoryID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IncomeTransactions">
+            <EntityTypeMapping TypeName="FinanceControl_DB_Model.IncomeTransactions">
+              <MappingFragment StoreEntitySet="IncomeTransactions">
+                <ScalarProperty Name="IncomeTransactionID" ColumnName="IncomeTransactionID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="IncomeCategoryID" ColumnName="IncomeCategoryID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RegularExpenses">
+            <EntityTypeMapping TypeName="FinanceControl_DB_Model.RegularExpenses">
+              <MappingFragment StoreEntitySet="RegularExpenses">
+                <ScalarProperty Name="RegularExpenseID" ColumnName="RegularExpenseID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ExpenseCategoryID" ColumnName="ExpenseCategoryID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reminders">
+            <EntityTypeMapping TypeName="FinanceControl_DB_Model.Reminders">
+              <MappingFragment StoreEntitySet="Reminders">
+                <ScalarProperty Name="ReminderID" ColumnName="ReminderID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ReminderDate" ColumnName="ReminderDate" />
+                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transfers">
+            <EntityTypeMapping TypeName="FinanceControl_DB_Model.Transfers">
+              <MappingFragment StoreEntitySet="Transfers">
+                <ScalarProperty Name="TransferID" ColumnName="TransferID" />
+                <ScalarProperty Name="AccountFromID" ColumnName="AccountFromID" />
+                <ScalarProperty Name="AccountToID" ColumnName="AccountToID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TransferDate" ColumnName="TransferDate" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="FinanceControl_DB_Model.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserLogin" ColumnName="UserLogin" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
