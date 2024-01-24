@@ -22,7 +22,7 @@
           <Property Name="UserID" Type="int" />
           <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="ToWho" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DebtStatus" Type="bit" Nullable="false" />
           <Property Name="Comment" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="DebtsTransactions">
@@ -55,6 +55,27 @@
           <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TransactionDate" Type="date" Nullable="false" />
           <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Goals">
+          <Key>
+            <PropertyRef Name="GoalID" />
+          </Key>
+          <Property Name="GoalID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ammount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="GoalStatus" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GoalsTransactions">
+          <Key>
+            <PropertyRef Name="GoalTransactionID" />
+          </Key>
+          <Property Name="GoalTransactionID" Type="int" Nullable="false" />
+          <Property Name="GoalID" Type="int" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="AccountID" Type="int" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TransactionDate" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="IncomeCategories">
           <Key>
@@ -93,7 +114,7 @@
           </Key>
           <Property Name="ReminderID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" />
-          <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ReminderDescription" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="ReminderDate" Type="date" Nullable="false" />
           <Property Name="IsCompleted" Type="bit" Nullable="false" />
         </EntityType>
@@ -141,7 +162,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DebtsTran__Accou__48CFD27E">
+        <Association Name="FK__DebtsTran__Accou__49C3F6B7">
           <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
           <End Role="DebtsTransactions" Type="Self.DebtsTransactions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -153,7 +174,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DebtsTran__DebtI__46E78A0C">
+        <Association Name="FK__DebtsTran__DebtI__47DBAE45">
           <End Role="Debts" Type="Self.Debts" Multiplicity="0..1" />
           <End Role="DebtsTransactions" Type="Self.DebtsTransactions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -165,7 +186,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DebtsTran__UserI__47DBAE45">
+        <Association Name="FK__DebtsTran__UserI__48CFD27E">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="DebtsTransactions" Type="Self.DebtsTransactions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -221,6 +242,54 @@
               <PropertyRef Name="UserID" />
             </Principal>
             <Dependent Role="ExpensesTransactions">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Goals__UserID__4CA06362">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Goals" Type="Self.Goals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Goals">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__GoalsTran__Accou__52593CB8">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="GoalsTransactions" Type="Self.GoalsTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="GoalsTransactions">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__GoalsTran__GoalI__5070F446">
+          <End Role="Goals" Type="Self.Goals" Multiplicity="0..1" />
+          <End Role="GoalsTransactions" Type="Self.GoalsTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Goals">
+              <PropertyRef Name="GoalID" />
+            </Principal>
+            <Dependent Role="GoalsTransactions">
+              <PropertyRef Name="GoalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__GoalsTran__UserI__5165187F">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="GoalsTransactions" Type="Self.GoalsTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="GoalsTransactions">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -339,6 +408,8 @@
           <EntitySet Name="DebtsTransactions" EntityType="Self.DebtsTransactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExpensesCategories" EntityType="Self.ExpensesCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExpensesTransactions" EntityType="Self.ExpensesTransactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Goals" EntityType="Self.Goals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GoalsTransactions" EntityType="Self.GoalsTransactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IncomeCategories" EntityType="Self.IncomeCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IncomeTransactions" EntityType="Self.IncomeTransactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RegularExpenses" EntityType="Self.RegularExpenses" Schema="dbo" store:Type="Tables" />
@@ -353,15 +424,15 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Debts" EntitySet="Debts" />
           </AssociationSet>
-          <AssociationSet Name="FK__DebtsTran__Accou__48CFD27E" Association="Self.FK__DebtsTran__Accou__48CFD27E">
+          <AssociationSet Name="FK__DebtsTran__Accou__49C3F6B7" Association="Self.FK__DebtsTran__Accou__49C3F6B7">
             <End Role="Accounts" EntitySet="Accounts" />
             <End Role="DebtsTransactions" EntitySet="DebtsTransactions" />
           </AssociationSet>
-          <AssociationSet Name="FK__DebtsTran__DebtI__46E78A0C" Association="Self.FK__DebtsTran__DebtI__46E78A0C">
+          <AssociationSet Name="FK__DebtsTran__DebtI__47DBAE45" Association="Self.FK__DebtsTran__DebtI__47DBAE45">
             <End Role="Debts" EntitySet="Debts" />
             <End Role="DebtsTransactions" EntitySet="DebtsTransactions" />
           </AssociationSet>
-          <AssociationSet Name="FK__DebtsTran__UserI__47DBAE45" Association="Self.FK__DebtsTran__UserI__47DBAE45">
+          <AssociationSet Name="FK__DebtsTran__UserI__48CFD27E" Association="Self.FK__DebtsTran__UserI__48CFD27E">
             <End Role="Users" EntitySet="Users" />
             <End Role="DebtsTransactions" EntitySet="DebtsTransactions" />
           </AssociationSet>
@@ -380,6 +451,22 @@
           <AssociationSet Name="FK__ExpensesT__UserI__33D4B598" Association="Self.FK__ExpensesT__UserI__33D4B598">
             <End Role="Users" EntitySet="Users" />
             <End Role="ExpensesTransactions" EntitySet="ExpensesTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Goals__UserID__4CA06362" Association="Self.FK__Goals__UserID__4CA06362">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Goals" EntitySet="Goals" />
+          </AssociationSet>
+          <AssociationSet Name="FK__GoalsTran__Accou__52593CB8" Association="Self.FK__GoalsTran__Accou__52593CB8">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="GoalsTransactions" EntitySet="GoalsTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__GoalsTran__GoalI__5070F446" Association="Self.FK__GoalsTran__GoalI__5070F446">
+            <End Role="Goals" EntitySet="Goals" />
+            <End Role="GoalsTransactions" EntitySet="GoalsTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__GoalsTran__UserI__5165187F" Association="Self.FK__GoalsTran__UserI__5165187F">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="GoalsTransactions" EntitySet="GoalsTransactions" />
           </AssociationSet>
           <AssociationSet Name="FK__IncomeCat__UserI__2C3393D0" Association="Self.FK__IncomeCat__UserI__2C3393D0">
             <End Role="Users" EntitySet="Users" />
@@ -432,8 +519,9 @@
           <Property Name="Balance" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="UserID" Type="Int32" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Accounts__UserID__267ABA7A" FromRole="Accounts" ToRole="Users" />
-          <NavigationProperty Name="DebtsTransactions" Relationship="Self.FK__DebtsTran__Accou__48CFD27E" FromRole="Accounts" ToRole="DebtsTransactions" />
+          <NavigationProperty Name="DebtsTransactions" Relationship="Self.FK__DebtsTran__Accou__49C3F6B7" FromRole="Accounts" ToRole="DebtsTransactions" />
           <NavigationProperty Name="ExpensesTransactions" Relationship="Self.FK__ExpensesT__Accou__34C8D9D1" FromRole="Accounts" ToRole="ExpensesTransactions" />
+          <NavigationProperty Name="GoalsTransactions" Relationship="Self.FK__GoalsTran__Accou__52593CB8" FromRole="Accounts" ToRole="GoalsTransactions" />
           <NavigationProperty Name="IncomeTransactions" Relationship="Self.FK__IncomeTra__Accou__300424B4" FromRole="Accounts" ToRole="IncomeTransactions" />
           <NavigationProperty Name="Transfers" Relationship="Self.FK__Transfers__Accou__38996AB5" FromRole="Accounts" ToRole="Transfers" />
           <NavigationProperty Name="Transfers1" Relationship="Self.FK__Transfers__Accou__398D8EEE" FromRole="Accounts" ToRole="Transfers" />
@@ -446,10 +534,10 @@
           <Property Name="UserID" Type="Int32" />
           <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="ToWho" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DebtStatus" Type="Boolean" Nullable="false" />
           <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Debts__UserID__440B1D61" FromRole="Debts" ToRole="Users" />
-          <NavigationProperty Name="DebtsTransactions" Relationship="Self.FK__DebtsTran__DebtI__46E78A0C" FromRole="Debts" ToRole="DebtsTransactions" />
+          <NavigationProperty Name="DebtsTransactions" Relationship="Self.FK__DebtsTran__DebtI__47DBAE45" FromRole="Debts" ToRole="DebtsTransactions" />
         </EntityType>
         <EntityType Name="DebtsTransactions">
           <Key>
@@ -461,9 +549,9 @@
           <Property Name="AccountID" Type="Int32" />
           <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Accounts" Relationship="Self.FK__DebtsTran__Accou__48CFD27E" FromRole="DebtsTransactions" ToRole="Accounts" />
-          <NavigationProperty Name="Debts" Relationship="Self.FK__DebtsTran__DebtI__46E78A0C" FromRole="DebtsTransactions" ToRole="Debts" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__DebtsTran__UserI__47DBAE45" FromRole="DebtsTransactions" ToRole="Users" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK__DebtsTran__Accou__49C3F6B7" FromRole="DebtsTransactions" ToRole="Accounts" />
+          <NavigationProperty Name="Debts" Relationship="Self.FK__DebtsTran__DebtI__47DBAE45" FromRole="DebtsTransactions" ToRole="Debts" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__DebtsTran__UserI__48CFD27E" FromRole="DebtsTransactions" ToRole="Users" />
         </EntityType>
         <EntityType Name="ExpensesCategories">
           <Key>
@@ -490,6 +578,32 @@
           <NavigationProperty Name="Accounts" Relationship="Self.FK__ExpensesT__Accou__34C8D9D1" FromRole="ExpensesTransactions" ToRole="Accounts" />
           <NavigationProperty Name="ExpensesCategories" Relationship="Self.FK__ExpensesT__Expen__35BCFE0A" FromRole="ExpensesTransactions" ToRole="ExpensesCategories" />
           <NavigationProperty Name="Users" Relationship="Self.FK__ExpensesT__UserI__33D4B598" FromRole="ExpensesTransactions" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Goals">
+          <Key>
+            <PropertyRef Name="GoalID" />
+          </Key>
+          <Property Name="GoalID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ammount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="GoalStatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Goals__UserID__4CA06362" FromRole="Goals" ToRole="Users" />
+          <NavigationProperty Name="GoalsTransactions" Relationship="Self.FK__GoalsTran__GoalI__5070F446" FromRole="Goals" ToRole="GoalsTransactions" />
+        </EntityType>
+        <EntityType Name="GoalsTransactions">
+          <Key>
+            <PropertyRef Name="GoalTransactionID" />
+          </Key>
+          <Property Name="GoalTransactionID" Type="Int32" Nullable="false" />
+          <Property Name="GoalID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="AccountID" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK__GoalsTran__Accou__52593CB8" FromRole="GoalsTransactions" ToRole="Accounts" />
+          <NavigationProperty Name="Goals" Relationship="Self.FK__GoalsTran__GoalI__5070F446" FromRole="GoalsTransactions" ToRole="Goals" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__GoalsTran__UserI__5165187F" FromRole="GoalsTransactions" ToRole="Users" />
         </EntityType>
         <EntityType Name="IncomeCategories">
           <Key>
@@ -535,7 +649,7 @@
           </Key>
           <Property Name="ReminderID" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReminderDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ReminderDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Reminders__UserI__403A8C7D" FromRole="Reminders" ToRole="Users" />
@@ -563,9 +677,11 @@
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Accounts" Relationship="Self.FK__Accounts__UserID__267ABA7A" FromRole="Users" ToRole="Accounts" />
           <NavigationProperty Name="Debts" Relationship="Self.FK__Debts__UserID__440B1D61" FromRole="Users" ToRole="Debts" />
-          <NavigationProperty Name="DebtsTransactions" Relationship="Self.FK__DebtsTran__UserI__47DBAE45" FromRole="Users" ToRole="DebtsTransactions" />
+          <NavigationProperty Name="DebtsTransactions" Relationship="Self.FK__DebtsTran__UserI__48CFD27E" FromRole="Users" ToRole="DebtsTransactions" />
           <NavigationProperty Name="ExpensesCategories" Relationship="Self.FK__ExpensesC__UserI__29572725" FromRole="Users" ToRole="ExpensesCategories" />
           <NavigationProperty Name="ExpensesTransactions" Relationship="Self.FK__ExpensesT__UserI__33D4B598" FromRole="Users" ToRole="ExpensesTransactions" />
+          <NavigationProperty Name="Goals" Relationship="Self.FK__Goals__UserID__4CA06362" FromRole="Users" ToRole="Goals" />
+          <NavigationProperty Name="GoalsTransactions" Relationship="Self.FK__GoalsTran__UserI__5165187F" FromRole="Users" ToRole="GoalsTransactions" />
           <NavigationProperty Name="IncomeCategories" Relationship="Self.FK__IncomeCat__UserI__2C3393D0" FromRole="Users" ToRole="IncomeCategories" />
           <NavigationProperty Name="IncomeTransactions" Relationship="Self.FK__IncomeTra__UserI__2F10007B" FromRole="Users" ToRole="IncomeTransactions" />
           <NavigationProperty Name="RegularExpenses" Relationship="Self.FK__RegularEx__UserI__3C69FB99" FromRole="Users" ToRole="RegularExpenses" />
@@ -583,7 +699,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DebtsTran__Accou__48CFD27E">
+        <Association Name="FK__DebtsTran__Accou__49C3F6B7">
           <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
           <End Role="DebtsTransactions" Type="Self.DebtsTransactions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -603,6 +719,18 @@
               <PropertyRef Name="AccountID" />
             </Principal>
             <Dependent Role="ExpensesTransactions">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__GoalsTran__Accou__52593CB8">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="GoalsTransactions" Type="Self.GoalsTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="GoalsTransactions">
               <PropertyRef Name="AccountID" />
             </Dependent>
           </ReferentialConstraint>
@@ -655,7 +783,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DebtsTran__DebtI__46E78A0C">
+        <Association Name="FK__DebtsTran__DebtI__47DBAE45">
           <End Role="Debts" Type="Self.Debts" Multiplicity="0..1" />
           <End Role="DebtsTransactions" Type="Self.DebtsTransactions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -667,7 +795,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DebtsTran__UserI__47DBAE45">
+        <Association Name="FK__DebtsTran__UserI__48CFD27E">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="DebtsTransactions" Type="Self.DebtsTransactions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -723,6 +851,42 @@
               <PropertyRef Name="UserID" />
             </Principal>
             <Dependent Role="ExpensesTransactions">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Goals__UserID__4CA06362">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Goals" Type="Self.Goals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Goals">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__GoalsTran__GoalI__5070F446">
+          <End Role="Goals" Type="Self.Goals" Multiplicity="0..1" />
+          <End Role="GoalsTransactions" Type="Self.GoalsTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Goals">
+              <PropertyRef Name="GoalID" />
+            </Principal>
+            <Dependent Role="GoalsTransactions">
+              <PropertyRef Name="GoalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__GoalsTran__UserI__5165187F">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="GoalsTransactions" Type="Self.GoalsTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="GoalsTransactions">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -793,6 +957,8 @@
           <EntitySet Name="DebtsTransactions" EntityType="Self.DebtsTransactions" />
           <EntitySet Name="ExpensesCategories" EntityType="Self.ExpensesCategories" />
           <EntitySet Name="ExpensesTransactions" EntityType="Self.ExpensesTransactions" />
+          <EntitySet Name="Goals" EntityType="Self.Goals" />
+          <EntitySet Name="GoalsTransactions" EntityType="Self.GoalsTransactions" />
           <EntitySet Name="IncomeCategories" EntityType="Self.IncomeCategories" />
           <EntitySet Name="IncomeTransactions" EntityType="Self.IncomeTransactions" />
           <EntitySet Name="RegularExpenses" EntityType="Self.RegularExpenses" />
@@ -803,13 +969,17 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Accounts" EntitySet="Accounts" />
           </AssociationSet>
-          <AssociationSet Name="FK__DebtsTran__Accou__48CFD27E" Association="Self.FK__DebtsTran__Accou__48CFD27E">
+          <AssociationSet Name="FK__DebtsTran__Accou__49C3F6B7" Association="Self.FK__DebtsTran__Accou__49C3F6B7">
             <End Role="Accounts" EntitySet="Accounts" />
             <End Role="DebtsTransactions" EntitySet="DebtsTransactions" />
           </AssociationSet>
           <AssociationSet Name="FK__ExpensesT__Accou__34C8D9D1" Association="Self.FK__ExpensesT__Accou__34C8D9D1">
             <End Role="Accounts" EntitySet="Accounts" />
             <End Role="ExpensesTransactions" EntitySet="ExpensesTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__GoalsTran__Accou__52593CB8" Association="Self.FK__GoalsTran__Accou__52593CB8">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="GoalsTransactions" EntitySet="GoalsTransactions" />
           </AssociationSet>
           <AssociationSet Name="FK__IncomeTra__Accou__300424B4" Association="Self.FK__IncomeTra__Accou__300424B4">
             <End Role="Accounts" EntitySet="Accounts" />
@@ -827,11 +997,11 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Debts" EntitySet="Debts" />
           </AssociationSet>
-          <AssociationSet Name="FK__DebtsTran__DebtI__46E78A0C" Association="Self.FK__DebtsTran__DebtI__46E78A0C">
+          <AssociationSet Name="FK__DebtsTran__DebtI__47DBAE45" Association="Self.FK__DebtsTran__DebtI__47DBAE45">
             <End Role="Debts" EntitySet="Debts" />
             <End Role="DebtsTransactions" EntitySet="DebtsTransactions" />
           </AssociationSet>
-          <AssociationSet Name="FK__DebtsTran__UserI__47DBAE45" Association="Self.FK__DebtsTran__UserI__47DBAE45">
+          <AssociationSet Name="FK__DebtsTran__UserI__48CFD27E" Association="Self.FK__DebtsTran__UserI__48CFD27E">
             <End Role="Users" EntitySet="Users" />
             <End Role="DebtsTransactions" EntitySet="DebtsTransactions" />
           </AssociationSet>
@@ -850,6 +1020,18 @@
           <AssociationSet Name="FK__ExpensesT__UserI__33D4B598" Association="Self.FK__ExpensesT__UserI__33D4B598">
             <End Role="Users" EntitySet="Users" />
             <End Role="ExpensesTransactions" EntitySet="ExpensesTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Goals__UserID__4CA06362" Association="Self.FK__Goals__UserID__4CA06362">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Goals" EntitySet="Goals" />
+          </AssociationSet>
+          <AssociationSet Name="FK__GoalsTran__GoalI__5070F446" Association="Self.FK__GoalsTran__GoalI__5070F446">
+            <End Role="Goals" EntitySet="Goals" />
+            <End Role="GoalsTransactions" EntitySet="GoalsTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__GoalsTran__UserI__5165187F" Association="Self.FK__GoalsTran__UserI__5165187F">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="GoalsTransactions" EntitySet="GoalsTransactions" />
           </AssociationSet>
           <AssociationSet Name="FK__IncomeCat__UserI__2C3393D0" Association="Self.FK__IncomeCat__UserI__2C3393D0">
             <End Role="Users" EntitySet="Users" />
@@ -895,7 +1077,7 @@
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="ToWho" ColumnName="ToWho" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DebtStatus" ColumnName="DebtStatus" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -931,6 +1113,29 @@
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Goals">
+            <EntityTypeMapping TypeName="FinanceControl_DB_Model.Goals">
+              <MappingFragment StoreEntitySet="Goals">
+                <ScalarProperty Name="GoalID" ColumnName="GoalID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Ammount" ColumnName="Ammount" />
+                <ScalarProperty Name="GoalStatus" ColumnName="GoalStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GoalsTransactions">
+            <EntityTypeMapping TypeName="FinanceControl_DB_Model.GoalsTransactions">
+              <MappingFragment StoreEntitySet="GoalsTransactions">
+                <ScalarProperty Name="GoalTransactionID" ColumnName="GoalTransactionID" />
+                <ScalarProperty Name="GoalID" ColumnName="GoalID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -973,7 +1178,7 @@
               <MappingFragment StoreEntitySet="Reminders">
                 <ScalarProperty Name="ReminderID" ColumnName="ReminderID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ReminderDescription" ColumnName="ReminderDescription" />
                 <ScalarProperty Name="ReminderDate" ColumnName="ReminderDate" />
                 <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
               </MappingFragment>

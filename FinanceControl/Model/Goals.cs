@@ -12,23 +12,22 @@ namespace FinanceControl.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Debts
+    public partial class Goals
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Debts()
+        public Goals()
         {
-            this.DebtsTransactions = new HashSet<DebtsTransactions>();
+            this.GoalsTransactions = new HashSet<GoalsTransactions>();
         }
     
-        public int DebtID { get; set; }
+        public int GoalID { get; set; }
         public Nullable<int> UserID { get; set; }
-        public decimal Amount { get; set; }
-        public string ToWho { get; set; }
-        public bool DebtStatus { get; set; }
-        public string Comment { get; set; }
+        public string Title { get; set; }
+        public decimal Ammount { get; set; }
+        public bool GoalStatus { get; set; }
     
         public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DebtsTransactions> DebtsTransactions { get; set; }
+        public virtual ICollection<GoalsTransactions> GoalsTransactions { get; set; }
     }
 }

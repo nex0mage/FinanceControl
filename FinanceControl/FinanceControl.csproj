@@ -14,6 +14,7 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,7 +27,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -126,6 +126,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FinanceControl_Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Model\Goals.cs">
+      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GoalsTransactions.cs">
+      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\IncomeCategories.cs">
       <DependentUpon>FinanceControl_Model.tt</DependentUpon>
     </Compile>
@@ -141,6 +147,7 @@
     <Compile Include="Model\Transfers.cs">
       <DependentUpon>FinanceControl_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\UnsecureString.cs" />
     <Compile Include="Model\Users.cs">
       <DependentUpon>FinanceControl_Model.tt</DependentUpon>
     </Compile>
@@ -201,8 +208,21 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Resource Include="Resources\collapse_button.png" />
+    <Resource Include="Resources\exit_button.png" />
+    <Resource Include="Resources\login_box.png" />
+    <Resource Include="Resources\mail_box.png" />
+    <Resource Include="Resources\pass_box.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FinanceControl_DB.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FinanceControl_DB_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>FinanceControl_DB.mdf</DependentUpon>
+    </Content>
     <Content Include="Model\FinanceControl_Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>FinanceControl_Model.edmx</DependentUpon>
@@ -213,11 +233,6 @@
       <DependentUpon>FinanceControl_Model.edmx</DependentUpon>
       <LastGenOutput>FinanceControl_Model.cs</LastGenOutput>
     </Content>
-    <Resource Include="Resources\collapse_button.png" />
-    <Resource Include="Resources\exit_button.png" />
-    <Resource Include="Resources\login_box.png" />
-    <Resource Include="Resources\mail_box.png" />
-    <Resource Include="Resources\pass_box.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

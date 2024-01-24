@@ -4,22 +4,38 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinanceControl.View"
-        xmlns:viewmodel="clr-namespace:FinanceControl.ViewModel" xmlns:customcontrols="clr-namespace:FinanceControl.CustomControls" d:DataContext="{d:DesignInstance Type=viewmodel:LoginViewModel}"
+        xmlns:viewmodel="clr-namespace:FinanceControl.ViewModel"
+        xmlns:customcontrols="clr-namespace:FinanceControl.CustomControls"
+        d:DataContext="{d:DesignInstance Type=viewmodel:LoginViewModel}"
         mc:Ignorable="d"
-        WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent" ResizeMode="NoResize"
-        Title="Вход" Height="500" Width="800" >
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize"
+        Title="Вход"
+        Height="500"
+        Width="800" >
     <Window.DataContext>
-        <viewmodel:LoginViewModel />
+        <viewmodel:LoginViewModel/>
     </Window.DataContext>
 
-    <Border Background="#3D3D3D" CornerRadius="10 10 10 10">
+    <Border Background="#3D3D3D"
+            CornerRadius="10 10 10 10">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="1.5*" />
             </Grid.ColumnDefinitions>
 
-            <Image Source="/Resources/exit_button.png" Grid.Column="1" Panel.ZIndex="1" Style="{StaticResource imgTitlebar}"/>
+            <Image Source="/Resources/exit_button.png"
+                   Grid.Column="1"
+                   Panel.ZIndex="1"
+                   Style="{StaticResource imgTitlebar}">
+                <Image.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding PictureCloseApplication}" />
+                </Image.InputBindings>
+            </Image>
 
             <Border CornerRadius="10 0 0 10">
                 <Border.Background>
@@ -30,44 +46,78 @@
                 </Border.Background>
                 <Grid>
                     <Canvas>
-                        <Polygon Points="0,20 320,140 0,320" Fill="#FF4E6E82"/>
-                        <Ellipse Margin="140 300 0 0" Width="153" Height="153" Fill="#FF4E6E82"/>
+                        <Polygon Points="0,20 320,140 0,320"
+                                 Fill="#FF4E6E82"/>
+                        <Ellipse Margin="140 300 0 0"
+                                 Width="153"
+                                 Height="153"
+                                 Fill="#FF4E6E82"/>
                     </Canvas>
                     <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="Зарегистрироваться"  Style="{StaticResource titleText}" />
-                        <TextBlock Text="Если у вас нет аккаунта, чтобы войти в приложение" Style="{StaticResource normalText}" Opacity="0.8" Margin="20 20"/>
-                        <Button Content="Регистрация" Style="{StaticResource button_left}"/>
+                        <TextBlock Text="Зарегистрироваться"
+                                   Style="{StaticResource titleText}" />
+                        <TextBlock Text="Если у вас нет аккаунта, чтобы войти в приложение"
+                                   Style="{StaticResource normalText}" Opacity="0.8"
+                                   Margin="20 20"/>
+                        <Button Content="Регистрация"
+                                Style="{StaticResource button_left}"/>
                     </StackPanel>
                 </Grid>
             </Border>
 
-            <Border Background="#3D3D3D" Grid.Column="1" CornerRadius="0 10 10 0">
+            <Border Background="#3D3D3D"
+                    Grid.Column="1"
+                    CornerRadius="0 10 10 0">
                 <StackPanel VerticalAlignment="Center">
-                    <TextBlock Text="Войти в приложение" Style="{StaticResource titleText}" Margin="65 92 65 30" FontSize="30"/>
-                    <Border BorderThickness="0 0 0 3" BorderBrush="#FFEFEFEF" Margin="70 0" >
+                    <TextBlock Text="Войти в приложение"
+                               Style="{StaticResource titleText}"
+                               Margin="65 92 65 30"
+                               FontSize="30"/>
+                    <Border BorderThickness="0 0 0 3"
+                            BorderBrush="#FFEFEFEF"
+                            Margin="70 0" >
                         <Grid Margin="0 2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Image Source="/FinanceControl;component/Resources/login_box.png" Height="26" Margin="3 0 0 0"/>
-                            <TextBox x:Name="textLogin" Text="{Binding userLogin}" Style="{StaticResource textBox}" MaxLength="50"/>
+                            <Image Source="/FinanceControl;component/Resources/login_box.png"
+                                   Height="26"
+                                   Margin="3 0 0 0"/>
+                            <TextBox x:Name="textLogin"
+                                     Text="{Binding userLogin, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource textBox}"
+                                     MaxLength="50"/>
                         </Grid>
                     </Border>
 
-                    <Border BorderThickness="0 0 0 3" BorderBrush="#FFEFEFEF" Margin="70 5 70 20" >
-                        <customcontrols:BindablePasswordBox Password="{Binding userPassword}"/>
+                    <Border BorderThickness="0 0 0 3"
+                            BorderBrush="#FFEFEFEF"
+                            Margin="70 5 70 20" >
+                        <customcontrols:BindablePasswordBox Password="{Binding userPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     </Border>
 
-                    <Button Content="Войти" Command="{Binding LoginCommand}" Style="{StaticResource button_right}" Margin="0 8"/>
+                    <Button Content="Войти"
+                            Command="{Binding LoginCommand}"
+                            Style="{StaticResource button_right}"
+                            Margin="0 8"/>
 
-                    <Grid Margin="0 60 0 0" HorizontalAlignment="Center">
+                    <Grid Margin="0 60 0 0"
+                          HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="RecoveryPassText" Style="{StaticResource normalText}" Text="Быть может вы забыли пароль?" HorizontalAlignment="Right"  Margin="0 0 10 0" FontSize="14" VerticalAlignment="Center"/>
-                        <Button Content="Восстановить" Style="{StaticResource button_bottom}" Grid.Column="2" HorizontalAlignment="Left"/>
+                        <TextBlock x:Name="RecoveryPassText"
+                                   Style="{StaticResource normalText}"
+                                   Text="Быть может вы забыли пароль?"
+                                   HorizontalAlignment="Right"
+                                   Margin="0 0 10 0" FontSize="14"
+                                   VerticalAlignment="Center"/>
+                        <Button Content="Восстановить"
+                                Style="{StaticResource button_bottom}"
+                                Grid.Column="2"
+                                HorizontalAlignment="Left"/>
 
                     </Grid>
 

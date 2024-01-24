@@ -16,7 +16,7 @@ namespace FinanceControl.Model
     {
         public int ReminderID { get; set; }
         public Nullable<int> UserID { get; set; }
-        public string Description { get; set; }
+        public string ReminderDescription { get; set; }
         public System.DateTime ReminderDate { get; set; }
         public bool IsCompleted { get; set; }
     

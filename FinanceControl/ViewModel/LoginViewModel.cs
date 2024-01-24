@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows;
 using FinanceControl.Model;
 using System.Security;
+using System.Runtime.InteropServices;
 
 namespace FinanceControl.ViewModel
 {
@@ -18,7 +19,7 @@ namespace FinanceControl.ViewModel
         private SecureString _password;
         private string _errorMessage;
         private bool _isViewVisible;
-        private FinanceControl_DB_Entities _dbContext; // Здесь ваш контекст базы данных
+        private FinanceControl_DB_Entities _dbContext; // Здесь  контекст базы данных
         public event EventHandler<int> LoginSuccess; // Событие для передачи UserID в MainWindowViewModel
 
         //Свойства
@@ -48,6 +49,11 @@ namespace FinanceControl.ViewModel
             }
         }
 
+        private string UnsecuredString_userPassword
+        {
+            get {return userPassword.ToUnsecuredString(); }
+        }
+
         public string ErrorMessage
         {
             get { return _errorMessage; }
@@ -74,13 +80,12 @@ namespace FinanceControl.ViewModel
         public ICommand LoginCommand { get; }
         public ICommand RegisterCommand { get; }
         public ICommand RecoverCommand { get; }
+        public ICommand PictureCloseApplication { get; private set; }
 
-        public LoginViewModel(FinanceControl_DB_Entities dbContext)
+        public LoginViewModel()
         {
-            _dbContext = dbContext;
-
-            // Команда для кнопки входа
             LoginCommand = new ViewModelCommand(Login, CanLogin);
+            PictureCloseApplication = new ViewModelCommand(CloseApp_Click);
         }
 
         // Проверка на пустые поля
@@ -93,47 +98,43 @@ namespace FinanceControl.ViewModel
                 validData = true;
             return validData;
 
-            //    var user = _dbContext.Users.FirstOrDefault(u => u.UserLogin == userLogin && u.UserPassword == userPassword);
 
-            //    if (user != null)
-            //    {
-            //        // Успешная аутентификация
-            //        MessageBox.Show("Вход выполнен успешно!");
+        }
 
-            //        // Вызываем событие и передаем UserID в MainWindowViewModel
-            //        LoginSuccess?.Invoke(this, user.UserID);
-            //    }
-            //    else
-            //    {
-            //        // Неправильный логин или пароль, выводим MessageBox
-            //        MessageBox.Show("Неверный логин или пароль");
-            //    }
+        private void CloseApp_Click(object parameter)
+        {
+            Application.Current.MainWindow.Close();
 
         }
 
         private void Login(object parameter)
+
         {
+            Console.WriteLine("Login method called");
+            _dbContext = new FinanceControl_DB_Entities();
+            var user = _dbContext.Users.FirstOrDefault(u => u.UserLogin == userLogin && u.UserPassword == UnsecuredString_userPassword);
+            if (user != null)
+            {
+                // Успешная аутентификация
+                MessageBox.Show("Вход выполнен успешно!");
+
+                // Вызываем событие и передаем UserID в MainWindowViewModel
+                LoginSuccess?.Invoke(this, user.UserID);
+            }
+            else
+            {
+                // Неправильный логин или пароль, выводим MessageBox
+                MessageBox.Show("Неверный логин или пароль");
+            }
+
             // Реализуйте вашу логику аутентификации
         }
 
-        // Метод для преобразования SecureString в string
-        private string SecureStringToString(SecureString secureString)
-        {
-            IntPtr ptr = System.Runtime.InteropServices.Marshal.SecureStringToBSTR(secureString);
-            try
-            {
-                return System.Runtime.InteropServices.Marshal.PtrToStringBSTR(ptr);
-            }
-            finally
-            {
-                System.Runtime.InteropServices.Marshal.ZeroFreeBSTR(ptr);
-            }
-        }
 
-        public LoginViewModel()
-        {
-            // Инициализация вашей ViewModel
-        }
+
+
+
     }
+
 
 }

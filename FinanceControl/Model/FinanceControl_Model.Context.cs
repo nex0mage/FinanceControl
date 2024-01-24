@@ -30,6 +30,8 @@ namespace FinanceControl.Model
         public virtual DbSet<DebtsTransactions> DebtsTransactions { get; set; }
         public virtual DbSet<ExpensesCategories> ExpensesCategories { get; set; }
         public virtual DbSet<ExpensesTransactions> ExpensesTransactions { get; set; }
+        public virtual DbSet<Goals> Goals { get; set; }
+        public virtual DbSet<GoalsTransactions> GoalsTransactions { get; set; }
         public virtual DbSet<IncomeCategories> IncomeCategories { get; set; }
         public virtual DbSet<IncomeTransactions> IncomeTransactions { get; set; }
         public virtual DbSet<RegularExpenses> RegularExpenses { get; set; }

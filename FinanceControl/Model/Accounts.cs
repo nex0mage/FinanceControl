@@ -19,6 +19,7 @@ namespace FinanceControl.Model
         {
             this.DebtsTransactions = new HashSet<DebtsTransactions>();
             this.ExpensesTransactions = new HashSet<ExpensesTransactions>();
+            this.GoalsTransactions = new HashSet<GoalsTransactions>();
             this.IncomeTransactions = new HashSet<IncomeTransactions>();
             this.Transfers = new HashSet<Transfers>();
             this.Transfers1 = new HashSet<Transfers>();
@@ -34,6 +35,8 @@ namespace FinanceControl.Model
         public virtual ICollection<DebtsTransactions> DebtsTransactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExpensesTransactions> ExpensesTransactions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoalsTransactions> GoalsTransactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IncomeTransactions> IncomeTransactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
