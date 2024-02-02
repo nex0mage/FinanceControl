@@ -81,6 +81,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\DataWorker.cs" />
+    <Compile Include="ViewModel\MainWindow\MainWIndowViewModel.cs" />
+    <Compile Include="ViewModel\RecoveryViewModel.cs" />
+    <Compile Include="ViewModel\RegisterViewModel.cs" />
+    <Compile Include="View\MainWindow\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RecoveryView.xaml.cs">
+      <DependentUpon>RecoveryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RegisterView.xaml.cs">
+      <DependentUpon>RegisterView.xaml</DependentUpon>
+    </Compile>
     <Page Include="CustomControls\BindablePasswordBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -158,6 +171,18 @@
       <DependentUpon>LoginView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\MainWindow\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RecoveryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RegisterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -233,6 +258,10 @@
       <DependentUpon>FinanceControl_Model.edmx</DependentUpon>
       <LastGenOutput>FinanceControl_Model.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\MainWindow\WindowPages\" />
+    <Folder Include="View\MainWindow\WindowPages\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

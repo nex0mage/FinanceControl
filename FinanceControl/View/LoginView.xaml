@@ -16,6 +16,7 @@
         Title="Вход"
         Height="500"
         Width="800" >
+    
     <Window.DataContext>
         <viewmodel:LoginViewModel/>
     </Window.DataContext>
@@ -60,6 +61,7 @@
                                    Style="{StaticResource normalText}" Opacity="0.8"
                                    Margin="20 20"/>
                         <Button Content="Регистрация"
+                                Command="{Binding RegistrationCommand}"
                                 Style="{StaticResource button_left}"/>
                     </StackPanel>
                 </Grid>
@@ -94,7 +96,8 @@
                     <Border BorderThickness="0 0 0 3"
                             BorderBrush="#FFEFEFEF"
                             Margin="70 5 70 20" >
-                        <customcontrols:BindablePasswordBox Password="{Binding userPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <customcontrols:BindablePasswordBox
+                            Password="{Binding userPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     </Border>
 
                     <Button Content="Войти"
@@ -115,6 +118,7 @@
                                    Margin="0 0 10 0" FontSize="14"
                                    VerticalAlignment="Center"/>
                         <Button Content="Восстановить"
+                                Command="{Binding RecoverCommand}"
                                 Style="{StaticResource button_bottom}"
                                 Grid.Column="2"
                                 HorizontalAlignment="Left"/>

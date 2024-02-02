@@ -45,6 +45,11 @@
                     <Setter Property="Foreground" Value="#D7D7D7"/>
 
                 </Trigger>
+                <Trigger Property="IsEnabled" Value="True">
+                    <Setter Property="Cursor" Value="{x:Static Cursors.Hand}" />
+                </Trigger>
+                <!-- Триггер для неактивной кнопки -->
+
 
             </Style.Triggers>
 
@@ -70,6 +75,11 @@
             <Setter Property="Foreground" Value="#FFEFEFEF"/>
             <Setter Property="Background" Value="#3D3D3D"/>
             <Setter Property="BorderThickness" Value="1"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="{x:Static Cursors.IBeam}"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
 
@@ -99,6 +109,13 @@
                     <Setter Property="Foreground" Value="#D7D7D7"/>
 
                 </Trigger>
+                <Trigger Property="IsEnabled" Value="True">
+                    <Setter Property="Cursor" Value="{x:Static Cursors.Hand}" />
+                </Trigger>
+                <!-- Триггер для неактивной кнопки -->
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Cursor" Value="{x:Static Cursors.Arrow}" />
+                </Trigger>
 
             </Style.Triggers>
 
@@ -127,37 +144,12 @@
                     <Setter Property="Foreground" Value="#D7D7D7"/>
 
                 </Trigger>
-
-
-
-            </Style.Triggers>
-
-        </Style>
-
-
-        <Style x:Key="error_ok_button" TargetType="Button">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#FFEFEFEF"/>
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="2" BorderBrush="#FFEFEFEF" Padding="0">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#FFEFEFEF"/>
-                    <Setter Property="Foreground" Value="DimGray"/>
+                <Trigger Property="IsEnabled" Value="True">
+                    <Setter Property="Cursor" Value="{x:Static Cursors.Hand}" />
                 </Trigger>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#FF496475"/>
-                    <Setter Property="Foreground" Value="#D7D7D7"/>
-
-
+                <!-- Триггер для неактивной кнопки -->
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Cursor" Value="{x:Static Cursors.Arrow}" />
                 </Trigger>
 
 

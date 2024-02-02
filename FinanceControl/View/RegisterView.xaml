@@ -1,0 +1,236 @@
+﻿<Window x:Class="FinanceControl.View.RegisterView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:customcontrols="clr-namespace:FinanceControl.CustomControls"
+        xmlns:viewmodel="clr-namespace:FinanceControl.ViewModel"
+        d:DataContext="{d:DesignInstance Type=viewmodel:RegisterViewModel}"
+        xmlns:local="clr-namespace:FinanceControl.View"
+        mc:Ignorable="d"
+        Title="RegisterView" 
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" 
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize"
+        Height="600"
+        Width="450">
+    
+    <Window.DataContext>
+        <viewmodel:RegisterViewModel/>
+    </Window.DataContext>
+    
+    <Grid>
+        <Border Background="#3D3D3D"
+                CornerRadius="10 10 10 10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="6*" />
+                    <RowDefinition Height="1.5*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0"
+                        CornerRadius="10 10 0 0">
+                    <Border.Background>
+
+                        <LinearGradientBrush StartPoint="0,0"
+                                             EndPoint="1,1">
+
+                            <GradientStop Color="#FF496475"
+                                          Offset="0"/>
+                            <GradientStop Color="#FF5D5D5D"
+                                          Offset="4"/>
+
+                        </LinearGradientBrush>
+
+                    </Border.Background>
+                    <Grid>
+                        <Canvas>
+                            <Polygon  Points="20,20 80,50 20,80"
+                                      Fill="#FF4E6E82"
+                                      RenderTransformOrigin="0.5,0.5"
+                                      Canvas.Left="-4"
+                                      Canvas.Top="6"
+                                      HorizontalAlignment="Left"
+                                      Height="81"
+                                      VerticalAlignment="Top"
+                                      Width="85">
+                                <Polygon.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="-232.248"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Polygon.RenderTransform>
+                            </Polygon>
+                            <Ellipse Width="44"
+                                     Height="45"
+                                     Fill="#FF4E6E82"
+                                     RenderTransformOrigin="0.5,0.5"
+                                     Canvas.Left="15"
+                                     Canvas.Top="75"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Top">
+                                <Ellipse.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="-41.475"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Ellipse.RenderTransform>
+                            </Ellipse>
+                            <Polygon  Points="20,20 80,50 20,80"
+                                      Fill="#FF4E6E82"
+                                      Canvas.Left="375"
+                                      Canvas.Top="42"
+                                      RenderTransformOrigin="0.682,0.379"
+                                      Width="81" HorizontalAlignment="Left"
+                                      VerticalAlignment="Top"
+                                      Height="82">
+                                <Polygon.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="-41.229"/>
+                                        <TranslateTransform X="-15.24"
+                                                            Y="-7.087"/>
+                                    </TransformGroup>
+                                </Polygon.RenderTransform>
+                            </Polygon>
+                            <Rectangle Fill="#FF4E6E82"
+                                       Height="40"
+                                       Width="40"
+                                       Canvas.Left="393"
+                                       Canvas.Top="13"
+                                       RenderTransformOrigin="0.5,0.5"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center">
+                                <Rectangle.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="-45.406"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
+                        </Canvas>
+                        <TextBlock Style="{StaticResource titleText}"
+                                   Text="Создание учетной записи"
+                                   Opacity="1"
+                                   FontSize="29"
+                                   Margin="20"
+                                   VerticalAlignment="Center"/>
+
+                    </Grid>
+                </Border>
+                <Border Grid.Row="1"
+                        Background="#3D3D3D">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1.5*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border BorderThickness="0 0 0 3"
+                                BorderBrush="#FFEFEFEF"
+                                Grid.Row="0"
+                                VerticalAlignment="Top"
+                                Margin="50 30" >
+                            <Grid Margin="0 2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="/FinanceControl;component/Resources/mail_box.png"
+                                       Height="26"
+                                       Margin="3 0 0 0"/>
+                                <TextBox x:Name="txtMail"
+                                         Text="{Binding userEmail, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource textBox}"
+                                         MaxLength="50"/>
+                            </Grid>
+                        </Border>
+
+                        <Border BorderThickness="0 0 0 3"
+                                BorderBrush="#FFEFEFEF"
+                                Grid.Row="1"
+                                VerticalAlignment="Top"
+                                Margin="50 30" >
+                            <Grid Margin="0 2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="/FinanceControl;component/Resources/login_box.png"
+                                       Height="26"
+                                       Margin="3 0 0 0"/>
+                                <TextBox x:Name="txtLogin"
+                                         Text="{Binding userLogin, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource textBox}"
+                                         MaxLength="50"/>
+                            </Grid>
+                        </Border>
+
+
+
+                        <Border BorderThickness="0 0 0 3"
+                                BorderBrush="#FFEFEFEF"
+                                VerticalAlignment="Top"
+                                Grid.Row="2"
+                                Margin="50 30" >
+                            <StackPanel>
+                                <Grid Margin="0 2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <customcontrols:BindablePasswordBox
+                                    Password="{Binding userPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        <TextBlock Text="Примечание: Все данные стоит вводить на латинице. Пожалуйста, Придумайте надежный пароль."
+                                   TextWrapping="Wrap"
+                                   Style="{StaticResource normalText}"
+                                   Grid.Row="2"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Bottom"
+                                   Margin="20 50 20 0"/>
+
+                    </Grid>
+                </Border>
+                <Border Grid.Row="3"
+                        CornerRadius="0 0 10 10"
+                        Background="#3D3D3D">
+                    <Grid>
+                        <Button Style="{StaticResource  button_bottom}"
+                                Command="{Binding RegisterCommand}"
+                                Height="40"
+                                Width="180"
+                                Content="Зарегистрироваться"
+                                FontSize="17"
+                                HorizontalAlignment="Left"
+                                Margin="60 0 0 0"
+                                x:Name="regButton"/>
+                        <Button Style="{StaticResource button_bottom}"
+                                Command="{Binding CancelCommand}"
+                                Height="40"
+                                Width="90"
+                                Content="Отмена"
+                                FontSize="17"
+                                HorizontalAlignment="Right"
+                                Margin="0 0 60 0"
+                                x:Name="cancelButton"/>
+
+                    </Grid>
+                </Border>
+            </Grid>
+
+        </Border>
+    </Grid>
+</Window>
