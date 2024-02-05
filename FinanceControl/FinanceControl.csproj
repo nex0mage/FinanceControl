@@ -82,11 +82,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\DataWorker.cs" />
-    <Compile Include="ViewModel\MainWindow\MainWIndowViewModel.cs" />
+    <Compile Include="NavigationManager.cs" />
+    <Compile Include="ViewModel\EventAggregator.cs" />
+    <Compile Include="ViewModel\MainViewModels\MainViewModel.cs" />
     <Compile Include="ViewModel\RecoveryViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
-    <Compile Include="View\MainWindow\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="View\MainViews\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RecoveryView.xaml.cs">
       <DependentUpon>RecoveryView.xaml</DependentUpon>
@@ -171,7 +173,7 @@
       <DependentUpon>LoginView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\MainWindow\MainWindow.xaml">
+    <Page Include="View\MainViews\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -260,8 +262,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModel\MainWindow\WindowPages\" />
-    <Folder Include="View\MainWindow\WindowPages\" />
+    <Folder Include="ViewModel\MainViewModels\PageViewModel\" />
+    <Folder Include="View\MainViews\PageViews\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

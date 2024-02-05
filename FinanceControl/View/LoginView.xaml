@@ -16,11 +16,6 @@
         Title="Вход"
         Height="500"
         Width="800" >
-    
-    <Window.DataContext>
-        <viewmodel:LoginViewModel/>
-    </Window.DataContext>
-
     <Border Background="#3D3D3D"
             CornerRadius="10 10 10 10">
         <Grid>
@@ -122,12 +117,9 @@
                                 Style="{StaticResource button_bottom}"
                                 Grid.Column="2"
                                 HorizontalAlignment="Left"/>
-
                     </Grid>
-
                 </StackPanel>
             </Border>
         </Grid>
     </Border>
-
 </Window>

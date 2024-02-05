@@ -24,7 +24,9 @@ namespace FinanceControl.ViewModel
         private string _login;
         private SecureString _password;
         private string _errorMessage;
-        private FinanceControl_DB_Entities _dbContext = new FinanceControl_DB_Entities();// Здесь  контекст базы данных
+        private EventAggregator _eventAggregator;
+        private FinanceControl_DB_Entities _dbContext;
+        private NavigationManager _navigationManager;
 
         public string userEmail
         {
@@ -77,17 +79,17 @@ namespace FinanceControl.ViewModel
             {
                 _errorMessage = value;
                 OnPropertyChanged(nameof(ErrorMessage));
-
             }
         }
-
 
         public ICommand RegisterCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public RegisterViewModel()
+        public RegisterViewModel(EventAggregator eventAggregator, FinanceControl_DB_Entities dbContext, NavigationManager navigationManager)
         {
-            
+            _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _navigationManager = navigationManager ?? throw new ArgumentNullException(nameof(navigationManager));
             RegisterCommand = new ViewModelCommand(Register, CanRegister);
             CancelCommand = new ViewModelCommand(Cancel);
         }
@@ -106,7 +108,6 @@ namespace FinanceControl.ViewModel
         {
             // Регулярное выражение для проверки адреса электронной почты
             string emailPattern = @"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
-
             // Используем Regex.IsMatch для проверки соответствия
             return Regex.IsMatch(email, emailPattern);
         }
@@ -115,7 +116,6 @@ namespace FinanceControl.ViewModel
         {
             _dbContext = new FinanceControl_DB_Entities();
             bool userExists = _dbContext.Users.Any(u => u.UserLogin == _login || u.Email == _email);
-
             if (IsValidEmail(_email) == true)
             {
                 if (userExists)
@@ -129,21 +129,16 @@ namespace FinanceControl.ViewModel
                     int newUserId = maxUserId + 1;
                     _dbContext.Users.Add(new Users 
                     {
-                        UserID = newUserId + 1,
+                        UserID = newUserId,
                         UserLogin = _login,
                         UserPassword = UnsecuredString_userPassword,
                         Email = _email
-                    }
-                    );
+                    });
                     _dbContext.SaveChanges();
                     MessageBox.Show("Регистрация выполнена успешно. Добро пожаловать!");
-                    Window currentWindow = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
-                    if (currentWindow != null)
-                    {
-                        currentWindow.Close();
-                    }
-
-
+                    _eventAggregator.PublishUserLoggedIn(newUserId);
+                    _navigationManager.NavigateToMainView(newUserId);
+                    Cancel(1);
                 }
             }
             else
@@ -155,18 +150,11 @@ namespace FinanceControl.ViewModel
         private void Cancel(object parameter) 
         {
             Window currentWindow = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
-
             if (currentWindow != null)
             {
+                _navigationManager.StartAtLoginView();
                 currentWindow.Close();
             }
-
         }
-
-
-
-
-
-
     }
 }

@@ -16,11 +16,6 @@
         ResizeMode="NoResize"
         Height="600"
         Width="450">
-    
-    <Window.DataContext>
-        <viewmodel:RegisterViewModel/>
-    </Window.DataContext>
-    
     <Grid>
         <Border Background="#3D3D3D"
                 CornerRadius="10 10 10 10">
@@ -36,14 +31,11 @@
 
                         <LinearGradientBrush StartPoint="0,0"
                                              EndPoint="1,1">
-
                             <GradientStop Color="#FF496475"
                                           Offset="0"/>
                             <GradientStop Color="#FF5D5D5D"
                                           Offset="4"/>
-
                         </LinearGradientBrush>
-
                     </Border.Background>
                     <Grid>
                         <Canvas>
@@ -124,7 +116,6 @@
                                    FontSize="29"
                                    Margin="20"
                                    VerticalAlignment="Center"/>
-
                     </Grid>
                 </Border>
                 <Border Grid.Row="1"
@@ -155,7 +146,6 @@
                                          MaxLength="50"/>
                             </Grid>
                         </Border>
-
                         <Border BorderThickness="0 0 0 3"
                                 BorderBrush="#FFEFEFEF"
                                 Grid.Row="1"
@@ -175,9 +165,6 @@
                                          MaxLength="50"/>
                             </Grid>
                         </Border>
-
-
-
                         <Border BorderThickness="0 0 0 3"
                                 BorderBrush="#FFEFEFEF"
                                 VerticalAlignment="Top"
@@ -201,7 +188,6 @@
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Bottom"
                                    Margin="20 50 20 0"/>
-
                     </Grid>
                 </Border>
                 <Border Grid.Row="3"
@@ -226,11 +212,9 @@
                                 HorizontalAlignment="Right"
                                 Margin="0 0 60 0"
                                 x:Name="cancelButton"/>
-
                     </Grid>
                 </Border>
             </Grid>
-
         </Border>
     </Grid>
 </Window>
