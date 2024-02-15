@@ -4,17 +4,173 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinanceControl.View.MainViews"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         mc:Ignorable="d"
-        Title="Finapp"
-        Height="700"
-        Width="1200"
+        MinHeight="700"
+        MinWidth="1200"
         Background="#3D3D3D"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="9*"/>
         </Grid.ColumnDefinitions>
-        
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="8*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Background="#FF405363"  BorderThickness="3 3 3 1.5">
+                <StackPanel>
+                    
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock  Style="{StaticResource titleText}" Margin="5 5 5 0" Width="224" Height="45" TextAlignment="Center" FontSize="35" Text="FinApp"/>
+                    </StackPanel>
+                    
+                    <Expander>
+                                <Expander.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Счета и переводы" FontSize="18" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
+                                    </StackPanel>
+                                </Expander.Header>
+                                <StackPanel>
+                            <RadioButton Style="{StaticResource menuButton}" Tag="#FFB35C1E" GroupName="MenuGroup" Command="{Binding CurrentPageAccounts}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:IconImage Style="{StaticResource menuButtonIcon}" Icon="Wallet" />
+                                                <TextBlock Text="Мои счета" Style="{StaticResource menuButtonText}" />
+                                            </StackPanel>
+                                        </RadioButton>
+                                        <RadioButton Style="{StaticResource menuButton}" Tag="#FF79A479" GroupName="MenuGroup" Command="{Binding CurrentPageAccountTransfers}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:IconImage Style="{StaticResource menuButtonIcon}" Icon="MoneyBillTransfer" />
+                                                <TextBlock TextWrapping="Wrap" Text="Переводы между счетами" Style="{StaticResource menuButtonText}" />
+                                            </StackPanel>
+                                        </RadioButton>
+                                </StackPanel>
+                                    
+                    </Expander>
+
+                    <Expander>
+                                <Expander.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Доходы" FontSize="18" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
+                                    </StackPanel>
+                                </Expander.Header>
+                                <StackPanel>
+                            <RadioButton Style="{StaticResource menuButton}" Tag="#FF79A479" GroupName="MenuGroup" Command="{Binding CurrentPageIncomeTransactions}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <fa:IconImage Style="{StaticResource menuButtonIcon}" Icon="Plus" />
+                                    <TextBlock Text="Операции по доходам" Style="{StaticResource menuButtonText}" />
+                                        </StackPanel>
+                                    </RadioButton>
+                            <RadioButton Style="{StaticResource menuButton}" Tag="#FF79A479" GroupName="MenuGroup" Command="{Binding CurrentPageIncomeCategories}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <fa:IconImage Style="{StaticResource menuButtonIcon}" Icon="List" />
+                                            <TextBlock Text="Категории доходов" Style="{StaticResource menuButtonText}" />
+                                        </StackPanel>
+                                    </RadioButton>
+                                </StackPanel>
+                    </Expander>
+                    <Expander>
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Расходы" FontSize="18" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel>
+                            <RadioButton Style="{StaticResource menuButton}" Tag="#FFB33E3E" GroupName="MenuGroup" Command="{Binding CurrentPageExpenseTransactions}">
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Style="{StaticResource menuButtonIcon}" Icon="Minus" />
+                                    <TextBlock Text="Операции по расходам" Style="{StaticResource menuButtonText}" />
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton Style="{StaticResource menuButton}" Tag="#FFB33E3E" GroupName="MenuGroup" Command="{Binding CurrentPageRegularExpenses}">
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Style="{StaticResource menuButtonIcon}" Icon="DiagramSuccessor" />
+                                    <TextBlock Text="Регулярные траты" Style="{StaticResource menuButtonText}" />
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton Style="{StaticResource menuButton}" Tag="#FFB33E3E" GroupName="MenuGroup" Command="{Binding CurrentPageExpenseCategories}">
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Style="{StaticResource menuButtonIcon}" Icon="List" />
+                                    <TextBlock Text="Категории расходов" Style="{StaticResource menuButtonText}" />
+                                </StackPanel>
+                            </RadioButton>
+                        </StackPanel>
+                    </Expander>
+                    <Expander>
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Долги" FontSize="18" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel>
+                            <RadioButton Style="{StaticResource menuButton}" Tag="#FFB33E3E" GroupName="MenuGroup" Command="{Binding CurrentPageDebtsTransaction}">
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Style="{StaticResource menuButtonIcon}" Icon="Percent" />
+                                    <TextBlock Text="Выплаты долгов" Style="{StaticResource menuButtonText}" />
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton Style="{StaticResource menuButton}" Tag="#FFB33E3E" GroupName="MenuGroup" Command="{Binding CurrentPageDebts}">
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Style="{StaticResource menuButtonIcon}" Icon="List" />
+                                    <TextBlock Text="Список долгов" Style="{StaticResource menuButtonText}" />
+                                </StackPanel>
+                            </RadioButton>
+                        </StackPanel>
+                    </Expander>
+                    <Expander>
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Цели" FontSize="18" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel>
+                            <RadioButton Style="{StaticResource menuButton}" Tag="#FFD1D261" GroupName="MenuGroup" Command="{Binding CurrentPageGoalsTransactions}">
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Style="{StaticResource menuButtonIcon}" Icon="ListCheck" />
+                                    <TextBlock Text="Операции по целям" Style="{StaticResource menuButtonText}" />
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton Style="{StaticResource menuButton}" Tag="#FFD1D261" GroupName="MenuGroup" Command="{Binding CurrentPageGoals}">
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Style="{StaticResource menuButtonIcon}" Icon="List" />
+                                    <TextBlock Text="Список целей" Style="{StaticResource menuButtonText}" />
+                                </StackPanel>
+                            </RadioButton>
+                        </StackPanel>
+                    </Expander>
+                    <Border Margin="0 0 0 0" BorderBrush="#3d3d3d" BorderThickness="0 3 0 0">
+                        <RadioButton  Style="{StaticResource menuButton}" Tag="#FAFAFA" GroupName="MenuGroup" Command="{Binding CurrentPageReminders}">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Style="{StaticResource menuButtonIcon}" Icon="Bell" />
+                                <TextBlock Text="Напоминания" Style="{StaticResource menuButtonText}" />
+                            </StackPanel>
+                        </RadioButton>
+                    </Border>
+                    <Border Margin="0 0 0 0">
+                        <RadioButton  Style="{StaticResource menuButton}" Tag="#FAFAFA" GroupName="MenuGroup" Command="{Binding CurrentPageCharts}" Cursor="Hand">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Style="{StaticResource menuButtonIcon}" Icon="ChartLine" />
+                                <TextBlock Text="Отчеты" Style="{StaticResource menuButtonText}" />
+                            </StackPanel>
+                        </RadioButton>
+                    </Border>
+
+
+
+
+                    <!-- Добавьте аналогичные Expander для других пунктов меню -->
+                </StackPanel>
+
+            </Border>
+            <Border Grid.Row="1" Background="#FF405363" BorderBrush="#3D3D3D" BorderThickness="3 1.5 3 3">
+                
+            </Border>
+        </Grid>
+        <Frame Grid.Column="1" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden">
+
+        </Frame>
     </Grid>
 </Window>

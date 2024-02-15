@@ -50,18 +50,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
+      <HintPath>..\packages\ControlzEx.4.4.0\lib\net462\ControlzEx.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="FontAwesome.Sharp, Version=6.3.0.0, Culture=neutral, PublicKeyToken=d16d1e4e568ec10f, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontAwesome.Sharp.6.3.0\lib\net48\FontAwesome.Sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=51482d6f650b2b3f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.2.4.10\lib\net47\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -85,10 +100,53 @@
     <Compile Include="NavigationManager.cs" />
     <Compile Include="ViewModel\EventAggregator.cs" />
     <Compile Include="ViewModel\MainViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModels\PageViewModel\AccountsPageVM.cs" />
     <Compile Include="ViewModel\RecoveryViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="View\MainViews\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainViews\PageViews\AccountsPage.xaml.cs">
+      <DependentUpon>AccountsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainViews\PageViews\AccountTransfersPage.xaml.cs">
+      <DependentUpon>AccountTransfersPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainViews\PageViews\ChartsPage.xaml.cs">
+      <DependentUpon>ChartsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainViews\PageViews\DebtsPage.xaml.cs">
+      <DependentUpon>DebtsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainViews\PageViews\DebtsTransactionsPage.xaml.cs">
+      <DependentUpon>DebtsTransactionsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainViews\PageViews\ExpenseCategoriesPage.xaml.cs">
+      <DependentUpon>ExpenseCategoriesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainViews\PageViews\ExpenseTransactionsPage.xaml.cs">
+      <DependentUpon>ExpenseTransactionsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainViews\PageViews\GoalsPage.xaml.cs">
+      <DependentUpon>GoalsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainViews\PageViews\GoalsTransactionsPage.xaml.cs">
+      <DependentUpon>GoalsTransactionsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainViews\PageViews\IncomeCategoriesPage.xaml.cs">
+      <DependentUpon>IncomeCategoriesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainViews\PageViews\IncomeTransactionsPage.xaml.cs">
+      <DependentUpon>IncomeTransactionsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainViews\PageViews\RegularExpensesPage.xaml.cs">
+      <DependentUpon>RegularExpensesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainViews\PageViews\RemindersPage.xaml.cs">
+      <DependentUpon>RemindersPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainViews\PageViews\WelcomePage.xaml.cs">
+      <DependentUpon>WelcomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RecoveryView.xaml.cs">
       <DependentUpon>RecoveryView.xaml</DependentUpon>
@@ -177,6 +235,62 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\MainViews\PageViews\AccountsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainViews\PageViews\AccountTransfersPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainViews\PageViews\ChartsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainViews\PageViews\DebtsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainViews\PageViews\DebtsTransactionsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainViews\PageViews\ExpenseCategoriesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainViews\PageViews\ExpenseTransactionsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainViews\PageViews\GoalsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainViews\PageViews\GoalsTransactionsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainViews\PageViews\IncomeCategoriesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainViews\PageViews\IncomeTransactionsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainViews\PageViews\RegularExpensesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainViews\PageViews\RemindersPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainViews\PageViews\WelcomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\RecoveryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -244,10 +358,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FinanceControl_DB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="FinanceControl_DB_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <DependentUpon>FinanceControl_DB.mdf</DependentUpon>
     </Content>
     <Content Include="Model\FinanceControl_Model.Context.tt">
@@ -261,9 +375,6 @@
       <LastGenOutput>FinanceControl_Model.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\MainViewModels\PageViewModel\" />
-    <Folder Include="View\MainViews\PageViews\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

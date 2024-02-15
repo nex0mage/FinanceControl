@@ -61,7 +61,6 @@ namespace FinanceControl.ViewModel
         public ICommand RegistrationCommand { get; }
         public ICommand RecoverCommand { get; }
         public ICommand PictureCloseApplication { get; }
-        public ICommand CursorOverrideIbeamCommand { get; }
         // Конструктор окна
         public LoginViewModel(EventAggregator eventAggregator, FinanceControl_DB_Entities dbContext, NavigationManager navigationManager)
         {
