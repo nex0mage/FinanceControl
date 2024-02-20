@@ -24,7 +24,7 @@ namespace FinanceControl.ViewModel
         private string _recoveryCode;
         private string randomCode;
          // Здесь  контекст базы данных
-        private FinanceControl_DB_Entities _dbContext = new FinanceControl_DB_Entities();
+        private FinanceControl_DBEntities _dbContext = new FinanceControl_DBEntities();
 
         public string userEmail
         {

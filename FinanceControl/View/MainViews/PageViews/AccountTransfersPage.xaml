@@ -4,12 +4,207 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FinanceControl.View.MainViews.PageViews"
+      xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+      xmlns:i="clr-namespace:FinanceControl.CustomControls" 
+
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Background="PaleVioletRed"
+      d:DesignHeight="700" d:DesignWidth="900"
+      Background="Transparent"
       Title="AccountTransfersPage">
 
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer>
+            <ListBox ItemsSource="{Binding UserTransfers}" Grid.Column="0" Width="515" HorizontalAlignment="Left" Background="Transparent"
+             SelectionMode="Single"
+             SelectedItem="{Binding IsTransferSelected, Mode=TwoWay}">
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#FAFAFA" 
+                            BorderThickness="2"
+                            CornerRadius="15" 
+                            Background="#2E2E2E"
+                            MinWidth="500">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <StackPanel>
+                                        <fa:IconImage Icon="MoneyBillTransfer" Width="40" Height="40" Foreground="White" HorizontalAlignment="Center"/>
+                                        <TextBlock TextWrapping="Wrap" Text="{Binding Comment}" 
+                                            FontSize="20"
+                                            Foreground="White"
+                                            HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock FontSize="16" Foreground="White" Margin="10 0 0 10">
+                                        <Run Text="Сумма:" />
+                                        <Run Text="{Binding Amount}" />
+                                        <Run Text="руб." />
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock FontSize="16" HorizontalAlignment="Right" Foreground="White" Margin="0 0 10 10">
+                                        <Run Text="Дата:" />
+                                        <Run Text="{Binding TransferDate, StringFormat=d, ConverterCulture=ru-Ru}" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock FontSize="16" Foreground="White" Margin="10 0 0 10">
+                                        <Run Text="Со счета:" />
+                                        <Run Text="{Binding Accounts.AccountName, Mode=OneWay}" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock FontSize="16" Foreground="White" HorizontalAlignment="Right" Margin="0 0 10 10">
+                                        <Run Text="На счет:" />
+                                        <Run Text="{Binding Accounts1.AccountName, Mode=OneWay}" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+
+
+
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ScrollViewer>
+        <Border Grid.Column="1" BorderThickness="3" BorderBrush="Transparent" Background="#405363">
+            <Grid>
+
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Border BorderBrush="#FF2F2F2F" Background="#3D3D3D" BorderThickness="5">
+
+                    <TextBlock Style="{StaticResource titleText}" FontSize="30" 
+                                   Text="Переводы между вашими счетами" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0 0"/>
+
+                </Border>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Column="0" Grid.Row="0" BorderBrush="#FF2F2F2F" BorderThickness="0 0 2.5 5" Background="#384957">
+                        <TextBlock Style="{StaticResource normalText}" Text="Свойство" VerticalAlignment="Center"/>
+
+                    </Border>
+                    <Border Grid.Column="1" Grid.Row="0" BorderBrush="#FF2F2F2F" BorderThickness="2.5 0 0 5" Background="#384957">
+                        <TextBlock Style="{StaticResource normalText}" Text="Значение" VerticalAlignment="Center"/>
+
+                    </Border>
+                    <Border Grid.Column="0" Grid.Row="1" BorderBrush="#FF2F2F2F" BorderThickness="0 0 0 0" Background="Transparent">
+                        <TextBlock  Style="{StaticResource normalText}" Text="Счет отправитель" VerticalAlignment="Center"/>
+
+                    </Border>
+                    <Border Grid.Column="1" Grid.Row="1" BorderBrush="#FF2F2F2F" BorderThickness="0 0 0 0" Background="Transparent">
+                        <ComboBox Margin="3.5 1.5" 
+                             ItemsSource="{Binding Accounts}" 
+                             DisplayMemberPath="AccountName"
+                             SelectedItem="{Binding AccountFrom, Mode=TwoWay}"/>
+                    </Border>
+                    <Border Grid.Column="0" Grid.Row="2" BorderBrush="#FF2F2F2F" BorderThickness="0 0 0 0" Background="Transparent">
+                        <TextBlock Style="{StaticResource normalText}" Text="Счет получатель" VerticalAlignment="Center"/>
+
+                    </Border>
+                    <Border Grid.Column="1" Grid.Row="2" BorderBrush="#FF2F2F2F" BorderThickness="0 0 0 0" Background="Transparent">
+                        <ComboBox Margin="3.5 1.5" 
+                              ItemsSource="{Binding Accounts1}" 
+                              DisplayMemberPath="AccountName"
+                              SelectedItem="{Binding AccountTo, Mode=TwoWay}"/>
+                    </Border>
+                    <Border Grid.Column="0" Grid.Row="3">
+                        <TextBlock Style="{StaticResource normalText}" Text="Сумма" VerticalAlignment="Center"/>
+                    </Border>
+                    <Border Grid.Column="1" Grid.Row="3" BorderBrush="#FF2F2F2F" BorderThickness="0 0 0 0" Background="Transparent">
+                        <TextBox Margin="3.5 1.5" Style="{StaticResource  textBox}" Text="{Binding Amount, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.00}}"  i:TextBoxInputBehavior.AllowOnlyDecimalInput="True"/>
+                    </Border>
+                    <Border Grid.Column="0" Grid.Row="4">
+                        <TextBlock Style="{StaticResource normalText}" Text="Дата  перевода" VerticalAlignment="Center"/>
+                    </Border>
+                    <Border Grid.Column="1" Grid.Row="4" BorderBrush="#FF2F2F2F" BorderThickness="0 0 0 0" Background="Transparent">
+                        <DatePicker Height="40" VerticalContentAlignment="Center"  Margin="3.5 1.5" SelectedDate="{Binding TransferDate}" VerticalAlignment="Center" Background="#3D3D3D" FirstDayOfWeek="Monday" Cursor="Hand">
+                            <DatePicker.Resources>
+                                <Style TargetType="DatePickerTextBox">
+                                    <Setter Property="Control.Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <TextBox x:Name="PART_TextBox"
+                                                         Text="{Binding Path=SelectedDate, StringFormat=d, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Mode=TwoWay, ConverterCulture=ru-Ru}" IsReadOnly="True"
+                                                         Background="{TemplateBinding Background}"
+                                                         BorderThickness="{TemplateBinding BorderThickness}"
+                                                         BorderBrush="{TemplateBinding BorderBrush}"
+                                                         Foreground="{TemplateBinding Foreground}"
+                                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </DatePicker.Resources>
+                        </DatePicker>
+                    </Border>
+                    <Border Grid.Column="0" Grid.Row="5">
+                        <TextBlock Style="{StaticResource normalText}" Text="Комментарий к переводу" VerticalAlignment="Center"/>
+                    </Border>
+                    <Border Grid.Column="1" Grid.Row="5" BorderBrush="#FF2F2F2F" BorderThickness="0 0 0 0" Background="Transparent">
+                        <TextBox Margin="3.5 1.5" Style="{StaticResource  textBox}" TextWrapping="Wrap" MaxLength="200" Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+
+                </Grid>
+                <Grid Grid.Row="2" Background="#3D3D3D">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Row="2" Grid.Column="0" Style="{StaticResource button_bottom}" Content="Удалить" Width="90" Margin="4, 15" Background="#754B42" Command="{Binding DeleteSelectedTransferCommand}"/>
+                    <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource button_bottom}" Content="Изменить" Width="90" Margin="4, 15" Background="#497280" Command="{Binding UpdateSelectedTransferCommand}"/>
+                    <Button Grid.Row="2" BorderBrush="#3A3A3A" Grid.Column="2" Style="{StaticResource button_bottom}" Content="Добавить" Width="90" Margin="4, 15" Background="#597B55" Command="{Binding AddNewTransferCommand}"/>
+                </Grid>
+            </Grid>
+        </Border>
     </Grid>
+
+
 </Page>

@@ -25,7 +25,7 @@ namespace FinanceControl.ViewModel
         private SecureString _password;
         private string _errorMessage;
         private EventAggregator _eventAggregator;
-        private FinanceControl_DB_Entities _dbContext;
+        private FinanceControl_DBEntities _dbContext;
         private NavigationManager _navigationManager;
 
         public string userEmail
@@ -85,7 +85,7 @@ namespace FinanceControl.ViewModel
         public ICommand RegisterCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public RegisterViewModel(EventAggregator eventAggregator, FinanceControl_DB_Entities dbContext, NavigationManager navigationManager)
+        public RegisterViewModel(EventAggregator eventAggregator, FinanceControl_DBEntities dbContext, NavigationManager navigationManager)
         {
             _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
@@ -114,7 +114,7 @@ namespace FinanceControl.ViewModel
 
         private void Register(object parameter)
         {
-            _dbContext = new FinanceControl_DB_Entities();
+            _dbContext = new FinanceControl_DBEntities();
             bool userExists = _dbContext.Users.Any(u => u.UserLogin == _login || u.Email == _email);
             if (IsValidEmail(_email) == true)
             {

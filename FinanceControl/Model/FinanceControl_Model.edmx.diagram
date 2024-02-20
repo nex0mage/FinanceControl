@@ -4,42 +4,40 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a729ebb8006a4faf934f65007218d6a6" Name="Diagram1">
-        <EntityTypeShape EntityType="FinanceControl_DB_Model.Accounts" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FinanceControl_DB_Model.Debts" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="FinanceControl_DB_Model.DebtsTransactions" Width="1.5" PointX="5.25" PointY="13.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="FinanceControl_DB_Model.ExpensesCategories" Width="1.5" PointX="3" PointY="16.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FinanceControl_DB_Model.ExpensesTransactions" Width="1.5" PointX="8.25" PointY="13.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="FinanceControl_DB_Model.Goals" Width="1.5" PointX="3" PointY="19.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="FinanceControl_DB_Model.GoalsTransactions" Width="1.5" PointX="5.25" PointY="17.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="FinanceControl_DB_Model.IncomeCategories" Width="1.5" PointX="3" PointY="22.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FinanceControl_DB_Model.IncomeTransactions" Width="1.5" PointX="8.25" PointY="17.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="FinanceControl_DB_Model.RegularExpenses" Width="1.5" PointX="8.25" PointY="22.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="FinanceControl_DB_Model.Reminders" Width="1.5" PointX="3" PointY="25.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FinanceControl_DB_Model.Transfers" Width="1.5" PointX="5.25" PointY="24.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="FinanceControl_DB_Model.Users" Width="1.5" PointX="0.75" PointY="16.625" IsExpanded="true" />
+      <Diagram DiagramId="5f3ef58e9ba64da2881e829e1046e140" Name="Diagram1" ZoomLevel="63">
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.Accounts" Width="1.5" PointX="18.5" PointY="22.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.Debts" Width="1.5" PointX="7.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.DebtsTransactions" Width="1.5" PointX="18.125" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.ExpensesCategories" Width="1.5" PointX="15.5" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.ExpensesTransactions" Width="1.5" PointX="16" PointY="22.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.Goals" Width="1.5" PointX="7.625" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.GoalsTransactions" Width="1.5" PointX="7.5" PointY="26.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.IncomeCategories" Width="1.5" PointX="12.875" PointY="22.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.IncomeTransactions" Width="1.5" PointX="12" PointY="25.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.RegularExpenses" Width="1.5" PointX="12.75" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.Reminders" Width="1.5" PointX="9.375" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.Transfers" Width="1.5" PointX="14" PointY="24.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceControl_DB_Model.Users" Width="1.5" PointX="10.875" PointY="20.375" IsExpanded="true" />
         <AssociationConnector Association="FinanceControl_DB_Model.FK__Accounts__UserID__267ABA7A" ManuallyRouted="false" />
-        <AssociationConnector Association="FinanceControl_DB_Model.FK__DebtsTran__Accou__49C3F6B7" ManuallyRouted="false" />
-        <AssociationConnector Association="FinanceControl_DB_Model.FK__ExpensesT__Accou__34C8D9D1" ManuallyRouted="false" />
-        <AssociationConnector Association="FinanceControl_DB_Model.FK__GoalsTran__Accou__52593CB8" ManuallyRouted="false" />
-        <AssociationConnector Association="FinanceControl_DB_Model.FK__IncomeTra__Accou__300424B4" ManuallyRouted="false" />
-        <AssociationConnector Association="FinanceControl_DB_Model.FK__Transfers__Accou__38996AB5" ManuallyRouted="false" />
-        <AssociationConnector Association="FinanceControl_DB_Model.FK__Transfers__Accou__398D8EEE" ManuallyRouted="false" />
-        <AssociationConnector Association="FinanceControl_DB_Model.FK__Debts__UserID__440B1D61" ManuallyRouted="false" />
-        <AssociationConnector Association="FinanceControl_DB_Model.FK__DebtsTran__DebtI__47DBAE45" ManuallyRouted="false" />
-        <AssociationConnector Association="FinanceControl_DB_Model.FK__DebtsTran__UserI__48CFD27E" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__DebtsTran__Accou__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__ExpensesT__Accou__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__GoalsTran__Accou__4E88ABD4" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__IncomeTra__Accou__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__Transfers__Accou__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__Transfers__Accou__37A5467C" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__Debts__UserID__4222D4EF" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__DebtsTran__DebtI__45F365D3" ManuallyRouted="false" />
         <AssociationConnector Association="FinanceControl_DB_Model.FK__ExpensesC__UserI__29572725" ManuallyRouted="false" />
-        <AssociationConnector Association="FinanceControl_DB_Model.FK__ExpensesT__Expen__35BCFE0A" ManuallyRouted="false" />
-        <AssociationConnector Association="FinanceControl_DB_Model.FK__RegularEx__Expen__3D5E1FD2" ManuallyRouted="false" />
-        <AssociationConnector Association="FinanceControl_DB_Model.FK__ExpensesT__UserI__33D4B598" ManuallyRouted="false" />
-        <AssociationConnector Association="FinanceControl_DB_Model.FK__Goals__UserID__4CA06362" ManuallyRouted="false" />
-        <AssociationConnector Association="FinanceControl_DB_Model.FK__GoalsTran__GoalI__5070F446" ManuallyRouted="false" />
-        <AssociationConnector Association="FinanceControl_DB_Model.FK__GoalsTran__UserI__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__ExpensesT__Expen__33D4B598" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__RegularEx__Expen__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__Goals__UserID__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__GoalsTran__GoalI__4D94879B" ManuallyRouted="false" />
         <AssociationConnector Association="FinanceControl_DB_Model.FK__IncomeCat__UserI__2C3393D0" ManuallyRouted="false" />
-        <AssociationConnector Association="FinanceControl_DB_Model.FK__IncomeTra__Incom__30F848ED" ManuallyRouted="false" />
-        <AssociationConnector Association="FinanceControl_DB_Model.FK__IncomeTra__UserI__2F10007B" ManuallyRouted="false" />
-        <AssociationConnector Association="FinanceControl_DB_Model.FK__RegularEx__UserI__3C69FB99" ManuallyRouted="false" />
-        <AssociationConnector Association="FinanceControl_DB_Model.FK__Reminders__UserI__403A8C7D" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__IncomeTra__Incom__300424B4" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__RegularEx__UserI__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceControl_DB_Model.FK__Reminders__UserI__3E52440B" ManuallyRouted="false" >
+        </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

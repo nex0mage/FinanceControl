@@ -19,13 +19,9 @@ namespace FinanceControl.Model
         {
             this.Accounts = new HashSet<Accounts>();
             this.Debts = new HashSet<Debts>();
-            this.DebtsTransactions = new HashSet<DebtsTransactions>();
             this.ExpensesCategories = new HashSet<ExpensesCategories>();
-            this.ExpensesTransactions = new HashSet<ExpensesTransactions>();
             this.Goals = new HashSet<Goals>();
-            this.GoalsTransactions = new HashSet<GoalsTransactions>();
             this.IncomeCategories = new HashSet<IncomeCategories>();
-            this.IncomeTransactions = new HashSet<IncomeTransactions>();
             this.RegularExpenses = new HashSet<RegularExpenses>();
             this.Reminders = new HashSet<Reminders>();
         }
@@ -40,19 +36,11 @@ namespace FinanceControl.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Debts> Debts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DebtsTransactions> DebtsTransactions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExpensesCategories> ExpensesCategories { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ExpensesTransactions> ExpensesTransactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Goals> Goals { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GoalsTransactions> GoalsTransactions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IncomeCategories> IncomeCategories { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IncomeTransactions> IncomeTransactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RegularExpenses> RegularExpenses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

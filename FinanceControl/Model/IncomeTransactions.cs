@@ -15,7 +15,6 @@ namespace FinanceControl.Model
     public partial class IncomeTransactions
     {
         public int IncomeTransactionID { get; set; }
-        public Nullable<int> UserID { get; set; }
         public Nullable<int> AccountID { get; set; }
         public Nullable<int> IncomeCategoryID { get; set; }
         public decimal Amount { get; set; }
@@ -24,6 +23,5 @@ namespace FinanceControl.Model
     
         public virtual Accounts Accounts { get; set; }
         public virtual IncomeCategories IncomeCategories { get; set; }
-        public virtual Users Users { get; set; }
     }
 }

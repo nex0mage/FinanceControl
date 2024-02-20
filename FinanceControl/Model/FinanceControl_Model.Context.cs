@@ -13,10 +13,10 @@ namespace FinanceControl.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class FinanceControl_DB_Entities : DbContext
+    public partial class FinanceControl_DBEntities : DbContext
     {
-        public FinanceControl_DB_Entities()
-            : base("name=FinanceControl_DB_Entities")
+        public FinanceControl_DBEntities()
+            : base("name=FinanceControl_DBEntities")
         {
         }
     

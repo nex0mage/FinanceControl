@@ -24,17 +24,6 @@ namespace FinanceControl.View.MainViews.PageViews
         {
             InitializeComponent();
         }
-        private void NumericUpDown_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            if (!IsTextNumeric(e.Text))
-            {
-                e.Handled = true;
-            }
-        }
 
-        private bool IsTextNumeric(string text)
-        {
-            return text.All(char.IsDigit);
-        }
     }
 }

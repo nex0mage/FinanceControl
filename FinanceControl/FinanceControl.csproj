@@ -96,11 +96,67 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CustomControls\TextBoxInputBehavior.cs" />
+    <Compile Include="Model\Accounts.cs">
+      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\DataWorker.cs" />
+    <Compile Include="Model\Debts.cs">
+      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DebtsTransactions.cs">
+      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ExpensesCategories.cs">
+      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ExpensesTransactions.cs">
+      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FinanceControl_Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FinanceControl_Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FinanceControl_Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FinanceControl_Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FinanceControl_Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Goals.cs">
+      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GoalsTransactions.cs">
+      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\IncomeCategories.cs">
+      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\IncomeTransactions.cs">
+      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\RegularExpenses.cs">
+      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Reminders.cs">
+      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Transfers.cs">
+      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Users.cs">
+      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="NavigationManager.cs" />
     <Compile Include="ViewModel\EventAggregator.cs" />
     <Compile Include="ViewModel\MainViewModels\MainViewModel.cs" />
     <Compile Include="ViewModel\MainViewModels\PageViewModel\AccountsPageVM.cs" />
+    <Compile Include="ViewModel\MainViewModels\PageViewModel\AccountTransfersPageVM.cs" />
     <Compile Include="ViewModel\RecoveryViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="View\MainViews\MainView.xaml.cs">
@@ -169,61 +225,7 @@
     <Compile Include="CustomControls\BindablePasswordBox.xaml.cs">
       <DependentUpon>BindablePasswordBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Accounts.cs">
-      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Debts.cs">
-      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DebtsTransactions.cs">
-      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\ExpensesCategories.cs">
-      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\ExpensesTransactions.cs">
-      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\FinanceControl_Model.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FinanceControl_Model.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\FinanceControl_Model.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\FinanceControl_Model.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FinanceControl_Model.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Goals.cs">
-      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\GoalsTransactions.cs">
-      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\IncomeCategories.cs">
-      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\IncomeTransactions.cs">
-      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\RegularExpenses.cs">
-      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Reminders.cs">
-      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Transfers.cs">
-      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\UnsecureString.cs" />
-    <Compile Include="Model\Users.cs">
-      <DependentUpon>FinanceControl_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelCommand.cs" />
@@ -375,6 +377,5 @@
       <LastGenOutput>FinanceControl_Model.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

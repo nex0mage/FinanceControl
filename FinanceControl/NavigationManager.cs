@@ -15,9 +15,9 @@ namespace FinanceControl
     public class NavigationManager
     {
         private EventAggregator _eventAggregator;
-        private FinanceControl_DB_Entities _dbContext;
+        private FinanceControl_DBEntities _dbContext;
 
-        public NavigationManager(EventAggregator eventAggregator, FinanceControl_DB_Entities dbContext)
+        public NavigationManager(EventAggregator eventAggregator, FinanceControl_DBEntities dbContext)
         {
             _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));

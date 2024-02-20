@@ -16,13 +16,11 @@ namespace FinanceControl.Model
     {
         public int GoalTransactionID { get; set; }
         public Nullable<int> GoalID { get; set; }
-        public Nullable<int> UserID { get; set; }
         public Nullable<int> AccountID { get; set; }
         public decimal Amount { get; set; }
         public System.DateTime TransactionDate { get; set; }
     
         public virtual Accounts Accounts { get; set; }
         public virtual Goals Goals { get; set; }
-        public virtual Users Users { get; set; }
     }
 }

@@ -14,6 +14,7 @@ using FinanceControl.ViewModel.MainViewModels.PageViewModel;
     {
         internal class MainViewModel : ViewModelBase
         {
+            private FinanceControl_DBEntities context = new FinanceControl_DBEntities();
             private EventAggregator _eventAggregator;
             private NavigationManager _navigationManager;
 
@@ -67,8 +68,9 @@ using FinanceControl.ViewModel.MainViewModels.PageViewModel;
             {
                 Welcome = new WelcomePage();
                 Accounts = new AccountsPage();
-                Accounts.DataContext = new AccountsPageVM(loggedInUserId);
+                Accounts.DataContext = new AccountsPageVM(loggedInUserId, context);
                 AccountTransfers = new AccountTransfersPage();
+                AccountTransfers.DataContext = new AccountTransfersPageVM(loggedInUserId, context);
                 IncomeTransactions = new IncomeTransactionsPage();
                 IncomeCategories = new IncomeCategoriesPage();
                 ExpenseTransactions = new ExpenseTransactionsPage();

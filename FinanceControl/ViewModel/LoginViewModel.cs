@@ -23,7 +23,7 @@ namespace FinanceControl.ViewModel
         private string _login; //Логин
         private SecureString _password; //Пароль
         private EventAggregator _eventAggregator;
-        private FinanceControl_DB_Entities _dbContext;
+        private FinanceControl_DBEntities _dbContext;
         private NavigationManager _navigationManager;
         //Свойства
         public string userLogin
@@ -62,7 +62,7 @@ namespace FinanceControl.ViewModel
         public ICommand RecoverCommand { get; }
         public ICommand PictureCloseApplication { get; }
         // Конструктор окна
-        public LoginViewModel(EventAggregator eventAggregator, FinanceControl_DB_Entities dbContext, NavigationManager navigationManager)
+        public LoginViewModel(EventAggregator eventAggregator, FinanceControl_DBEntities dbContext, NavigationManager navigationManager)
         {
             _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
@@ -98,7 +98,7 @@ namespace FinanceControl.ViewModel
         //Метод проверки данных на правильность и последующая аутентификация
         private void Login(object parameter)
         {
-            _dbContext = new FinanceControl_DB_Entities();
+            _dbContext = new FinanceControl_DBEntities();
             var user = _dbContext.Users.FirstOrDefault(u => u.UserLogin == _login && u.UserPassword == UnsecuredString_userPassword);
             if (user != null)
             {
