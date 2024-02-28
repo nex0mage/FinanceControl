@@ -33,7 +33,7 @@
                             <StackPanel>
                                 <!-- Иконка из FontAwesome.Sharp -->
                                 <fa:IconImage Icon="Wallet" Width="40" Height="40" Foreground="White" HorizontalAlignment="Center"/>
-                                <TextBlock TextWrapping="Wrap" Text="{Binding AccountName}" 
+                                <TextBlock TextWrapping="Wrap" FontWeight="Bold" Text="{Binding AccountName}" 
                                FontSize="20"
                                Foreground="White"
                                HorizontalAlignment="Center"/>

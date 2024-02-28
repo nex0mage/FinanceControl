@@ -82,13 +82,13 @@
                 
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Margin" Value="0,0,0,0"/>
-                    <Setter Property="Background" Value="#3D3D3F"/>
+                    <Setter Property="Background" Value="#292929"/>
                     <Setter Property="BorderBrush" Value="{Binding Path=Tag, RelativeSource={RelativeSource Self}}"/>
                 </Trigger>
 
                 <Trigger Property="IsChecked" Value="True">
                     <Setter Property="Margin" Value="0,0,0,5"/>
-                    <Setter Property="Background" Value="#3D3D3F"/>
+                    <Setter Property="Background" Value="#292929"/>
                     <Setter Property="BorderBrush" Value="{Binding Path=Tag, RelativeSource={RelativeSource Self}}"/>
                 </Trigger>
                 

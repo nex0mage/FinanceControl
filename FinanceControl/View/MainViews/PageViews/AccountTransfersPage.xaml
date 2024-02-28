@@ -38,7 +38,7 @@
                                 <Grid Grid.Row="0">
                                     <StackPanel>
                                         <fa:IconImage Icon="MoneyBillTransfer" Width="40" Height="40" Foreground="White" HorizontalAlignment="Center"/>
-                                        <TextBlock TextWrapping="Wrap" Text="{Binding Comment}" 
+                                        <TextBlock TextWrapping="Wrap" FontWeight="Bold" Text="{Binding Comment}" 
                                             FontSize="20"
                                             Foreground="White"
                                             HorizontalAlignment="Center"/>

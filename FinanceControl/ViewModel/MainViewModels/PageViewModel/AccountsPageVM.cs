@@ -56,9 +56,17 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             {
                 if (_balance != value)
                 {
-                    _balance = value;
-                    ValidateInput(); // Передаем _balance для валидации
-                    OnPropertyChanged(nameof(Balance));
+                    string stringValue = value.ToString("0.##"); // Форматирование с двумя знаками после точки, но без лишних нулей
+                    if (IsValidInput(stringValue))
+                    {
+                        _balance = value;
+                        OnPropertyChanged(nameof(Balance));
+                    }
+                    else
+                    {
+                        // Обработка недопустимого ввода, например, выдача сообщения об ошибке.
+                        MessageBox.Show("Ошибка вы можете ввести до 18 знаков перед запятой", "Ошибка");
+                    }
                 }
             }
         }
@@ -75,7 +83,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             LoadUserAccounts();
             DeleteSelectedAccountCommand = new ViewModelCommand(DeleteSelectedAccount, CanDeleteSelectedAccount);
             UpdateSelectedAccountCommand = new ViewModelCommand(UpdateSelectedAccount, CanUpdateSelectedAccount);
-            AddNewAccountCommand = new ViewModelCommand(AddNewAccount);
+            AddNewAccountCommand = new ViewModelCommand(AddNewAccount, CanAddNewAccount);
 
 
         }
@@ -112,16 +120,12 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                     // Если объект не прикреплен, прикрепим его
                     context.Accounts.Attach(IsAccountSelected);
                 }
-
                 // Удалить из базы данных
                 context.Accounts.Remove(IsAccountSelected);
-                context.SaveChanges();
-
                 // Удалить из коллекции
                 UserAccounts.Remove(IsAccountSelected);
-
                 // Сбросить выбор после удаления
-                IsAccountSelected = null;
+                EndOperation();
             }
         }
 
@@ -137,12 +141,9 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 // Обновляем свойства аккаунта
                 IsAccountSelected.Balance = Balance;
                 IsAccountSelected.AccountName = AccountName;
-
-                // Сохраняем изменения в базе данных
-                context.SaveChanges();
-
                 // Обновить коллекцию после изменений в базе данных
                 LoadUserAccounts();
+                EndOperation();
             }
         }
 
@@ -157,17 +158,11 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 Balance = Balance
 
             };
-
             // Добавляем новый аккаунт в базу данных
             context.Accounts.Add(newAccount);
-            context.SaveChanges();
-
             // Добавляем новый аккаунт в коллекцию
             UserAccounts.Add(newAccount);
-
-            // Очищаем поля ввода
-            AccountName = string.Empty;
-            Balance = 0;
+            EndOperation();
         }
 
         private bool CanUpdateSelectedAccount(object parameter)
@@ -175,26 +170,43 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             return IsAccountSelected != null;
         }
 
+        private bool CanAddNewAccount(object parameter)
+        {
+            if (string.IsNullOrWhiteSpace(AccountName) || Balance == 0.0m)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+
+        }
+
+
         private int GetNextAccountId()
         {
             // Находим максимальное значение AccountID в коллекции
-            int maxAccountId = UserAccounts.Max(account => account?.AccountID ?? 0);
-
+            int maxAccountId = context.Accounts.Any() ? context.Accounts.Max(account => account.AccountID) : 0;
             // Возвращаем следующее значение, увеличенное на 1
             return maxAccountId + 1;
         }
 
-        private void ValidateInput()
+        private void EndOperation()
         {
-            // Паттерн для десятичного числа с не более чем 18 знаками перед точкой и не более чем 2 знаками после точки
-            string pattern = @"^\d{0,18}([.,]\d{0,2})?$";
-            if (!Regex.IsMatch(_balance.ToString(), pattern))
-            {
-                // Сбросить значение или выполнить другие действия при неверном вводе
-                _balance = IsAccountSelected?.Balance ?? 0;
-                MessageBox.Show("Некорректный ввод строки с десятичным значением. Вы можете ввести 18 знаков до запятой и 2 знака после.", "Ошибка");
-                // Или можно использовать MessageBox.Show("Некорректный ввод");
-            }
+            context.SaveChanges();
+            IsAccountSelected = null;
+            Balance = 0.00m;
+            AccountName = null;
         }
+
+        private bool IsValidInput(string input)
+        {
+            string pattern = @"^\d{1,18}(\.\d{2})?$";
+            return Regex.IsMatch(input, pattern);
+        }
+
+
     }
 }

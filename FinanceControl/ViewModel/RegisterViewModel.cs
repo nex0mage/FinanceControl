@@ -138,7 +138,12 @@ namespace FinanceControl.ViewModel
                     MessageBox.Show("Регистрация выполнена успешно. Добро пожаловать!");
                     _eventAggregator.PublishUserLoggedIn(newUserId);
                     _navigationManager.NavigateToMainView(newUserId);
-                    Cancel(1);
+                    Window currentWindow = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
+                    if (currentWindow != null)
+                    {
+                        currentWindow.Close();
+                    }
+
                 }
             }
             else

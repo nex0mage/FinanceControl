@@ -4,12 +4,114 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FinanceControl.View.MainViews.PageViews"
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Background="#919A"
+      d:DesignHeight="700" d:DesignWidth="900"
+      Background="Transparent"
       Title="ChartsPage">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="7.5*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0" Background="#252525">
+            <TextBlock Style="{StaticResource titleText}"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center"
+               FontSize="40"
+               Text="Отчеты"/>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="1" Background="#292929">
+            <TextBlock Style="{StaticResource titleText}"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center"
+               FontSize="40"
+               Text="Настройки"/>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <lvc:PieChart Series="{Binding TotalPieSeries }" LegendLocation="Bottom" Width="400" Height="359" HorizontalAlignment="Center" TextBlock.Foreground="#FAFAFA" Background="Transparent" />
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1" Background="#405363">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="6*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource normalText}" Text="Начало периода отчета:" VerticalAlignment="Center"/>
+                <DatePicker Grid.Column="1" Grid.Row="0" Height="40" VerticalContentAlignment="Center"  Margin="3.5 1.5" SelectedDate="{Binding StartDate}" VerticalAlignment="Center" Background="#3D3D3D" FirstDayOfWeek="Monday" Cursor="Hand">
+                    <DatePicker.Resources>
+                        <Style TargetType="DatePickerTextBox">
+                            <Setter Property="Control.Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <TextBox x:Name="PART_TextBox"
+                                                         Text="{Binding Path=SelectedDate, StringFormat=d, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Mode=TwoWay, ConverterCulture=ru-Ru}" IsReadOnly="True"
+                                                         Background="{TemplateBinding Background}"
+                                                         BorderThickness="{TemplateBinding BorderThickness}"
+                                                         BorderBrush="{TemplateBinding BorderBrush}"
+                                                         Foreground="{TemplateBinding Foreground}"
+                                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DatePicker.Resources>
+                </DatePicker>
+                <TextBlock Grid.Column="0" Grid.Row="1" Style="{StaticResource normalText}" Text="Конец периода отчета:" VerticalAlignment="Center"/>
+                <DatePicker Grid.Column="1" Grid.Row="1" Height="40" VerticalContentAlignment="Center"  Margin="3.5 1.5" SelectedDate="{Binding EndDate}" VerticalAlignment="Center" Background="#3D3D3D" FirstDayOfWeek="Monday" Cursor="Hand">
+                    <DatePicker.Resources>
+                        <Style TargetType="DatePickerTextBox">
+                            <Setter Property="Control.Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <TextBox x:Name="PART_TextBox"
+                                                         Text="{Binding Path=SelectedDate, StringFormat=d, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Mode=TwoWay, ConverterCulture=ru-Ru}" IsReadOnly="True"
+                                                         Background="{TemplateBinding Background}"
+                                                         BorderThickness="{TemplateBinding BorderThickness}"
+                                                         BorderBrush="{TemplateBinding BorderBrush}"
+                                                         Foreground="{TemplateBinding Foreground}"
+                                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DatePicker.Resources>
+                </DatePicker>
+
+
+            </Grid>
+            
+
+            <Grid Grid.Row="1" Background="#3D3D3D">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Row="2" Grid.Column="0" Style="{StaticResource button_bottom}" Content="Сохранить" Width="90" Margin="4, 15" Command="{Binding Save}"/>
+                <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource button_bottom}" Content="Обновить" Width="90" Margin="4, 15" Command="{Binding UpdateChartPie}"/>
+
+            </Grid>
+
+        </Grid>
     </Grid>
 </Page>

@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -87,8 +88,11 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
 
         private void LoadAccountsFromContext()
         {
-            var accountsFrom = context.Accounts.ToList();
-            var accountsTo = context.Accounts.ToList();
+            var accountsFrom = context.Accounts.Where(accountFrom => accountFrom.Users.UserID == _loggedInUserId).ToList();
+
+            var accountsTo = context.Accounts.Where(accountTo => accountTo.Users.UserID == _loggedInUserId).ToList();
+
+
 
             // Создаем новые ObservableCollection и добавляем элементы из списков
             Accounts = new ObservableCollection<Accounts>(accountsFrom);
@@ -132,9 +136,18 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             {
                 if (_amount != value)
                 {
-                    _amount = value;
-                    OnPropertyChanged(nameof(Amount));
-                }    
+                    string stringValue = value.ToString("0.##"); // Форматирование с двумя знаками после точки, но без лишних нулей
+                    if (IsValidInput(stringValue))
+                    {
+                        _amount = value;
+                        OnPropertyChanged(nameof(Amount));
+                    }
+                    else
+                    {
+                        // Обработка недопустимого ввода, например, выдача сообщения об ошибке.
+                        MessageBox.Show("Ошибка вы можете ввести до 18 знаков перед запятой", "Ошибка");
+                    }
+                }
             }
         }
 
@@ -167,7 +180,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             LoadUserTransfers();
             DeleteSelectedTransferCommand = new ViewModelCommand(DeleteSelectedTransfer, CanDeleteSelectedTransfer);
             UpdateSelectedTransferCommand = new ViewModelCommand(UpdateSelectedTransfer, CanUpdateSelectedTransfer);
-            AddNewTransferCommand = new ViewModelCommand(AddNewTransfer);
+            AddNewTransferCommand = new ViewModelCommand(AddNewTransfer, CanAddNewTransfer);
 
 
 
@@ -200,10 +213,10 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
 
                 // Удаляем из базы данных
                 context.Transfers.Remove(IsTransferSelected);
-                context.SaveChanges();
-
                 // Удаляем из коллекции
                 UserTransfers.Remove(IsTransferSelected);
+                EndOperation();
+
             }
         }
 
@@ -252,7 +265,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             decimal difference = Amount - IsTransferSelected.Amount;
 
-            if (difference < 0 && (AccountTo.Balance - difference) < 0)
+            if (difference > 0 && (AccountTo.Balance - difference) < 0)
             {
                 MessageBox.Show("Кошелек получателя приобретает значение меньше нуля. Измените значение и повторите попытку.", "Операция прервана");
                 return;
@@ -271,17 +284,23 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             IsTransferSelected.Accounts = AccountFrom;
             IsTransferSelected.Accounts1 = AccountTo;
 
-            // Сохраняем изменения в базе данных
-            context.SaveChanges();
-
             // Обновить коллекцию после изменений в базе данных
+            EndOperation();
             LoadUserTransfers();
+
         }
 
         private bool CanUpdateSelectedTransfer(object parameter)
         {
+            if(string.IsNullOrWhiteSpace(Comment)|| Amount == 0.0m || AccountFrom == null || AccountTo == null)
+            {
+                return false;
+            } 
+            else
+            {
+                return IsTransferSelected != null;
 
-            return IsTransferSelected != null;
+            }
 
         }
 
@@ -303,11 +322,10 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 AccountFrom.Balance = AccountFrom.Balance - Amount;
                 AccountTo.Balance = AccountTo.Balance + Amount;
                 context.Transfers.Add(newTransfer);
-                context.SaveChanges();
 
                 // Добавляем в коллекцию
                 UserTransfers.Add(newTransfer);
-
+                EndOperation();
             }
             else
             {
@@ -318,13 +336,25 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             // Добавляем в базу данных
         }
 
+        private bool CanAddNewTransfer(object parameter)
+        {
+            if (string.IsNullOrWhiteSpace(Comment) || Amount == 0.0m || AccountFrom == null || AccountTo == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+
+        }
+
         private void LoadUserTransfers()
         {
             UserTransfers.Clear(); // Очищаем коллекцию перед загрузкой
 
-            var transfers = context.Transfers
-                .Where(transfer => transfer.Accounts.Users.UserID == _loggedInUserId)
-                .ToList();
+            var transfers = context.Transfers.Where(transfer => transfer.Accounts.Users.UserID == _loggedInUserId).ToList();
 
             foreach (var transfer in transfers)
             {
@@ -338,11 +368,30 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         private int GetNextTransferId()
         {
             // Находим максимальное значение AccountID в коллекции
-            int maxAccountId = UserTransfers.Max(account => account?.TransferID ?? 0);
+            int maxTransferId = context.Transfers.Any() ? context.Transfers.Max(transfer => transfer.TransferID) : 0;
 
             // Возвращаем следующее значение, увеличенное на 1
-            return maxAccountId + 1;
+            return maxTransferId + 1;
         }
+
+        private void EndOperation()
+        {
+            context.SaveChanges();
+            IsTransferSelected = null;
+            Amount = 0.00m;
+            AccountFrom = null;
+            AccountTo = null;
+            TransferDate = new DateTime(2023, 01, 01);
+            Comment = null;
+        }
+
+        private bool IsValidInput(string input)
+        {
+            string pattern = @"^\d{1,18}(\.\d{2})?$";
+            return Regex.IsMatch(input, pattern);
+        }
+
+
 
 
 

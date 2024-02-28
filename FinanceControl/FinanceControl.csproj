@@ -62,17 +62,34 @@
     <Reference Include="FontAwesome.Sharp, Version=6.3.0.0, Culture=neutral, PublicKeyToken=d16d1e4e568ec10f, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome.Sharp.6.3.0\lib\net48\FontAwesome.Sharp.dll</HintPath>
     </Reference>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=51482d6f650b2b3f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.2.4.10\lib\net47\MahApps.Metro.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
+    <Reference Include="OxyPlot, Version=2.1.2.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Core.2.1.2\lib\net45\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Wpf, Version=2.1.2.0, Culture=neutral, PublicKeyToken=75e952ba404cdbb0, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Wpf.2.1.2\lib\net45\OxyPlot.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Wpf.Shared, Version=2.1.2.0, Culture=neutral, PublicKeyToken=75e952ba404cdbb0, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Wpf.Shared.2.1.2\lib\net45\OxyPlot.Wpf.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web" />
@@ -90,6 +107,12 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Document.NET, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocX.3.0.0\lib\net40\Xceed.Document.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Words.NET, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocX.3.0.0\lib\net40\Xceed.Words.NET.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -157,6 +180,18 @@
     <Compile Include="ViewModel\MainViewModels\MainViewModel.cs" />
     <Compile Include="ViewModel\MainViewModels\PageViewModel\AccountsPageVM.cs" />
     <Compile Include="ViewModel\MainViewModels\PageViewModel\AccountTransfersPageVM.cs" />
+    <Compile Include="ViewModel\MainViewModels\PageViewModel\ChartsPageVM.cs" />
+    <Compile Include="ViewModel\MainViewModels\PageViewModel\DebtsPageVM.cs" />
+    <Compile Include="ViewModel\MainViewModels\PageViewModel\DebtsTransactionsPageVM.cs" />
+    <Compile Include="ViewModel\MainViewModels\PageViewModel\DocumentCreate.cs" />
+    <Compile Include="ViewModel\MainViewModels\PageViewModel\ExpenseCategoriesPageVM.cs" />
+    <Compile Include="ViewModel\MainViewModels\PageViewModel\ExpenseTransactionsPageVM.cs" />
+    <Compile Include="ViewModel\MainViewModels\PageViewModel\GoalsPageVM.cs" />
+    <Compile Include="ViewModel\MainViewModels\PageViewModel\GoalsTransactionsPageVM.cs" />
+    <Compile Include="ViewModel\MainViewModels\PageViewModel\IncomeCategoriesPageVM.cs" />
+    <Compile Include="ViewModel\MainViewModels\PageViewModel\IncomeTransactionsPageVM.cs" />
+    <Compile Include="ViewModel\MainViewModels\PageViewModel\RegularExpensesPageVM.cs" />
+    <Compile Include="ViewModel\MainViewModels\PageViewModel\RemindersPageVM.cs" />
     <Compile Include="ViewModel\RecoveryViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="View\MainViews\MainView.xaml.cs">

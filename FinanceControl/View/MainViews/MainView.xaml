@@ -21,14 +21,13 @@
                 <RowDefinition  Height="8*"/>
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" Background="#FF405363"  BorderThickness="3 3 3 1.5">
-                <StackPanel>
+                <StackPanel Grid.Row="0" Background="#FF405363">
+
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#292929">
+                        <TextBlock  Height="75" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource titleText}" Margin="5" TextAlignment="Center" FontWeight="ExtraBold" FontSize="45" Text="FinApp"/>
+                </Grid>
                     
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock  Style="{StaticResource titleText}" Margin="5 5 5 0" Width="224" Height="45" TextAlignment="Center" FontSize="35" Text="FinApp"/>
-                    </StackPanel>
-                    
-                    <Expander>
+                    <Expander Margin="2 0 0 0">
                                 <Expander.Header>
                                     <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Счета и переводы" FontSize="18" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
@@ -51,7 +50,7 @@
                                     
                     </Expander>
 
-                    <Expander>
+                <Expander Margin="2 0 0 0">
                                 <Expander.Header>
                                     <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Доходы" FontSize="18" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
@@ -72,7 +71,7 @@
                                     </RadioButton>
                                 </StackPanel>
                     </Expander>
-                    <Expander>
+                <Expander Margin="2 0 0 0">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Расходы" FontSize="18" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
@@ -99,7 +98,7 @@
                             </RadioButton>
                         </StackPanel>
                     </Expander>
-                    <Expander>
+                <Expander Margin="2 0 0 0">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Долги" FontSize="18" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
@@ -120,7 +119,7 @@
                             </RadioButton>
                         </StackPanel>
                     </Expander>
-                    <Expander>
+                <Expander Margin="2 0 0 0">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Цели" FontSize="18" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
@@ -141,7 +140,7 @@
                             </RadioButton>
                         </StackPanel>
                     </Expander>
-                    <Border Margin="0 0 0 0" BorderBrush="#3d3d3d" BorderThickness="0 3 0 0">
+                <Border Margin="0 0 0 0" BorderBrush="#292929" BorderThickness="0 3 0 0">
                         <RadioButton  Style="{StaticResource menuButton}" Tag="#FAFAFA" GroupName="MenuGroup" Command="{Binding CurrentPageReminders}">
                             <StackPanel Orientation="Horizontal">
                                 <fa:IconImage Style="{StaticResource menuButtonIcon}" Icon="Bell" />
@@ -164,10 +163,42 @@
                     <!-- Добавьте аналогичные Expander для других пунктов меню -->
                 </StackPanel>
 
-            </Border>
-            <Border Grid.Row="1" Background="#FF405363" BorderBrush="#3D3D3D" BorderThickness="3 1.5 3 3">
-                
-            </Border>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Style="{StaticResource titleText}" Text="Активные напоминания" Background="#292929"/>
+                <Grid Grid.Row="1" Background="#292929">
+                        <ScrollViewer>
+                            <ListBox ItemsSource="{Binding UserReminders}" Width="330" HorizontalAlignment="Center" Background="#405363">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+
+                                            <Grid Width="315" Background="Transparent">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock Style="{StaticResource normalText}" FontSize="12" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding ReminderDescription, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0"/>
+                                                <TextBlock Style="{StaticResource normalText}" FontSize="12" VerticalAlignment="Center" Text="{Binding ReminderDate, UpdateSourceTrigger=PropertyChanged, StringFormat=d, ConverterCulture=ru-Ru}" Grid.Column="1"/>
+                                                <CheckBox IsChecked="{Binding IsCompleted}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                    <CheckBox.LayoutTransform>
+                                                        <ScaleTransform ScaleX="1.3" ScaleY="1.3"/>
+                                                    </CheckBox.LayoutTransform>
+                                                </CheckBox>
+                                            </Grid>
+                                            
+
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </ScrollViewer>
+
+                    </Grid>
+                </Grid>
         </Grid>
         <Frame Grid.Column="1" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden">
 
