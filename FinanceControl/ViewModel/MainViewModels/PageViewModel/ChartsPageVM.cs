@@ -20,6 +20,8 @@ using OxyPlot.Series;
 using System.Runtime.Remoting.Contexts;
 using Xceed.Words.NET;
 using OxyPlot.Legends;
+using System.Runtime.InteropServices.ComTypes;
+using System.Data.Common;
 
 
 namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
@@ -76,8 +78,9 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         public ChartsPageVM(int loggedInUserId)
         {
             _loggedInUserId = loggedInUserId; // Присваиваем идентификатор пользователя
-            // Инициализация данных
-            // Загрузка данных из базы данных
+                                              // Инициализация данных
+                                              // Загрузка данных из базы данных
+            _context = new FinanceControl_DBEntities();
             LoadData();
             Save = new ViewModelCommand(SaveInFile);
             UpdateChartPie = new ViewModelCommand(UpdateChartByNewDate);
@@ -177,72 +180,80 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
 
         private void UpdateChartByNewDate(object parameter)
         {
+            _context = new FinanceControl_DBEntities();
             LoadData();
         }
 
         private void LoadData()
         {
-            _context = new FinanceControl_DBEntities();
             TotalPieSeries = new SeriesCollection();
+
             using (var context = _context)
             {
-                var incomeTransactions = context.IncomeTransactions
+                var startDate = _startDate.Date;
+                var endDate = _endDate.Date.AddDays(1).AddTicks(-1);  // Конечная дата (включительно)
+                var incomeTotal = CalculateTotalAmountByDate(context.IncomeTransactions
                     .Where(t => t.Accounts.UserID == _loggedInUserId)
-                    .ToList();
+                    .Select(t => (IncomeTransactions)t), startDate, endDate);
 
-                var goalsTransactions = context.GoalsTransactions
+                var goalsTotal = CalculateTotalAmountByDate(context.GoalsTransactions
                     .Where(t => t.Accounts.UserID == _loggedInUserId)
-                    .ToList();
+                    .Select(t => (GoalsTransactions)t), startDate, endDate);
 
-                var debtsTransactions = context.DebtsTransactions
+                var debtsTotal = CalculateTotalAmountByDate(context.DebtsTransactions
                     .Where(t => t.Accounts.UserID == _loggedInUserId)
-                    .ToList();
+                    .Select(t => (DebtsTransactions)t), startDate, endDate);
 
-                var expensesTransactions = context.ExpensesTransactions
+                var expensesTotal = CalculateTotalAmountByDate(context.ExpensesTransactions
                     .Where(t => t.Accounts.UserID == _loggedInUserId)
-                    .ToList();
-
-                // Расчет суммы транзакций по дате
-
-                var incomeData = CalculateTotalAmountByDate(incomeTransactions, _startDate, _endDate);
-                var goalsData = CalculateTotalAmountByDate(goalsTransactions, _startDate, _endDate);
-                var debtsData = CalculateTotalAmountByDate(debtsTransactions, _startDate, _endDate);
-                var expensesData = CalculateTotalAmountByDate(expensesTransactions, _startDate, _endDate);
+                    .Select(t => (ExpensesTransactions)t), startDate, endDate);
+                // Цвета для каждой диаграммы
+                var colors = new Dictionary<string, string>
+        {
+            {"Доходы", "#597B55"},
+            {"Цели", "#e3a832"},
+            {"Долги", "#497280"},
+            {"Расходы", "#754B42"}
+        };
 
                 // Добавление данных в коллекции PieSeries
-                AddDataToSeries(TotalPieSeries, incomeData, "Доходы", "#597B55");
-                AddDataToSeries(TotalPieSeries, goalsData, "Цели", "#e3a832");
-                AddDataToSeries(TotalPieSeries, debtsData, "Долги", "#497280");
-                AddDataToSeries(TotalPieSeries, expensesData, "Расходы", "#754B42");
+                AddDataToSeries(TotalPieSeries, new Dictionary<string, decimal>
+        {
+            {"Доходы", incomeTotal},
+            {"Цели", goalsTotal},
+            {"Долги", debtsTotal},
+            {"Расходы", expensesTotal}
+        }, colors);
             }
         }
 
-
-
-        private Dictionary<DateTime, decimal> CalculateTotalAmountByDate<T>(List<T> transactions, DateTime _startDate, DateTime _endDate)
+        private decimal CalculateTotalAmountByDate<T>(IEnumerable<T> transactions, DateTime _startDate, DateTime _endDate)
             where T : class
         {
             return transactions
                 .Where(t => t.GetType().GetProperty("TransactionDate") != null)
                 .Where(t => (DateTime)t.GetType().GetProperty("TransactionDate").GetValue(t, null) >= _startDate &&
                             (DateTime)t.GetType().GetProperty("TransactionDate").GetValue(t, null) <= _endDate)
-                .GroupBy(t => (DateTime)t.GetType().GetProperty("TransactionDate").GetValue(t, null))
-                .ToDictionary(group => group.Key, group => group.Sum(t => (decimal)t.GetType().GetProperty("Amount").GetValue(t, null)));
+                .Sum(t => (decimal)t.GetType().GetProperty("Amount").GetValue(t, null));
         }
 
-        private void AddDataToSeries(SeriesCollection series, Dictionary<DateTime, decimal> data, string seriesTitle, string hexColor)
+        private void AddDataToSeries(SeriesCollection series, Dictionary<string, decimal> data, Dictionary<string, string> colors)
         {
-            System.Windows.Media.Color color = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString(hexColor);
-
-            var pieSeries = new LiveCharts.Wpf.PieSeries
+            foreach (var entry in data)
             {
-                Title = seriesTitle,
-                Values = new ChartValues<double>(data.Values.Select(value => (double)value)),
-                DataLabels = true,
-                Fill = new SolidColorBrush(color)
-            };
+                var color = colors.ContainsKey(entry.Key) ? colors[entry.Key] : "#000000"; // Цвет по умолчанию
+                System.Windows.Media.Color colorValue = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString(color);
 
-            series.Add(pieSeries);
+                var pieSeries = new LiveCharts.Wpf.PieSeries
+                {
+                    Title = entry.Key,
+                    Values = new ChartValues<double> { (double)entry.Value },
+                    DataLabels = true,
+                    Fill = new SolidColorBrush(colorValue)
+                };
+
+                series.Add(pieSeries);
+            }
         }
     }
 }
