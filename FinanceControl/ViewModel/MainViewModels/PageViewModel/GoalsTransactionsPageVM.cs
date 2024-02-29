@@ -182,7 +182,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 var oldAccountFrom = context.Accounts.Find(oldAccountFromID);
                 oldAccountFrom.Balance += IsGoalsTransactionSelected.Amount;
                 var oldAccountTo = context.Goals.Find(oldAccountToID);
-                oldAccountTo.Ammount -= IsGoalsTransactionSelected.Amount;
+                oldAccountTo.Ammount += IsGoalsTransactionSelected.Amount;
 
                 // Удаляем из базы данных
                 context.GoalsTransactions.Remove(IsGoalsTransactionSelected);

@@ -183,7 +183,6 @@
     <Compile Include="ViewModel\MainViewModels\PageViewModel\ChartsPageVM.cs" />
     <Compile Include="ViewModel\MainViewModels\PageViewModel\DebtsPageVM.cs" />
     <Compile Include="ViewModel\MainViewModels\PageViewModel\DebtsTransactionsPageVM.cs" />
-    <Compile Include="ViewModel\MainViewModels\PageViewModel\DocumentCreate.cs" />
     <Compile Include="ViewModel\MainViewModels\PageViewModel\ExpenseCategoriesPageVM.cs" />
     <Compile Include="ViewModel\MainViewModels\PageViewModel\ExpenseTransactionsPageVM.cs" />
     <Compile Include="ViewModel\MainViewModels\PageViewModel\GoalsPageVM.cs" />
