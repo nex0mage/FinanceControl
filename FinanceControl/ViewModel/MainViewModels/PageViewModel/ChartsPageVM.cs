@@ -142,27 +142,41 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
 
             if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                // Сохраняем график в изображение
-                var imageFileName = Path.Combine(Path.GetTempPath(), "chart_image.png");
-                SaveGraphImage(plotModel, imageFileName);
-
-                // Создаем новый документ Word
-                using (var doc = DocX.Create(saveFileDialog.FileName))
+                try
                 {
-                    // Вставляем изображение в документ
-                    var image = doc.AddImage(imageFileName);
-                    var picture = image.CreatePicture();
-                    var paragraph = doc.InsertParagraph();
-                    paragraph.InsertPicture(picture);
-
-                    // Добавляем легенду к изображению в документе Word
-                    foreach (var slice in pieSeries.Slices)
+                    using (File.Open(saveFileDialog.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                     {
-                        paragraph.AppendLine($"{slice.Label} - {slice.Value}");
-                    }
+                        // Сохраняем график в изображение
+                        var imageFileName = Path.Combine(Path.GetTempPath(), "chart_image.png");
+                        SaveGraphImage(plotModel, imageFileName);
 
-                    // Сохраняем документ Word
-                    doc.Save();
+                        // Создаем новый документ Word
+                        using (var doc = DocX.Create(saveFileDialog.FileName))
+                        {
+                            // Вставляем изображение в документ
+                            var image = doc.AddImage(imageFileName);
+                            var picture = image.CreatePicture();
+                            var paragraph = doc.InsertParagraph();
+                            paragraph.InsertPicture(picture);
+
+                            // Добавляем легенду к изображению в документе Word
+                            foreach (var slice in pieSeries.Slices)
+                            {
+                                paragraph.AppendLine($"{slice.Label} - {slice.Value}");
+                            }
+
+                            // Сохраняем документ Word
+                            doc.Save();
+                        }
+
+                        // Файл не заблокирован, продолжаем выполнение кода
+                    }
+                }
+                catch (IOException)
+                {
+                    // Файл заблокирован другим приложением
+                    System.Windows.MessageBox.Show("Файл уже открыт другим приложением. Закройте его перед сохранением.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return; // Прекращаем сохранение
                 }
             }
         }
