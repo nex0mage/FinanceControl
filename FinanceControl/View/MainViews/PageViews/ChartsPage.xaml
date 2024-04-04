@@ -34,11 +34,7 @@
                Text="Настройки"/>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="5*"/>
-                <RowDefinition Height="3*"/>
-            </Grid.RowDefinitions>
-            <lvc:PieChart Series="{Binding TotalPieSeries }" LegendLocation="Bottom" Width="400" Height="359" HorizontalAlignment="Center" TextBlock.Foreground="#FAFAFA" Background="Transparent" />
+            <lvc:PieChart Series="{Binding TotalPieSeries }" LegendLocation="Bottom" Width="500" Height="500" HorizontalAlignment="Center" TextBlock.Foreground="#FAFAFA" Background="Transparent" />
         </Grid>
         <Grid Grid.Row="1" Grid.Column="1" Background="#405363">
             <Grid.RowDefinitions>
@@ -100,9 +96,9 @@
 
 
             </Grid>
-            
 
-            <Grid Grid.Row="1" Background="#3D3D3D">
+
+            <Grid Grid.Row="1" Background="#292929">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="3*"/>

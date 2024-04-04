@@ -10,7 +10,8 @@
         MinWidth="1200"
         Background="#3D3D3D"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanMinimize">
+        ResizeMode="CanMinimize"
+        Title="Контроль личных финансов" >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -24,13 +25,13 @@
                 <StackPanel Grid.Row="0" Background="#FF405363">
 
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#292929">
-                        <TextBlock  Height="75" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource titleText}" Margin="5" TextAlignment="Center" FontWeight="ExtraBold" FontSize="45" Text="FinApp"/>
+                        <TextBlock  Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource titleText}" Margin="5" TextAlignment="Center" FontWeight="ExtraBold" FontSize="35" Text="FinApp"/>
                 </Grid>
                     
                     <Expander Margin="2 0 0 0">
                                 <Expander.Header>
                                     <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Счета и переводы" FontSize="18" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
+                                <TextBlock Text="Счета и переводы" FontSize="17" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
                                     </StackPanel>
                                 </Expander.Header>
                                 <StackPanel>
@@ -53,7 +54,7 @@
                 <Expander Margin="2 0 0 0">
                                 <Expander.Header>
                                     <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Доходы" FontSize="18" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
+                            <TextBlock Text="Доходы" FontSize="17" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
                                     </StackPanel>
                                 </Expander.Header>
                                 <StackPanel>
@@ -74,7 +75,7 @@
                 <Expander Margin="2 0 0 0">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Расходы" FontSize="18" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
+                            <TextBlock Text="Расходы" FontSize="17" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel>
@@ -101,7 +102,7 @@
                 <Expander Margin="2 0 0 0">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Долги" FontSize="18" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
+                            <TextBlock Text="Долги" FontSize="17" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel>
@@ -122,7 +123,7 @@
                 <Expander Margin="2 0 0 0">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Цели" FontSize="18" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
+                            <TextBlock Text="Цели" FontSize="17" FontWeight="SemiBold" Style="{StaticResource menuButtonText}" />
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel>

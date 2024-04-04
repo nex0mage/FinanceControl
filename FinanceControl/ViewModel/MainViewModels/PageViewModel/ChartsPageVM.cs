@@ -144,7 +144,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             {
                 try
                 {
-                    using (File.Open(saveFileDialog.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    using (File.Open(saveFileDialog.FileName, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite))
                     {
                         // Сохраняем график в изображение
                         var imageFileName = Path.Combine(Path.GetTempPath(), "chart_image.png");

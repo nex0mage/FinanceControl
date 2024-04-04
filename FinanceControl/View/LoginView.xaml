@@ -36,24 +36,23 @@
             <Border CornerRadius="10 0 0 10">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#FF496475" Offset="0"/>
-                        <GradientStop Color="#FF5D5D5D" Offset="4"/>
+                        <GradientStop Color="#496475" Offset="0"/>
                     </LinearGradientBrush>
                 </Border.Background>
                 <Grid>
                     <Canvas>
                         <Polygon Points="0,20 320,140 0,320"
-                                 Fill="#FF4E6E82"/>
+                                 Fill="#4E6E82"/>
                         <Ellipse Margin="140 300 0 0"
                                  Width="153"
                                  Height="153"
-                                 Fill="#FF4E6E82"/>
+                                 Fill="#4E6E82"/>
                     </Canvas>
                     <StackPanel VerticalAlignment="Center">
                         <TextBlock Text="Зарегистрироваться"
                                    Style="{StaticResource titleText}" />
                         <TextBlock Text="Если у вас нет аккаунта, чтобы войти в приложение"
-                                   Style="{StaticResource normalText}" Opacity="0.8"
+                                   Style="{StaticResource normalText}" Opacity="0.9"
                                    Margin="20 20"/>
                         <Button Content="Регистрация"
                                 Command="{Binding RegistrationCommand}"

@@ -79,6 +79,13 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 // Удаляем из базы данных
                 context.IncomeCategories.Remove(IsIncomeCategorySelected);
                 // Удаляем из коллекции
+                var transactionsToRemove = context.IncomeTransactions.Where(tx => tx.IncomeCategoryID == IsIncomeCategorySelected.IncomeCategoryID).ToList();
+                if (transactionsToRemove.Any())
+                {
+                    context.IncomeTransactions.RemoveRange(transactionsToRemove);
+                    context.SaveChanges();
+                }
+
                 UserIncomeCategories.Remove(IsIncomeCategorySelected);
                 EndOperation();
 

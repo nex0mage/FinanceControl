@@ -231,7 +231,7 @@
                             Margin="60 0 0 0"
                             x:Name="changepassButton"/>
                     <Button Style="{StaticResource button_bottom}" 
-                            
+                            Command="{Binding CancelCommand}"
                             Height="40"
                             Width="90" 
                             Content="Отмена" 

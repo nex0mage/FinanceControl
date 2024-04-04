@@ -6,13 +6,10 @@
       xmlns:local="clr-namespace:FinanceControl.View.MainViews.PageViews"
       xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
       xmlns:i="clr-namespace:FinanceControl.CustomControls" 
-
-
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="900"
       Background="Transparent"
       Title="ExpenseCategoriesPage">
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="6*"/>
@@ -51,20 +48,15 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-
-
         </ScrollViewer>
         <Border Grid.Column="1" BorderThickness="3" BorderBrush="Transparent" Background="#405363">
             <Grid>
-
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="8*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Border BorderBrush="#FF2F2F2F" Background="#3D3D3D" BorderThickness="5">
-
+                <Border BorderBrush="#FF2F2F2F" Background="#292929" BorderThickness="5">
                     <TextBlock Style="{StaticResource titleText}" FontSize="30" 
                                    Text="Категории расходов" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0 0"/>
 
@@ -90,7 +82,6 @@
                     </Grid.RowDefinitions>
                     <Border Grid.Column="0" Grid.Row="0" BorderBrush="#FF2F2F2F" BorderThickness="0 0 2.5 5" Background="#384957">
                         <TextBlock Style="{StaticResource normalText}" Text="Свойство" VerticalAlignment="Center"/>
-
                     </Border>
                     <Border Grid.Column="1" Grid.Row="0" BorderBrush="#FF2F2F2F" BorderThickness="2.5 0 0 5" Background="#384957">
                         <TextBlock Style="{StaticResource normalText}" Text="Значение" VerticalAlignment="Center"/>
@@ -103,7 +94,6 @@
                     <Border Grid.Column="1" Grid.Row="1" BorderBrush="#FF2F2F2F" BorderThickness="0 0 0 0" Background="Transparent">
                         <TextBox Margin="3.5 1.5" Style="{StaticResource  textBox}" Text="{Binding CategoryName, UpdateSourceTrigger=PropertyChanged}" MaxLength="100"/>
                     </Border>
-
                 </Grid>
                 <Grid Grid.Row="2" Background="#3D3D3D">
                     <Grid.ColumnDefinitions>
@@ -117,6 +107,5 @@
                 </Grid>
             </Grid>
         </Border>
-
     </Grid>
 </Page>

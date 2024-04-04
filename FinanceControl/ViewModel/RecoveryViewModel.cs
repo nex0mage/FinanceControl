@@ -80,6 +80,7 @@ namespace FinanceControl.ViewModel
 
             RecoverCommand = new ViewModelCommand(RecoverByCode, CanRecover_ByCode);
             SendRecoveryCodeCommand = new ViewModelCommand(SendRecoveryCode, CanSend_RecoveryCode);
+            CancelCommand = new ViewModelCommand(Cancel);
            // CancelCommand = new ViewModelCommand();
         }
 
@@ -199,6 +200,16 @@ namespace FinanceControl.ViewModel
                     smtpClient.Send(mailMessage);
                 }
             }
+        }
+
+        private void Cancel(object parameter)
+        {
+            Window currentWindow = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
+            if (currentWindow != null)
+            {
+                currentWindow.Close();
+            }
+
         }
 
 

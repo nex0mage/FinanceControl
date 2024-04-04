@@ -6,12 +6,10 @@
       xmlns:local="clr-namespace:FinanceControl.View.MainViews.PageViews"
       xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
       xmlns:i="clr-namespace:FinanceControl.CustomControls" 
-
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="900"
       Background="Transparent"
       Title="RemindersPage">
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="6*"/>
@@ -21,7 +19,6 @@
             <ListBox ItemsSource="{Binding UserReminders}" Grid.Column="0" Width="515" HorizontalAlignment="Left" Background="Transparent"
              SelectionMode="Single"
              SelectedItem="{Binding IsReminderSelected, Mode=TwoWay}">
-
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Border BorderBrush="#FAFAFA" 
@@ -79,10 +76,6 @@
                                         </TextBlock>
                                     </StackPanel>
                                 </Grid>
-
-
-
-
                             </Grid>
                         </Border>
                     </DataTemplate>
@@ -91,18 +84,14 @@
         </ScrollViewer>
         <Border Grid.Column="1" BorderThickness="3" BorderBrush="Transparent" Background="#405363">
             <Grid>
-
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="8*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Border BorderBrush="#FF2F2F2F" Background="#3D3D3D" BorderThickness="5">
-
+                <Border BorderBrush="#FF2F2F2F" Background="#292929" BorderThickness="5">
                     <TextBlock Style="{StaticResource titleText}" FontSize="30" 
                                    Text="Напоминания" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0 0"/>
-
                 </Border>
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
@@ -120,15 +109,12 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition Height="3*"/>
-
                     </Grid.RowDefinitions>
                     <Border Grid.Column="0" Grid.Row="0" BorderBrush="#FF2F2F2F" BorderThickness="0 0 2.5 5" Background="#384957">
                         <TextBlock Style="{StaticResource normalText}" Text="Свойство" VerticalAlignment="Center"/>
-
                     </Border>
                     <Border Grid.Column="1" Grid.Row="0" BorderBrush="#FF2F2F2F" BorderThickness="2.5 0 0 5" Background="#384957">
                         <TextBlock Style="{StaticResource normalText}" Text="Значение" VerticalAlignment="Center"/>
-
                     </Border>
                     <Border Grid.Column="0" Grid.Row="1" BorderBrush="#FF2F2F2F" BorderThickness="0 0 0 0" Background="Transparent">
                         <TextBlock Style="{StaticResource normalText}" Text="Дата напоминания" VerticalAlignment="Center"/>
@@ -175,10 +161,8 @@
                         <TextBlock Style="{StaticResource normalText}" Text="Примечание:" VerticalAlignment="Center"/>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="9" BorderBrush="#FF2F2F2F" BorderThickness="0 0 0 0" Background="Transparent">
-                        <TextBlock Style="{StaticResource normalText}" Margin="10" FontSize="12" TextAlignment="Justify" Text="Напоминание появится в окошке слева снизу, в день, который вы зададите. Если вы зайдете позже то оно также отобразится." VerticalAlignment="Center"/>
+                        <TextBlock Style="{StaticResource normalText}" Margin="10" FontSize="12" TextAlignment="Justify" Text="Напоминание появится в окошке слева снизу, в день, который вы зададите. Если вы зайдете позже, то оно также отобразится." VerticalAlignment="Center"/>
                     </Border>
-                    
-                    
                 </Grid>
                 <Grid Grid.Row="2" Background="#3D3D3D">
                     <Grid.ColumnDefinitions>
@@ -192,6 +176,5 @@
                 </Grid>
             </Grid>
         </Border>
-
     </Grid>
 </Page>

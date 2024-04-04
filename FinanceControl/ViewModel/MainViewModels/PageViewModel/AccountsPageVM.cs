@@ -113,22 +113,45 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (IsAccountSelected != null)
             {
-                var entry = context.Entry(IsAccountSelected);
+                // Получаем ID аккаунта, который будем удалять
+                var accountIdToDelete = IsAccountSelected.AccountID;
 
-                if (entry.State == EntityState.Detached)
+                // Удаляем все зависимые записи из таблицы ExpensesTransactions, связанные с выбранным аккаунтом
+                var expenses = context.ExpensesTransactions.Where(e => e.AccountID == accountIdToDelete);
+                context.ExpensesTransactions.RemoveRange(expenses);
+
+                // Удаляем все зависимые записи из таблицы IncomeTransactions, связанные с выбранным аккаунтом
+                var incomes = context.IncomeTransactions.Where(i => i.AccountID == accountIdToDelete);
+                context.IncomeTransactions.RemoveRange(incomes);
+
+                // Удаляем все зависимые записи из таблицы DebtTransactions, связанные с выбранным аккаунтом
+                var debts = context.DebtsTransactions.Where(d => d.AccountID == accountIdToDelete);
+                context.DebtsTransactions.RemoveRange(debts);
+
+                // Удаляем все зависимые записи из таблицы GoalTransactions, связанные с выбранным аккаунтом
+                var goals = context.GoalsTransactions.Where(g => g.AccountID == accountIdToDelete);
+                context.GoalsTransactions.RemoveRange(goals);
+
+                // Получаем выбранный аккаунт из базы данных
+                var accountToDelete = context.Accounts.SingleOrDefault(a => a.AccountID == accountIdToDelete);
+
+                // Если аккаунт найден
+                if (accountToDelete != null)
                 {
-                    // Если объект не прикреплен, прикрепим его
-                    context.Accounts.Attach(IsAccountSelected);
+                    // Удаляем выбранный аккаунт из базы данных
+                    context.Accounts.Remove(accountToDelete);
+
+                    // Удаляем выбранный аккаунт из коллекции пользовательских аккаунтов
+                    UserAccounts.Remove(IsAccountSelected);
+
+                    // Сохраняем изменения
+                    context.SaveChanges();
+
+                    // Сбросить выбор после удаления
+                    EndOperation();
                 }
-                // Удалить из базы данных
-                context.Accounts.Remove(IsAccountSelected);
-                // Удалить из коллекции
-                UserAccounts.Remove(IsAccountSelected);
-                // Сбросить выбор после удаления
-                EndOperation();
             }
         }
-
         private bool CanDeleteSelectedAccount(object parameter)
         {
             return IsAccountSelected != null;

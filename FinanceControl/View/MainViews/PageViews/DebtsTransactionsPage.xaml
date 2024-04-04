@@ -21,7 +21,6 @@
             <ListBox ItemsSource="{Binding UserDebtsTransactions}" Grid.Column="0" Width="515" HorizontalAlignment="Left" Background="Transparent"
              SelectionMode="Single"
              SelectedItem="{Binding IsDebtsTransactionSelected, Mode=TwoWay}">
-
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Border BorderBrush="#FAFAFA" 
@@ -81,10 +80,6 @@
                                         </TextBlock>
                                     </StackPanel>
                                 </Grid>
-
-
-
-
                             </Grid>
                         </Border>
                     </DataTemplate>
@@ -93,18 +88,15 @@
         </ScrollViewer>
         <Border Grid.Column="1" BorderThickness="3" BorderBrush="Transparent" Background="#405363">
             <Grid>
-
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="8*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Border BorderBrush="#FF2F2F2F" Background="#3D3D3D" BorderThickness="5">
+                <Border BorderBrush="#FF2F2F2F" Background="#292929" BorderThickness="5">
 
                     <TextBlock Style="{StaticResource titleText}" FontSize="30" 
                                    Text="Операции по долгам" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0 0"/>
-
                 </Border>
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
@@ -184,7 +176,6 @@
                             </DatePicker.Resources>
                         </DatePicker>
                     </Border>
-
                 </Grid>
                 <Grid Grid.Row="2" Background="#3D3D3D">
                     <Grid.ColumnDefinitions>
@@ -198,6 +189,5 @@
                 </Grid>
             </Grid>
         </Border>
-
     </Grid>
 </Page>

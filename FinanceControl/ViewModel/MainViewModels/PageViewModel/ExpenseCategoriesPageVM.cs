@@ -73,6 +73,15 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
 
                 // Удаляем из базы данных
                 context.ExpensesCategories.Remove(IsExpenseCategorySelected);
+                var transactionsToRemove = context.ExpensesTransactions.Where(tx => tx.ExpenseCategoryID == IsExpenseCategorySelected.ExpenseCategoryID).ToList();
+                var regularTransactionsToRemove = context.RegularExpenses.Where(tx => tx.ExpenseCategoryID == IsExpenseCategorySelected.ExpenseCategoryID).ToList();
+                if (transactionsToRemove.Any() || regularTransactionsToRemove.Any())
+                {
+                    context.ExpensesTransactions.RemoveRange(transactionsToRemove);
+                    context.RegularExpenses.RemoveRange(regularTransactionsToRemove);
+                    context.SaveChanges();
+                }
+
                 // Удаляем из коллекции
                 UserExpenseCategories.Remove(IsExpenseCategorySelected);
                 EndOperation();
@@ -144,14 +153,11 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
 
         }
 
-
         private void LoadSelectedExpenseCategorynDetails()
         {
             if (IsExpenseCategorySelected != null && context.Entry(IsExpenseCategorySelected).State != EntityState.Detached)
             {
                 CategoryName = IsExpenseCategorySelected.CategoryName;
-
-
             }
         }
 
@@ -184,10 +190,5 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             IsExpenseCategorySelected = null;
             CategoryName = null;
         }
-
-
-
-
-
     }
 }

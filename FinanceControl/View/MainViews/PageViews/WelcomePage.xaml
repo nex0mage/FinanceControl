@@ -7,7 +7,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="900"
       Title="WelcomePage">
-
     <Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock Style="{StaticResource titleText}" Text="Добро пожаловать в приложение."/>
