@@ -121,7 +121,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 }
             }
         }
-
         public decimal Amount
         {
             get => _amount;
@@ -154,17 +153,12 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                     _selectedIncomeTransaction = value;
                     OnPropertyChanged(nameof(IsIncomeTransactionSelected));
                     LoadSelectedIncomeTransactionDetails();
-
                 }
             }
-
         }
-
         public ICommand DeleteSelectedTransactionCommand { get; }
         public ICommand UpdateSelectedTransactionCommand { get; }
         public ICommand AddNewTransactionCommand { get; }
-
-
         public IncomeTransactionsPageVM(int loggedInUserId, FinanceControl_DBEntities transContext)
         {
             context = transContext;
@@ -175,9 +169,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             DeleteSelectedTransactionCommand = new ViewModelCommand(DeleteSelectedTransaction, CanDeleteSelectedTransaction);
             UpdateSelectedTransactionCommand = new ViewModelCommand(UpdateSelectedTransaction, CanUpdateSelectedTransactions);
             AddNewTransactionCommand = new ViewModelCommand(AddNewTransaction, CanAddNewTransaction);
-
         }
-
         private void DeleteSelectedTransaction(object parameter)
         {
             if (IsIncomeTransactionSelected != null)
@@ -185,23 +177,17 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 int? oldAccountToID = IsIncomeTransactionSelected.AccountID;
                 var oldAccountTo = context.Accounts.Find(oldAccountToID);
                 oldAccountTo.Balance -= IsIncomeTransactionSelected.Amount;
-
                 // Удаляем из базы данных
                 context.IncomeTransactions.Remove(IsIncomeTransactionSelected);
-
                 // Удаляем из коллекции
                 UserIncomeTransactions.Remove(IsIncomeTransactionSelected);
-
                 EndOperation();
-
             }
         }
-
         private bool CanDeleteSelectedTransaction(object parameter)
         {
             return IsIncomeTransactionSelected != null;
         }
-
         private void UpdateSelectedTransaction(object parameter)
         {
             if (IsIncomeTransactionSelected != null)
@@ -211,14 +197,10 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 IsIncomeTransactionSelected.TransactionDate = IncomeTransactionDate;
                 IsIncomeTransactionSelected.AccountID = AccountTo.AccountID;
                 IsIncomeTransactionSelected.IncomeCategoryID = IncomeCategory.IncomeCategoryID;
-
                 int? oldAccountToID = IsIncomeTransactionSelected.AccountID;
-
                 UpdateAccountBalances( oldAccountToID, AccountTo.AccountID);
             }
-
         }
-
         private void UpdateAccountBalances ( int? oldAccountToID, int newAccountToID)
         {
             if (oldAccountToID != newAccountToID)
@@ -227,19 +209,13 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 var oldAccountTo = context.Accounts.Find(oldAccountToID);
                 oldAccountTo.Balance -= IsIncomeTransactionSelected.Amount;
             }
-
             decimal difference = Amount - IsIncomeTransactionSelected.Amount;
             AccountTo.Balance += difference;
-
             IsIncomeTransactionSelected.Amount = Amount;
             IsIncomeTransactionSelected.Accounts = AccountTo;
-
             EndOperation();
-
             LoadUserIncomeTransactions();
-            
         }
-
         private bool CanUpdateSelectedTransactions(object parameter)
         {
             if (string.IsNullOrWhiteSpace(Comment) || Amount == 0.0m || AccountTo == null || IncomeCategory == null)
@@ -249,10 +225,8 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             else
             {
                 return IsIncomeTransactionSelected != null;
-
             }
         }
-
         private void AddNewTransaction(object parameter)
         {
             IncomeTransactions newIncomeTransaction = new IncomeTransactions
@@ -269,10 +243,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             // Добавляем в коллекцию
             UserIncomeTransactions.Add(newIncomeTransaction);
             EndOperation();
-
-
         }
-
         private bool CanAddNewTransaction(object parameter)
         {
             if (string.IsNullOrWhiteSpace(Comment) || Amount == 0.0m || AccountTo == null)
@@ -283,8 +254,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             {
                 return true;
             }
-
-
         }
 
         private void LoadSelectedIncomeTransactionDetails()

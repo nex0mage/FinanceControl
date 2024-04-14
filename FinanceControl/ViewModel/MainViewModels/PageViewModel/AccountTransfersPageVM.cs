@@ -192,10 +192,10 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             if (IsTransferSelected != null && context.Entry(IsTransferSelected).State != EntityState.Detached)
             {
                 Amount = IsTransferSelected.Amount;
-                Comment = IsTransferSelected.Comment; // Здесь Balance должен быть типа decimal
+                Comment = IsTransferSelected.Comment; 
                 TransferDate = IsTransferSelected.TransferDate;
-                AccountTo = IsTransferSelected.Accounts1; // Предположим, что Accounts1 относится к AccountTo
-                AccountFrom = IsTransferSelected.Accounts; // Предположим, что Accounts относится к AccountFrom
+                AccountTo = IsTransferSelected.Accounts1; 
+                AccountFrom = IsTransferSelected.Accounts;
 
             }
         }
@@ -210,13 +210,9 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 oldAccountFrom.Balance += IsTransferSelected.Amount;
                 var oldAccountTo = context.Accounts.Find(oldAccountToID);
                 oldAccountTo.Balance -= IsTransferSelected.Amount;
-
-                // Удаляем из базы данных
                 context.Transfers.Remove(IsTransferSelected);
-                // Удаляем из коллекции
                 UserTransfers.Remove(IsTransferSelected);
                 EndOperation();
-
             }
         }
 
@@ -322,8 +318,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 AccountFrom.Balance = AccountFrom.Balance - Amount;
                 AccountTo.Balance = AccountTo.Balance + Amount;
                 context.Transfers.Add(newTransfer);
-
-                // Добавляем в коллекцию
                 UserTransfers.Add(newTransfer);
                 EndOperation();
             }
@@ -331,9 +325,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             {
                 MessageBox.Show("Перевод не может быть осуществлен, так как на счету отправителя нет такого количества средств", "Ошибка");
             }
-            // Создаем новую транзакцию
-
-            // Добавляем в базу данных
         }
 
         private bool CanAddNewTransfer(object parameter)

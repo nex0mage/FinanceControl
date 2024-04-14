@@ -183,6 +183,11 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 oldAccountFrom.Balance += IsGoalsTransactionSelected.Amount;
                 var oldAccountTo = context.Goals.Find(oldAccountToID);
                 oldAccountTo.Ammount += IsGoalsTransactionSelected.Amount;
+                if (oldAccountTo.GoalStatus == true && oldAccountTo.Ammount > 0)
+                {
+                    oldAccountTo.GoalStatus = false;
+                }
+
 
                 // Удаляем из базы данных
                 context.GoalsTransactions.Remove(IsGoalsTransactionSelected);
@@ -301,6 +306,30 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 // Добавляем в коллекцию
                 UserGoalsTransactions.Add(newGoalsTransaction);
                 EndOperation();
+
+                if (GoalTo.Ammount - Amount > 0)
+                {
+                    AccountFrom.Balance = AccountFrom.Balance - Amount;
+                    GoalTo.Ammount = GoalTo.Ammount - Amount;
+                    context.GoalsTransactions.Add(newGoalsTransaction);
+                    UserGoalsTransactions.Add(newGoalsTransaction);
+
+                }
+                else if (GoalTo.Ammount - Amount == 0)
+                {
+                    AccountFrom.Balance = AccountFrom.Balance - Amount;
+                    GoalTo.Ammount = GoalTo.Ammount - Amount;
+                    GoalTo.GoalStatus = true;
+                    context.GoalsTransactions.Add(newGoalsTransaction);
+                    UserGoalsTransactions.Add(newGoalsTransaction);
+                }
+                else
+                {
+                    MessageBox.Show("Перевод не может быть осуществлен, так как баланс цели станет отрицательным. Пожалуйста скорректируйте сумму операции.", "Ошибка");
+                }
+
+                EndOperation();
+
             }
             else
             {

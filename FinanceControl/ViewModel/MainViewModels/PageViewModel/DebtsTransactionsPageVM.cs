@@ -192,10 +192,11 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 oldAccountFrom.Balance += IsDebtsTransactionSelected.Amount;
                 var oldAccountTo = context.Debts.Find(oldAccountToID);
                 oldAccountTo.Amount += IsDebtsTransactionSelected.Amount;
-
-                // Удаляем из базы данных
+                if (oldAccountTo.DebtStatus == true && oldAccountTo.Amount > 0)
+                {
+                    oldAccountTo.DebtStatus = false;
+                }
                 context.DebtsTransactions.Remove(IsDebtsTransactionSelected);
-                // Удаляем из коллекции
                 UserDebtsTransactions.Remove(IsDebtsTransactionSelected);
                 EndOperation();
 
@@ -303,21 +304,34 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                     Debts = DebtTo,
                     Amount = Amount
                 };
-                AccountFrom.Balance = AccountFrom.Balance - Amount;
-                DebtTo.Amount = DebtTo.Amount - Amount;
-                context.DebtsTransactions.Add(newDebtsTransaction);
+                if (DebtTo.Amount - Amount > 0)
+                {
+                    AccountFrom.Balance = AccountFrom.Balance - Amount;
+                    DebtTo.Amount = DebtTo.Amount - Amount;
+                    context.DebtsTransactions.Add(newDebtsTransaction);
+                    UserDebtsTransactions.Add(newDebtsTransaction);
 
-                // Добавляем в коллекцию
-                UserDebtsTransactions.Add(newDebtsTransaction);
+                }
+                else if (DebtTo.Amount - Amount == 0)
+                {
+                    AccountFrom.Balance = AccountFrom.Balance - Amount;
+                    DebtTo.Amount = DebtTo.Amount - Amount;
+                    DebtTo.DebtStatus = true;
+                    context.DebtsTransactions.Add(newDebtsTransaction);
+                    UserDebtsTransactions.Add(newDebtsTransaction);
+                }
+                else
+                {
+                    MessageBox.Show("Перевод не может быть осуществлен, так как баланс долга станет отрицательным", "Ошибка");
+                }
+
                 EndOperation();
+
             }
             else
             {
-                MessageBox.Show("Перевод не может быть осуществлен, так как на счету отправителя нет такого количества средств", "Ошибка");
+                MessageBox.Show("Перевод не может быть осуществлен, так как на счету отправителя нет такого количества средств. Пожалуйста скорректируйте сумму операции.", "Ошибка");
             }
-            // Создаем новую транзакцию
-
-            // Добавляем в базу данных
         }
 
         private bool CanAddNewDebtsTransaction(object parameter)
