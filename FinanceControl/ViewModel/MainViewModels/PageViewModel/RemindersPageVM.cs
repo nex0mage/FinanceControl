@@ -17,7 +17,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         private Reminders _selectedReminder;
 
         private string _comment;
-        private DateTime _reminderDate = new DateTime(2023, 01, 01);
+        private DateTime _reminderDate = new DateTime(2024, 01, 01);
         private bool _status;
 
         public ObservableCollection<Reminders> UserReminders { get; set; }
@@ -99,11 +99,10 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (IsReminderSelected != null)
             {
-                // Удаляем из базы данных
+                // Удаление из базы данных
                 context.Reminders.Remove(IsReminderSelected);
-                // Удаляем из коллекции
+                // Удаление из коллекции
                 var RemindersToRemove = context.Reminders.Where(Reminder => Reminder.ReminderID == IsReminderSelected.ReminderID).ToList();
-
                 if (RemindersToRemove.Any())
                 {
                     context.Reminders.RemoveRange(RemindersToRemove);
@@ -123,14 +122,13 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (IsReminderSelected != null)
             {
-                // Обновляем в базе данных
+                // Обновление в базе данных
                 IsReminderSelected.ReminderDescription = Comment;
                 IsReminderSelected.ReminderDate = ReminderDate;
                 IsReminderSelected.IsCompleted = Status;
                 EndOperation();
                 LoadUserReminders();
             }
-
         }
 
 
@@ -158,11 +156,9 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 ReminderDate = ReminderDate
             };
             context.Reminders.Add(newReminder);
-            // Добавляем в коллекцию
+            // Добавление в коллекцию
             UserReminders.Add(newReminder);
-
             EndOperation();
-
         }
 
         private bool CanAddNewReminder(object parameter)
@@ -175,8 +171,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             {
                 return true;
             }
-
-
         }
 
         private void LoadSelectedReminderDetails()
@@ -217,7 +211,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             context.SaveChanges();
             IsReminderSelected = null;
-            ReminderDate = new DateTime(2023, 01, 01);
+            ReminderDate = new DateTime(2024, 01, 01);
             Status = false;
             Comment = null;
         }

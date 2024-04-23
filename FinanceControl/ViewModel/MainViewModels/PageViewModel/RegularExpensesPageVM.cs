@@ -155,13 +155,10 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (IsRegularExpenseSelected != null)
             {
-
-                // Удаляем из базы данных
+                // Удаление из базы данных
                 context.RegularExpenses.Remove(IsRegularExpenseSelected);
-
-                // Удаляем из коллекции
+                // Удаление из коллекции
                 UserRegularExpenses.Remove(IsRegularExpenseSelected);
-
                 EndOperation();
             }
         }
@@ -175,18 +172,13 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (IsRegularExpenseSelected != null)
             {
-                // Обновляем в базе данных
+                // Обновление в базе данных
                 IsRegularExpenseSelected.Comment = Comment;
                 IsRegularExpenseSelected.Frequency = Freequency;
                 IsRegularExpenseSelected.ExpenseCategoryID = ExpenseCategory.ExpenseCategoryID;
-
-
             }
             EndOperation();
-
             LoadUserExpenseTransactions();
-
-
         }
 
 
@@ -215,7 +207,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 Amount = Amount
             };
             context.RegularExpenses.Add(newRegularExpense);
-            // Добавляем в коллекцию
+            // Добавление в коллекцию
             UserRegularExpenses.Add(newRegularExpense);
             EndOperation();
         }
@@ -230,8 +222,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             {
                 return true;
             }
-
-
         }
 
         private void LoadSelectedRegularExpenseDetails()

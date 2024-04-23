@@ -30,7 +30,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
     {
         FinanceControl_DBEntities _context;
         private int _loggedInUserId; // Добавляем переменную для идентификатора пользователя
-        private DateTime _startDate = new DateTime(2023, 1, 1);
+        private DateTime _startDate = new DateTime(2024, 1, 1);
         private DateTime _endDate = new DateTime(2024, 12, 31);
 
         public DateTime StartDate

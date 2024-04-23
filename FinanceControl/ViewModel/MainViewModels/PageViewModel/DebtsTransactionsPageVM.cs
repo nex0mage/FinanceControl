@@ -20,7 +20,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
 
         private Accounts _accountFrom;
         private Debts _debtTo;
-        private DateTime _DebtsTransactionDate = new DateTime(2023, 01, 01);
+        private DateTime _DebtsTransactionDate = new DateTime(2024, 01, 01);
         private decimal _amount;
 
         public ObservableCollection<DebtsTransactions> UserDebtsTransactions { get; set; }
@@ -164,9 +164,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             DeleteSelectedDebtsTransactionCommand = new ViewModelCommand(DeleteSelectedDebtsTransaction, CanDeleteSelectedDebtsTransaction);
             UpdateSelectedDebtsTransactionCommand = new ViewModelCommand(UpdateSelectedDebtsTransaction, CanUpdateSelectedDebtsTransaction);
             AddNewDebtsTransactionCommand = new ViewModelCommand(AddNewDebtsTransaction, CanAddNewDebtsTransaction);
-
-
-
         }
 
 
@@ -178,7 +175,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 DebtsTransactionDate = IsDebtsTransactionSelected.TransactionDate;
                 DebtTo = IsDebtsTransactionSelected.Debts; // Предположим, что Accounts1 относится к AccountTo
                 AccountFrom = IsDebtsTransactionSelected.Accounts; // Предположим, что Accounts относится к AccountFrom
-
             }
         }
 
@@ -199,7 +195,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 context.DebtsTransactions.Remove(IsDebtsTransactionSelected);
                 UserDebtsTransactions.Remove(IsDebtsTransactionSelected);
                 EndOperation();
-
             }
         }
 
@@ -212,37 +207,31 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (IsDebtsTransactionSelected != null)
             {
-                // Обновляем в базе данных
+                // Обновление в базе данных
                 IsDebtsTransactionSelected.TransactionDate = DebtsTransactionDate;
                 IsDebtsTransactionSelected.AccountID = AccountFrom.AccountID;
                 IsDebtsTransactionSelected.DebtID = DebtTo.DebtID;
-
                 int? oldAccountFromID = IsDebtsTransactionSelected.AccountID;
                 int? oldAccountToID = IsDebtsTransactionSelected.DebtID;
-
                 UpdateAccountBalances(oldAccountFromID, AccountFrom.AccountID, oldAccountToID, DebtTo.DebtID);
             }
         }
-
         private void UpdateAccountBalances(int? oldAccountFromID, int newAccountFromID, int? oldAccountToID, int newAccountToID)
         {
             if (oldAccountFromID != newAccountFromID)
             {
-                // Уменьшаем баланс у старого кошелька отправителя
+                //Повышение баланса у старого кошелька отправителя
                 var oldAccountFrom = context.Accounts.Find(oldAccountFromID);
                 oldAccountFrom.Balance += IsDebtsTransactionSelected.Amount;
             }
-
             if (oldAccountToID != newAccountToID)
             {
-                // Поднимаем баланс у старого кошелька получателя
+                //Понижение баланса у старого кошелька получателя
                 var oldAccountTo = context.Debts.Find(oldAccountToID);
                 oldAccountTo.Amount -= IsDebtsTransactionSelected.Amount;
             }
-
             UpdateFinal();
         }
-
         private void UpdateFinal()
         {
             decimal difference = Amount - IsDebtsTransactionSelected.Amount;
@@ -258,22 +247,24 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 MessageBox.Show("Кошелек отправителя приобретает значение меньше нуля. Измените значение и повторите попытку.", "Операция прервана");
                 return;
             }
-
             AccountFrom.Balance -= difference;
             DebtTo.Amount -= difference;
-
             if(DebtTo.Amount == 0)
             {
                 DebtTo.DebtStatus = true;
+                IsDebtsTransactionSelected.Amount = Amount;
+                IsDebtsTransactionSelected.Accounts = AccountFrom;
+                IsDebtsTransactionSelected.Debts = DebtTo;
             }
-            IsDebtsTransactionSelected.Amount = Amount;
-            IsDebtsTransactionSelected.Accounts = AccountFrom;
-            IsDebtsTransactionSelected.Debts = DebtTo;
-
-            // Обновить коллекцию после изменений в базе данных
+            else if (DebtTo.Amount > 0)
+            {
+                IsDebtsTransactionSelected.Amount = Amount;
+                IsDebtsTransactionSelected.Accounts = AccountFrom;
+                IsDebtsTransactionSelected.Debts = DebtTo;
+            }
+            // Обновление коллекции после изменений в базе данных
             EndOperation();
             LoadUserDebtsTransactions();
-
         }
 
         private bool CanUpdateSelectedDebtsTransaction(object parameter)
@@ -324,9 +315,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 {
                     MessageBox.Show("Перевод не может быть осуществлен, так как баланс долга станет отрицательным", "Ошибка");
                 }
-
                 EndOperation();
-
             }
             else
             {
@@ -350,18 +339,20 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
 
         private void LoadUserDebtsTransactions()
         {
-            UserDebtsTransactions.Clear(); // Очищаем коллекцию перед загрузкой
+            UserDebtsTransactions.Clear();
 
-            var DebtsTransactions = context.DebtsTransactions.Where(DebtsTransaction => DebtsTransaction.Accounts.Users.UserID == _loggedInUserId).ToList();
+            var DebtsTransactions = context.DebtsTransactions
+                .Where(DebtsTransaction => DebtsTransaction.Accounts.Users.UserID == _loggedInUserId)
+                .OrderByDescending(DebtsTransaction => DebtsTransaction.TransactionDate)
+                .ToList();
 
             foreach (var DebtsTransaction in DebtsTransactions)
             {
                 UserDebtsTransactions.Add(DebtsTransaction);
             }
 
-            OnPropertyChanged(nameof(UserDebtsTransactions)); // Уведомляем об изменении свойства для обновления привязки в UI
+            OnPropertyChanged(nameof(UserDebtsTransactions));
         }
-
 
         private int GetNextDebtsTransactionId()
         {
@@ -380,7 +371,8 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             Amount = 0.00m;
             AccountFrom = null;
             DebtTo = null;
-            DebtsTransactionDate = new DateTime(2023, 01, 01);
+            DebtsTransactionDate = new DateTime(2024, 01, 01);
+            LoadUserDebtsTransactions();
         }
 
         private bool IsValidInput(string input)

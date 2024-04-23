@@ -75,22 +75,18 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (IsIncomeCategorySelected != null)
             {
-
-                // Удаляем из базы данных
+                // Удаление из базы данных
                 context.IncomeCategories.Remove(IsIncomeCategorySelected);
-                // Удаляем из коллекции
                 var transactionsToRemove = context.IncomeTransactions.Where(tx => tx.IncomeCategoryID == IsIncomeCategorySelected.IncomeCategoryID).ToList();
                 if (transactionsToRemove.Any())
                 {
                     context.IncomeTransactions.RemoveRange(transactionsToRemove);
                     context.SaveChanges();
                 }
-
+                // Удаление из коллекции
                 UserIncomeCategories.Remove(IsIncomeCategorySelected);
                 EndOperation();
-
             }
-
         }
 
         private bool CanDeleteSelectedCategory(object parameter)
@@ -102,15 +98,16 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (IsIncomeCategorySelected != null)
             {
-                // Обновляем в базе данных
+                // Обновление в базе данных
                 IsIncomeCategorySelected.CategoryName = CategoryName;
+                var transactionsToUpdate = context.IncomeTransactions.Where(tx => tx.IncomeCategoryID == IsIncomeCategorySelected.IncomeCategoryID).ToList();
+                foreach (var transaction in transactionsToUpdate)
+                {
+                    transaction.IncomeCategories = IsIncomeCategorySelected;
+                }
                 LoadUserIncomeCategories();
                 EndOperation();
-
-
-
             }
-
         }
 
         private bool CanUpdateSelectedCategory(object parameter)
@@ -133,15 +130,11 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 IncomeCategoryID = GetNextCategoryId(),
                 CategoryName = CategoryName,
                 UserID = _loggedInUserId
-
             };
             context.IncomeCategories.Add(newIncomeCategory);
-            // Добавляем в коллекцию
+            // Добавление в коллекцию
             UserIncomeCategories.Add(newIncomeCategory);
             EndOperation();
-
-
-
         }
 
         private bool CanAddNewCategory(object parameter)

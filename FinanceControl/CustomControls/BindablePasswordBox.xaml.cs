@@ -22,20 +22,17 @@ namespace FinanceControl.CustomControls
     public partial class BindablePasswordBox : UserControl
     {
         public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register("Password", typeof(SecureString), typeof(BindablePasswordBox));
-
         public SecureString Password
         {
             get {  return (SecureString)GetValue(PasswordProperty); }
             set { SetValue(PasswordProperty, value);}
         }
-
         public BindablePasswordBox()
         {
             InitializeComponent();
             passboxPassword.PasswordChanged += OnPasswordChanged;
 
         }
-
         private void OnPasswordChanged(object sender, RoutedEventArgs e)
         {
             Password = passboxPassword.SecurePassword;

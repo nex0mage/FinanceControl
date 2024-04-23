@@ -19,7 +19,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
 
         private Accounts _accountFrom;
         private Goals _goalTo;
-        private DateTime _GoalsTransactionDate = new DateTime(2023, 01, 01);
+        private DateTime _GoalsTransactionDate = new DateTime(2024, 01, 01);
         private decimal _amount;
 
         public ObservableCollection<GoalsTransactions> UserGoalsTransactions { get; set; }
@@ -187,14 +187,11 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 {
                     oldAccountTo.GoalStatus = false;
                 }
-
-
-                // Удаляем из базы данных
+                // Удаление из базы данных
                 context.GoalsTransactions.Remove(IsGoalsTransactionSelected);
-                // Удаляем из коллекции
+                // Удаление из коллекции
                 UserGoalsTransactions.Remove(IsGoalsTransactionSelected);
                 EndOperation();
-
             }
         }
 
@@ -207,14 +204,11 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (IsGoalsTransactionSelected != null)
             {
-                // Обновляем в базе данных
                 IsGoalsTransactionSelected.TransactionDate = GoalsTransactionDate;
                 IsGoalsTransactionSelected.AccountID = AccountFrom.AccountID;
                 IsGoalsTransactionSelected.GoalID = GoalTo.GoalID;
-
                 int? oldAccountFromID = IsGoalsTransactionSelected.AccountID;
                 int? oldAccountToID = IsGoalsTransactionSelected.GoalID;
-
                 UpdateAccountBalances(oldAccountFromID, AccountFrom.AccountID, oldAccountToID, GoalTo.GoalID);
             }
         }
@@ -223,52 +217,47 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (oldAccountFromID != newAccountFromID)
             {
-                // Уменьшаем баланс у старого кошелька отправителя
                 var oldAccountFrom = context.Accounts.Find(oldAccountFromID);
                 oldAccountFrom.Balance += IsGoalsTransactionSelected.Amount;
             }
-
             if (oldAccountToID != newAccountToID)
             {
-                // Поднимаем баланс у старого кошелька получателя
                 var oldAccountTo = context.Accounts.Find(oldAccountToID);
                 oldAccountTo.Balance -= IsGoalsTransactionSelected.Amount;
             }
-
             UpdateFinal();
         }
 
         private void UpdateFinal()
         {
             decimal difference = Amount - IsGoalsTransactionSelected.Amount;
-
             if (difference > 0 && (GoalTo.Ammount - difference) < 0)
             {
                 MessageBox.Show("Кошелек получателя приобретает значение меньше нуля. Измените значение и повторите попытку.", "Операция прервана");
                 return;
             }
-
             if (difference > 0 && (AccountFrom.Balance - difference) < 0)
             {
                 MessageBox.Show("Кошелек отправителя приобретает значение меньше нуля. Измените значение и повторите попытку.", "Операция прервана");
                 return;
             }
-
             AccountFrom.Balance -= difference;
             GoalTo.Ammount -= difference;
             if (GoalTo.Ammount == 0)
             {
                 GoalTo.GoalStatus = true;
+                IsGoalsTransactionSelected.Amount = Amount;
+                IsGoalsTransactionSelected.Accounts = AccountFrom;
+                IsGoalsTransactionSelected.Goals = GoalTo;
             }
-
-            IsGoalsTransactionSelected.Amount = Amount;
-            IsGoalsTransactionSelected.Accounts = AccountFrom;
-            IsGoalsTransactionSelected.Goals = GoalTo;
-
-            // Обновить коллекцию после изменений в базе данных
+            else if (GoalTo.Ammount > 0)
+            {
+                IsGoalsTransactionSelected.Amount = Amount;
+                IsGoalsTransactionSelected.Accounts = AccountFrom;
+                IsGoalsTransactionSelected.Goals = GoalTo;
+            }
             EndOperation();
             LoadUserGoalsTransactions();
-
         }
 
         private bool CanUpdateSelectedGoalsTransaction(object parameter)
@@ -280,9 +269,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             else
             {
                 return IsGoalsTransactionSelected != null;
-
             }
-
         }
 
         private void AddNewGoalsTransaction(object parameter)
@@ -299,21 +286,12 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                     Goals = GoalTo,
                     Amount = Amount
                 };
-                AccountFrom.Balance = AccountFrom.Balance - Amount;
-                GoalTo.Ammount = GoalTo.Ammount - Amount;
-                context.GoalsTransactions.Add(newGoalsTransaction);
-
-                // Добавляем в коллекцию
-                UserGoalsTransactions.Add(newGoalsTransaction);
-                EndOperation();
-
                 if (GoalTo.Ammount - Amount > 0)
                 {
                     AccountFrom.Balance = AccountFrom.Balance - Amount;
                     GoalTo.Ammount = GoalTo.Ammount - Amount;
                     context.GoalsTransactions.Add(newGoalsTransaction);
                     UserGoalsTransactions.Add(newGoalsTransaction);
-
                 }
                 else if (GoalTo.Ammount - Amount == 0)
                 {
@@ -327,17 +305,12 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 {
                     MessageBox.Show("Перевод не может быть осуществлен, так как баланс цели станет отрицательным. Пожалуйста скорректируйте сумму операции.", "Ошибка");
                 }
-
                 EndOperation();
-
             }
             else
             {
                 MessageBox.Show("Перевод не может быть осуществлен, так как на счету отправителя нет такого количества средств", "Ошибка");
             }
-            // Создаем новую транзакцию
-
-            // Добавляем в базу данных
         }
 
         private bool CanAddNewGoalsTransaction(object parameter)
@@ -356,25 +329,21 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
 
         private void LoadUserGoalsTransactions()
         {
-            UserGoalsTransactions.Clear(); // Очищаем коллекцию перед загрузкой
-
-            var GoalsTransactions = context.GoalsTransactions.Where(GoalsTransaction => GoalsTransaction.Accounts.Users.UserID == _loggedInUserId).ToList();
-
-            foreach (var GoalsTransaction in GoalsTransactions)
+            UserGoalsTransactions.Clear();
+            var goalsTransactions = context.GoalsTransactions
+                .Where(goalsTransaction => goalsTransaction.Accounts.Users.UserID == _loggedInUserId)
+                .OrderByDescending(goalsTransaction => goalsTransaction.TransactionDate)
+                .ToList();
+            foreach (var goalsTransaction in goalsTransactions)
             {
-                UserGoalsTransactions.Add(GoalsTransaction);
+                UserGoalsTransactions.Add(goalsTransaction);
             }
-
-            OnPropertyChanged(nameof(UserGoalsTransactions)); // Уведомляем об изменении свойства для обновления привязки в UI
+            OnPropertyChanged(nameof(UserGoalsTransactions)); 
         }
-
 
         private int GetNextGoalsTransactionId()
         {
-            // Находим максимальное значение AccountID в коллекции
             int maxGoalsTransactionId = context.GoalsTransactions.Max(GoalsTransactions => (int?)GoalsTransactions.GoalTransactionID) ?? 0;
-
-            // Возвращаем следующее значение, увеличенное на 1
             return maxGoalsTransactionId + 1;
         }
 
@@ -385,8 +354,8 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             Amount = 0.00m;
             AccountFrom = null;
             GoalTo = null;
-            GoalsTransactionDate = new DateTime(2023, 01, 01);
+            GoalsTransactionDate = new DateTime(2024, 01, 01);
+            LoadUserGoalsTransactions();
         }
-
     }
 }

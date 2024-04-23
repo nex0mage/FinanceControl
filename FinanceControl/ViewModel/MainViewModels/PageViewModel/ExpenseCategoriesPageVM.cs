@@ -70,8 +70,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (IsExpenseCategorySelected != null)
             {
-
-                // Удаляем из базы данных
+                // Удаление из базы данных приближенных записей
                 context.ExpensesCategories.Remove(IsExpenseCategorySelected);
                 var transactionsToRemove = context.ExpensesTransactions.Where(tx => tx.ExpenseCategoryID == IsExpenseCategorySelected.ExpenseCategoryID).ToList();
                 var regularTransactionsToRemove = context.RegularExpenses.Where(tx => tx.ExpenseCategoryID == IsExpenseCategorySelected.ExpenseCategoryID).ToList();
@@ -81,13 +80,10 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                     context.RegularExpenses.RemoveRange(regularTransactionsToRemove);
                     context.SaveChanges();
                 }
-
-                // Удаляем из коллекции
+                // Удаление из коллекции
                 UserExpenseCategories.Remove(IsExpenseCategorySelected);
                 EndOperation();
-
             }
-
         }
 
         private bool CanDeleteSelectedCategory(object parameter)
@@ -99,15 +95,21 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (IsExpenseCategorySelected != null)
             {
-                // Обновляем в базе данных
+                // Обновление в базе данных
                 IsExpenseCategorySelected.CategoryName = CategoryName;
+                var transactionsToUpdate = context.ExpensesTransactions.Where(tx => tx.ExpenseCategoryID == IsExpenseCategorySelected.ExpenseCategoryID).ToList();
+                var regularTransactionsToUpdate = context.RegularExpenses.Where(tx => tx.ExpenseCategoryID == IsExpenseCategorySelected.ExpenseCategoryID).ToList();
+                foreach (var transaction in transactionsToUpdate)
+                {
+                    transaction.ExpensesCategories = IsExpenseCategorySelected;
+                }
+                foreach (var regularTransaction in regularTransactionsToUpdate)
+                {
+                    regularTransaction.ExpensesCategories = IsExpenseCategorySelected;
+                }
                 LoadUserExpenseCategories();
                 EndOperation();
-
-
-
             }
-
         }
 
         private bool CanUpdateSelectedCategory(object parameter)
@@ -130,12 +132,10 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 ExpenseCategoryID = GetNextCategoryId(),
                 CategoryName = CategoryName,
                 UserID = _loggedInUserId
-
             };
             context.ExpensesCategories.Add(newExpenseCategory);
-            // Добавляем в коллекцию
+            // Добавление в коллекцию
             UserExpenseCategories.Add(newExpenseCategory);
-
             EndOperation();
         }
 

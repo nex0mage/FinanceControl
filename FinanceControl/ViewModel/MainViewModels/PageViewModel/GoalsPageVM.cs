@@ -109,11 +109,10 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (IsGoalSelected != null)
             {
-                // Удаляем из базы данных
+                // Удаление из базы данных
                 context.Goals.Remove(IsGoalSelected);
-                // Удаляем из коллекции
+                // Удаление из коллекции
                 var transactionsToRemove = context.GoalsTransactions.Where(Goaltx => Goaltx.GoalID == IsGoalSelected.GoalID).ToList();
-
                 if (transactionsToRemove.Any())
                 {
                     context.GoalsTransactions.RemoveRange(transactionsToRemove);
@@ -123,7 +122,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 EndOperation();
             }
         }
-
         private bool CanDeleteSelectedTransaction(object parameter)
         {
             return IsGoalSelected != null;
@@ -133,7 +131,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (IsGoalSelected != null)
             {
-                // Обновляем в базе данных
+                // Обновление в базе данных
                 IsGoalSelected.Title = Comment;
                 IsGoalSelected.Ammount = Amount;
                 if (IsGoalSelected.Ammount <= 0)
@@ -143,7 +141,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 EndOperation();
                 LoadUserGoals();
             }
-
         }
 
 
@@ -171,11 +168,9 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 Ammount = Amount,
             };
             context.Goals.Add(newGoal);
-            // Добавляем в коллекцию
+            // Добавление в коллекцию
             UserGoals.Add(newGoal);
-
             EndOperation();
-
         }
 
         private bool CanAddNewTransaction(object parameter)

@@ -127,7 +127,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 context.Debts.Remove(IsDebtSelected);
                 // Удаляем из коллекции
                 var transactionsToRemove = context.DebtsTransactions.Where(debttx => debttx.DebtID == IsDebtSelected.DebtID).ToList();
-
                 if (transactionsToRemove.Any())
                 {
                     context.DebtsTransactions.RemoveRange(transactionsToRemove);
@@ -137,12 +136,10 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 EndOperation();
             }
         }
-
         private bool CanDeleteSelectedTransaction(object parameter)
         {
             return IsDebtSelected != null;
         }
-
         private void UpdateSelectedTransaction(object parameter)
         {
             if (IsDebtSelected != null)
@@ -158,7 +155,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 EndOperation();
                 LoadUserDebts();
             }
-
         }
 
 
@@ -189,9 +185,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             context.Debts.Add(newDebt);
             // Добавляем в коллекцию
             UserDebts.Add(newDebt);
-
             EndOperation();
-
         }
 
         private bool CanAddNewTransaction(object parameter)

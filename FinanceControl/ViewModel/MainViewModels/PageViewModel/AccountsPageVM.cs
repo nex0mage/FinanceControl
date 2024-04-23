@@ -64,7 +64,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                     }
                     else
                     {
-                        // Обработка недопустимого ввода, например, выдача сообщения об ошибке.
+                        // Обработка недопустимого ввода, выдача сообщения об ошибке.
                         MessageBox.Show("Ошибка вы можете ввести до 18 знаков перед запятой", "Ошибка");
                     }
                 }
@@ -97,7 +97,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 UserAccounts.Add(account);
             }
 
-            OnPropertyChanged(nameof(UserAccounts)); // Уведомляем об изменении свойства для обновления привязки в UI
+            OnPropertyChanged(nameof(UserAccounts)); // Уведомление об изменении свойства для обновления привязки в UI
         }
 
         private void LoadSelectedAccountDetails()
@@ -113,41 +113,31 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (IsAccountSelected != null)
             {
-                // Получаем ID аккаунта, который будем удалять
+                // Получение ID аккаунта, который подлежит удалению
                 var accountIdToDelete = IsAccountSelected.AccountID;
-
-                // Удаляем все зависимые записи из таблицы ExpensesTransactions, связанные с выбранным аккаунтом
+                // Удаление всех зависимых записей из таблицы ExpensesTransactions, связанных с выбранным аккаунтом
                 var expenses = context.ExpensesTransactions.Where(e => e.AccountID == accountIdToDelete);
                 context.ExpensesTransactions.RemoveRange(expenses);
-
-                // Удаляем все зависимые записи из таблицы IncomeTransactions, связанные с выбранным аккаунтом
+                // Удаление всех зависимых записей из таблицы IncomeTransactions, связанных с выбранным аккаунтом
                 var incomes = context.IncomeTransactions.Where(i => i.AccountID == accountIdToDelete);
                 context.IncomeTransactions.RemoveRange(incomes);
-
-                // Удаляем все зависимые записи из таблицы DebtTransactions, связанные с выбранным аккаунтом
+                // Удаление всех зависимых записей из таблицы DebtsTransactions, связанных с выбранным аккаунтом
                 var debts = context.DebtsTransactions.Where(d => d.AccountID == accountIdToDelete);
                 context.DebtsTransactions.RemoveRange(debts);
-
-                // Удаляем все зависимые записи из таблицы GoalTransactions, связанные с выбранным аккаунтом
+                // Удаление всех зависимых записей из таблицы GoalsTransactions, связанных с выбранным аккаунтом
                 var goals = context.GoalsTransactions.Where(g => g.AccountID == accountIdToDelete);
                 context.GoalsTransactions.RemoveRange(goals);
-
-                // Получаем выбранный аккаунт из базы данных
+                // Получение выбранного счета из базы данных
                 var accountToDelete = context.Accounts.SingleOrDefault(a => a.AccountID == accountIdToDelete);
-
                 // Если аккаунт найден
                 if (accountToDelete != null)
                 {
-                    // Удаляем выбранный аккаунт из базы данных
+                    // Удаление выбранного счета из базы данных
                     context.Accounts.Remove(accountToDelete);
-
-                    // Удаляем выбранный аккаунт из коллекции пользовательских аккаунтов
+                    // Удаление выбранного счета из коллекции пользовательских счетов
                     UserAccounts.Remove(IsAccountSelected);
-
-                    // Сохраняем изменения
+                    // Сохранение изменения
                     context.SaveChanges();
-
-                    // Сбросить выбор после удаления
                     EndOperation();
                 }
             }
@@ -161,10 +151,10 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (IsAccountSelected != null)
             {
-                // Обновляем свойства аккаунта
+                // Обновление свойств счета
                 IsAccountSelected.Balance = Balance;
                 IsAccountSelected.AccountName = AccountName;
-                // Обновить коллекцию после изменений в базе данных
+                // Обновление коллекции после изменений в базе данных
                 LoadUserAccounts();
                 EndOperation();
             }
@@ -172,18 +162,17 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
 
         private void AddNewAccount(object parameter)
         {
-            // Создаем новый аккаунт
+            // Создание нового счета
             var newAccount = new Accounts
             {
-                UserID = _loggedInUserId, // Присваиваем значение UserID
-                AccountID = GetNextAccountId(), // Получаем следующее значение для AccountID
+                UserID = _loggedInUserId, // Присваивание значения UserID
+                AccountID = GetNextAccountId(), // Получение следующего значения для AccountID
                 AccountName = AccountName,
                 Balance = Balance
-
             };
-            // Добавляем новый аккаунт в базу данных
+            // Добавление счета в базу данных
             context.Accounts.Add(newAccount);
-            // Добавляем новый аккаунт в коллекцию
+            // Добавление в коллекцию
             UserAccounts.Add(newAccount);
             EndOperation();
         }

@@ -21,7 +21,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         private Accounts _accountTo;
         private string _comment;
         private IncomeCategories _incomeCategory;
-        private DateTime _incomeTransactionDate = new DateTime(2023, 01, 01);
+        private DateTime _incomeTransactionDate = new DateTime(2024, 01, 01);
         private decimal _amount;
 
         public ObservableCollection<IncomeTransactions> UserIncomeTransactions { get; set; }
@@ -86,12 +86,8 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             var accountsTo = context.Accounts.Where(accountTo => accountTo.Users.UserID == _loggedInUserId).ToList();
             var categories = context.IncomeCategories.Where(category => category.Users.UserID == _loggedInUserId).ToList();
-
-
-            // Создаем новые ObservableCollection и добавляем элементы из списков
             Accounts = new ObservableCollection<Accounts>(accountsTo);
             IncomeCategories = new ObservableCollection<IncomeCategories>(categories);
-
             OnPropertyChanged(nameof(Accounts));
             OnPropertyChanged(nameof(IncomeCategories));
         }
@@ -128,7 +124,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             {
                 if (_amount != value)
                 {
-                    string stringValue = value.ToString("0.##"); // Форматирование с двумя знаками после точки, но без лишних нулей
+                    string stringValue = value.ToString("0.##");
                     if (IsValidInput(stringValue))
                     {
                         _amount = value;
@@ -136,7 +132,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                     }
                     else
                     {
-                        // Обработка недопустимого ввода, например, выдача сообщения об ошибке.
                         MessageBox.Show("Ошибка вы можете ввести до 18 знаков перед запятой", "Ошибка");
                     }
                 }
@@ -177,9 +172,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 int? oldAccountToID = IsIncomeTransactionSelected.AccountID;
                 var oldAccountTo = context.Accounts.Find(oldAccountToID);
                 oldAccountTo.Balance -= IsIncomeTransactionSelected.Amount;
-                // Удаляем из базы данных
                 context.IncomeTransactions.Remove(IsIncomeTransactionSelected);
-                // Удаляем из коллекции
                 UserIncomeTransactions.Remove(IsIncomeTransactionSelected);
                 EndOperation();
             }
@@ -192,7 +185,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (IsIncomeTransactionSelected != null)
             {
-                // Обновляем в базе данных
                 IsIncomeTransactionSelected.Comment = Comment;
                 IsIncomeTransactionSelected.TransactionDate = IncomeTransactionDate;
                 IsIncomeTransactionSelected.AccountID = AccountTo.AccountID;
@@ -205,7 +197,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (oldAccountToID != newAccountToID)
             {
-                // Уменьшаем баланс у старого кошелька получателя
                 var oldAccountTo = context.Accounts.Find(oldAccountToID);
                 oldAccountTo.Balance -= IsIncomeTransactionSelected.Amount;
             }
@@ -240,7 +231,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             };
             AccountTo.Balance = AccountTo.Balance + Amount;
             context.IncomeTransactions.Add(newIncomeTransaction);
-            // Добавляем в коллекцию
             UserIncomeTransactions.Add(newIncomeTransaction);
             EndOperation();
         }
@@ -261,35 +251,30 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             if (IsIncomeTransactionSelected != null && context.Entry(IsIncomeTransactionSelected).State != EntityState.Detached)
             {
                 Amount = IsIncomeTransactionSelected.Amount;
-                Comment = IsIncomeTransactionSelected.Comment; // Здесь Balance должен быть типа decimal
+                Comment = IsIncomeTransactionSelected.Comment;
                 IncomeTransactionDate = IsIncomeTransactionSelected.TransactionDate;
                 IncomeCategory = IsIncomeTransactionSelected.IncomeCategories;
-                AccountTo = IsIncomeTransactionSelected.Accounts; // Предположим, что Accounts относится к AccountFrom
-
+                AccountTo = IsIncomeTransactionSelected.Accounts; 
             }
         }
 
         private void LoadUserIncomeTransactions()
         {
-            UserIncomeTransactions.Clear(); // Очищаем коллекцию перед загрузкой
-
-            var incometransactions = context.IncomeTransactions.Where(incometransaction => incometransaction.Accounts.Users.UserID == _loggedInUserId).ToList();
-
+            UserIncomeTransactions.Clear(); 
+            var incometransactions = context.IncomeTransactions
+                .Where(incometransaction => incometransaction.Accounts.Users.UserID == _loggedInUserId)
+                .OrderByDescending(incometransaction => incometransaction.TransactionDate)
+                .ToList();
             foreach (var incometransaction in incometransactions)
             {
                 UserIncomeTransactions.Add(incometransaction);
             }
-
-            OnPropertyChanged(nameof(UserIncomeTransactions)); // Уведомляем об изменении свойства для обновления привязки в UI
+            OnPropertyChanged(nameof(UserIncomeTransactions)); 
         }
 
         private int GetNextTransferId()
         {
-            // Находим максимальное значение AccountID в коллекции
             int maxIncomeTransactionId = context.IncomeTransactions.Any() ? context.IncomeTransactions.Max(transaction => transaction.IncomeTransactionID) : 0;
-
-
-            // Возвращаем следующее значение, увеличенное на 1
             return maxIncomeTransactionId + 1;
         }
 
@@ -300,8 +285,9 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             Amount = 0.00m;
             IncomeCategory = null;
             AccountTo = null;
-            IncomeTransactionDate = new DateTime(2023, 01, 01);
+            IncomeTransactionDate = new DateTime(2024, 01, 01);
             Comment = null;
+            LoadUserIncomeTransactions();
         }
 
         private bool IsValidInput(string input)
@@ -309,7 +295,5 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             string pattern = @"^\d{1,18}(\.\d{2})?$";
             return Regex.IsMatch(input, pattern);
         }
-
-
     }
 }

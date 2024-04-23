@@ -21,7 +21,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         private Accounts _accountFrom;
         private string _comment;
         private ExpensesCategories _expenseCategory;
-        private DateTime _expenseTransactionDate = new DateTime(2023, 01, 01);
+        private DateTime _expenseTransactionDate = new DateTime(2024, 01, 01);
         private decimal _amount;
 
 
@@ -186,10 +186,9 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 int? oldAccountToID = IsExpenseTransactionSelected.AccountID;
                 var oldAccountTo = context.Accounts.Find(oldAccountToID);
                 oldAccountTo.Balance += IsExpenseTransactionSelected.Amount;
-
-                // Удаляем из базы данных
+                // Удаление из базы данных
                 context.ExpensesTransactions.Remove(IsExpenseTransactionSelected);
-                // Удаляем из коллекции
+                // Удаление из коллекции
                 UserExpenseTransactions.Remove(IsExpenseTransactionSelected);
                 EndOperation();
             }
@@ -206,40 +205,33 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             {
                 if (AccountFrom.Balance - Amount >= 0)
                 {
-                    // Обновляем в базе данных
+                    // Обновление в базе данных
                     IsExpenseTransactionSelected.Comment = Comment;
                     IsExpenseTransactionSelected.TransactionDate = ExpenseTransactionDate;
                     IsExpenseTransactionSelected.AccountID = AccountFrom.AccountID;
                     IsExpenseTransactionSelected.ExpenseCategoryID = ExpenseCategory.ExpenseCategoryID;
-
                     int? oldAccountFromID = IsExpenseTransactionSelected.AccountID;
-
                     UpdateAccountBalances(oldAccountFromID, AccountFrom.AccountID);
-
                 }
                 else
                 {
                     MessageBox.Show("Транзакция не может быть проведена, т.к. на выбранном счете нет столько денег.", "Ошибка!");
                 }
             }
-
         }
 
         private void UpdateAccountBalances(int? oldAccountFromID, int newAccountFromID)
         {
             if (oldAccountFromID != newAccountFromID)
             {
-                // Уменьшаем баланс у старого кошелька получателя
+                // Уменьшение баланса у старого кошелька получателя
                 var oldAccountFrom = context.Accounts.Find(oldAccountFromID);
                 oldAccountFrom.Balance += IsExpenseTransactionSelected.Amount;
             }
-
             decimal difference = Amount - IsExpenseTransactionSelected.Amount;
             AccountFrom.Balance -= difference;
-
             IsExpenseTransactionSelected.Amount = Amount;
             IsExpenseTransactionSelected.Accounts = AccountFrom;
-
             EndOperation();
             LoadUserExpenseTransactions();
         }
@@ -273,11 +265,9 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 };
                 AccountFrom.Balance = AccountFrom.Balance - Amount;
                 context.ExpensesTransactions.Add(newExpenseTransaction);
-                // Добавляем в коллекцию
+                // Добавление в коллекцию
                 UserExpenseTransactions.Add(newExpenseTransaction);
-
                 EndOperation();
-
             }
             else
             {
@@ -295,8 +285,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             {
                 return true;
             }
-
-
         }
 
         private void LoadSelectedExpenseTransactionDetails()
@@ -308,31 +296,26 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 ExpenseTransactionDate = IsExpenseTransactionSelected.TransactionDate;
                 ExpenseCategory = IsExpenseTransactionSelected.ExpensesCategories;
                 AccountFrom = IsExpenseTransactionSelected.Accounts; // Предположим, что Accounts относится к AccountFrom
-
             }
         }
 
         private void LoadUserExpenseTransactions()
         {
-            UserExpenseTransactions.Clear(); // Очищаем коллекцию перед загрузкой
-
-            var expensetransactions = context.ExpensesTransactions.Where(expensetransaction => expensetransaction.Accounts.Users.UserID == _loggedInUserId).ToList();
-
-            foreach (var expensetransaction in expensetransactions)
+            UserExpenseTransactions.Clear(); 
+            var expenseTransactions = context.ExpensesTransactions
+                .Where(expenseTransaction => expenseTransaction.Accounts.Users.UserID == _loggedInUserId)
+                .OrderByDescending(expenseTransaction => expenseTransaction.TransactionDate)
+                .ToList();
+            foreach (var expenseTransaction in expenseTransactions)
             {
-                UserExpenseTransactions.Add(expensetransaction);
+                UserExpenseTransactions.Add(expenseTransaction);
             }
-
-            OnPropertyChanged(nameof(UserExpenseTransactions)); // Уведомляем об изменении свойства для обновления привязки в UI
+            OnPropertyChanged(nameof(UserExpenseTransactions)); 
         }
 
         private int GetNextTransferId()
         {
-            // Находим максимальное значение AccountID в коллекции
             int maxExpenseTransactionId = context.ExpensesTransactions.Any() ? context.ExpensesTransactions.Max(transaction => transaction.ExpenseTransactionID) : 0;
-
-
-            // Возвращаем следующее значение, увеличенное на 1
             return maxExpenseTransactionId + 1;
         }
 
@@ -343,8 +326,9 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             Amount = 0.00m;
             ExpenseCategory = null;
             AccountFrom = null;
-            ExpenseTransactionDate = new DateTime(2023, 01, 01);
+            ExpenseTransactionDate = new DateTime(2024, 01, 01);
             Comment = null;
+            LoadUserExpenseTransactions();
         }
 
         private bool IsValidInput(string input)
@@ -352,8 +336,5 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             string pattern = @"^\d{1,18}(\.\d{2})?$";
             return Regex.IsMatch(input, pattern);
         }
-
-
-
     }
 }

@@ -23,85 +23,77 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         private Accounts _accountFrom;
         private Accounts _accountTo;
         private string _comment;
-        private DateTime _transferDate = new DateTime(2023, 01, 01);
+        private DateTime _transferDate = new DateTime(2024, 01, 01);
         private decimal _amount;
 
         public ObservableCollection<Transfers> UserTransfers { get; set; }
 
-        private ObservableCollection<Accounts> _accounts;
-        private ObservableCollection<Accounts> _accounts1;
+            private ObservableCollection<Accounts> _accounts;
+            private ObservableCollection<Accounts> _accounts1;
 
 
-        public ObservableCollection<Accounts> Accounts
-        {
-            get { return _accounts; }
-            set
+            public ObservableCollection<Accounts> Accounts
             {
-                if (_accounts != value)
+                get { return _accounts; }
+                set
                 {
-                    _accounts = value;
-                    OnPropertyChanged(nameof(Accounts));
+                    if (_accounts != value)
+                    {
+                        _accounts = value;
+                        OnPropertyChanged(nameof(Accounts));
+                    }
                 }
             }
-        }
 
 
-        public ObservableCollection<Accounts> Accounts1
-        {
-            get { return _accounts1; }
-            set
+            public ObservableCollection<Accounts> Accounts1
             {
-                if (_accounts1 != value)
+                get { return _accounts1; }
+                set
                 {
-                    _accounts1 = value;
-                    OnPropertyChanged(nameof(Accounts1));
+                    if (_accounts1 != value)
+                    {
+                        _accounts1 = value;
+                        OnPropertyChanged(nameof(Accounts1));
+                    }
                 }
             }
-        }
 
-        public Accounts AccountFrom
-        {
-            get { return _accountFrom; }
-            set
+            public Accounts AccountFrom
             {
-                if (_accountFrom != value)
+                get { return _accountFrom; }
+                set
                 {
-                    _accountFrom = value;
-                    OnPropertyChanged(nameof(AccountFrom));
+                    if (_accountFrom != value)
+                    {
+                        _accountFrom = value;
+                        OnPropertyChanged(nameof(AccountFrom));
+                    }
                 }
             }
-        }
 
-        public Accounts AccountTo
-        {
-            get { return _accountTo; }
-            set
+            public Accounts AccountTo
             {
-                if (_accountTo != value)
+                get { return _accountTo; }
+                set
                 {
-                    _accountTo = value;
-                    OnPropertyChanged(nameof(AccountTo));
+                    if (_accountTo != value)
+                    {
+                        _accountTo = value;
+                        OnPropertyChanged(nameof(AccountTo));
+                    }
                 }
             }
-        }
-
 
         private void LoadAccountsFromContext()
         {
             var accountsFrom = context.Accounts.Where(accountFrom => accountFrom.Users.UserID == _loggedInUserId).ToList();
-
             var accountsTo = context.Accounts.Where(accountTo => accountTo.Users.UserID == _loggedInUserId).ToList();
-
-
-
-            // Создаем новые ObservableCollection и добавляем элементы из списков
             Accounts = new ObservableCollection<Accounts>(accountsFrom);
             Accounts1 = new ObservableCollection<Accounts>(accountsTo);
-
             OnPropertyChanged(nameof(Accounts));
             OnPropertyChanged(nameof(Accounts1));
         }
-
 
         public string Comment
         {
@@ -136,7 +128,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             {
                 if (_amount != value)
                 {
-                    string stringValue = value.ToString("0.##"); // Форматирование с двумя знаками после точки, но без лишних нулей
+                    string stringValue = value.ToString("0.##");
                     if (IsValidInput(stringValue))
                     {
                         _amount = value;
@@ -144,7 +136,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                     }
                     else
                     {
-                        // Обработка недопустимого ввода, например, выдача сообщения об ошибке.
                         MessageBox.Show("Ошибка вы можете ввести до 18 знаков перед запятой", "Ошибка");
                     }
                 }
@@ -161,7 +152,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 {
                     _selectedTransfer = value;
                     OnPropertyChanged(nameof(IsTransferSelected));
-                    LoadSelectedTransferDetails(); // Загрузка деталей выбранного аккаунта
+                    LoadSelectedTransferDetails();
                     LoadAccountsFromContext();
                 }
             }
@@ -181,9 +172,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             DeleteSelectedTransferCommand = new ViewModelCommand(DeleteSelectedTransfer, CanDeleteSelectedTransfer);
             UpdateSelectedTransferCommand = new ViewModelCommand(UpdateSelectedTransfer, CanUpdateSelectedTransfer);
             AddNewTransferCommand = new ViewModelCommand(AddNewTransfer, CanAddNewTransfer);
-
-
-
         }
 
 
@@ -196,7 +184,6 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
                 TransferDate = IsTransferSelected.TransferDate;
                 AccountTo = IsTransferSelected.Accounts1; 
                 AccountFrom = IsTransferSelected.Accounts;
-
             }
         }
 
@@ -225,15 +212,12 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (IsTransferSelected != null)
             {
-                // Обновляем в базе данных
                 IsTransferSelected.Comment = Comment;
                 IsTransferSelected.TransferDate = TransferDate;
                 IsTransferSelected.AccountFromID = AccountFrom.AccountID;
                 IsTransferSelected.AccountToID = AccountTo.AccountID;
-
                 int? oldAccountFromID = IsTransferSelected.AccountFromID;
                 int? oldAccountToID = IsTransferSelected.AccountToID;
-
                 UpdateAccountBalances(oldAccountFromID, AccountFrom.AccountID, oldAccountToID, AccountTo.AccountID);
             }
         }
@@ -242,45 +226,36 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
         {
             if (oldAccountFromID != newAccountFromID)
             {
-                // Уменьшаем баланс у старого кошелька отправителя
                 var oldAccountFrom = context.Accounts.Find(oldAccountFromID);
                 oldAccountFrom.Balance += IsTransferSelected.Amount;
             }
 
             if (oldAccountToID != newAccountToID)
             {
-                // Поднимаем баланс у старого кошелька получателя
                 var oldAccountTo = context.Accounts.Find(oldAccountToID);
                 oldAccountTo.Balance -= IsTransferSelected.Amount;
             }
-
             UpdateFinal();
         }
 
         private void UpdateFinal()
         {
             decimal difference = Amount - IsTransferSelected.Amount;
-
             if (difference > 0 && (AccountTo.Balance - difference) < 0)
             {
                 MessageBox.Show("Кошелек получателя приобретает значение меньше нуля. Измените значение и повторите попытку.", "Операция прервана");
                 return;
             }
-
             if (difference > 0 && (AccountFrom.Balance - difference) < 0)
             {
                 MessageBox.Show("Кошелек отправителя приобретает значение меньше нуля. Измените значение и повторите попытку.", "Операция прервана");
                 return;
             }
-
             AccountFrom.Balance -= difference;
             AccountTo.Balance += difference;
-
             IsTransferSelected.Amount = Amount;
             IsTransferSelected.Accounts = AccountFrom;
             IsTransferSelected.Accounts1 = AccountTo;
-
-            // Обновить коллекцию после изменений в базе данных
             EndOperation();
             LoadUserTransfers();
 
@@ -288,16 +263,14 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
 
         private bool CanUpdateSelectedTransfer(object parameter)
         {
-            if(string.IsNullOrWhiteSpace(Comment)|| Amount == 0.0m || AccountFrom == null || AccountTo == null)
+            if(string.IsNullOrWhiteSpace(Comment)|| Amount == 0.0m || AccountFrom == null || AccountTo == null || AccountFrom == AccountTo)
             {
                 return false;
             } 
             else
             {
                 return IsTransferSelected != null;
-
             }
-
         }
 
         private void AddNewTransfer(object parameter)
@@ -329,7 +302,7 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
 
         private bool CanAddNewTransfer(object parameter)
         {
-            if (string.IsNullOrWhiteSpace(Comment) || Amount == 0.0m || AccountFrom == null || AccountTo == null)
+            if (string.IsNullOrWhiteSpace(Comment) || Amount == 0.0m || AccountFrom == null || AccountTo == null || AccountFrom == AccountTo)
             {
                 return false;
             }
@@ -337,31 +310,25 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             {
                 return true;
             }
-
-
         }
 
         private void LoadUserTransfers()
         {
-            UserTransfers.Clear(); // Очищаем коллекцию перед загрузкой
-
-            var transfers = context.Transfers.Where(transfer => transfer.Accounts.Users.UserID == _loggedInUserId).ToList();
-
+            UserTransfers.Clear();
+            var transfers = context.Transfers
+                .Where(transfer => transfer.Accounts.Users.UserID == _loggedInUserId)
+                .OrderByDescending(transfer => transfer.TransferDate)
+                .ToList();
             foreach (var transfer in transfers)
             {
                 UserTransfers.Add(transfer);
             }
-
-            OnPropertyChanged(nameof(UserTransfers)); // Уведомляем об изменении свойства для обновления привязки в UI
+            OnPropertyChanged(nameof(UserTransfers));
         }
-
 
         private int GetNextTransferId()
         {
-            // Находим максимальное значение AccountID в коллекции
             int maxTransferId = context.Transfers.Any() ? context.Transfers.Max(transfer => transfer.TransferID) : 0;
-
-            // Возвращаем следующее значение, увеличенное на 1
             return maxTransferId + 1;
         }
 
@@ -372,8 +339,9 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             Amount = 0.00m;
             AccountFrom = null;
             AccountTo = null;
-            TransferDate = new DateTime(2023, 01, 01);
+            TransferDate = new DateTime(2024, 01, 01);
             Comment = null;
+            LoadUserTransfers();    
         }
 
         private bool IsValidInput(string input)
@@ -381,11 +349,5 @@ namespace FinanceControl.ViewModel.MainViewModels.PageViewModel
             string pattern = @"^\d{1,18}(\.\d{2})?$";
             return Regex.IsMatch(input, pattern);
         }
-
-
-
-
-
-
     }
 }
